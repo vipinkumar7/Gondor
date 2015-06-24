@@ -17,6 +17,13 @@
  */
 package com.gondor.services.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.gondor.model.Hosts;
+import com.gondor.services.HostManager;
+
 /**
  * @author Vipin Kumar
  * @created 23-Jun-2015
@@ -24,8 +31,22 @@ package com.gondor.services.impl;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class HostManagerImpl
+
+@Service("hostManager")
+public class HostManagerImpl implements HostManager
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HostManagerImpl.class );
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#getAllHosts()
+     */
+    @Override
+    public List<Hosts> getAllHosts()
+    {
+        LOG.trace("Method: getAllHosts called.");
+        
+        return null;
+        
+    }
 }

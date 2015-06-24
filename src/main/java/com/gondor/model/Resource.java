@@ -21,10 +21,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -36,30 +36,28 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="HOSTS")
-public class Hosts implements Serializable
+@Table(name="RESOURCES")
+public class Resource implements Serializable
 {
 
-    
     /**
      * 
      */
-    private static final long serialVersionUID = 2885427806050671647L;
+    private static final long serialVersionUID = -8644773993023277569L;
+
     private int id;
+    
     private String name;
     
-    @OneToMany
-    @JoinColumn(name="SERVICE_ID")
-    private Service service;
-    
-    
-
+    @Enumerated(EnumType.STRING)
+    private ResourceType type;
     /**
      * @return the id
      */
+    
     @Id
     @GeneratedValue
-    @Column(name = "HOST_ID")
+    @Column(name = "RESOURCE_ID")
     public int getId()
     {
         return id;
@@ -90,18 +88,18 @@ public class Hosts implements Serializable
     }
 
     /**
-     * @return the service
+     * @return the type
      */
-    public Service getService()
+    public ResourceType getType()
     {
-        return service;
+        return type;
     }
 
     /**
-     * @param service the service to set
+     * @param type the type to set
      */
-    public void setService( Service service )
+    public void setType( ResourceType type )
     {
-        this.service = service;
+        this.type = type;
     }
 }

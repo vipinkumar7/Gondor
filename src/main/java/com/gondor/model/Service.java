@@ -29,37 +29,34 @@ import javax.persistence.Table;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
 @Entity
-@Table(name="HOSTS")
-public class Hosts implements Serializable
+@Table(name="SERVICES")
+public class Service implements Serializable
 {
 
     
     /**
      * 
      */
-    private static final long serialVersionUID = 2885427806050671647L;
+    private static final long serialVersionUID = -3065584052959688964L;
     private int id;
     private String name;
     
     @OneToMany
-    @JoinColumn(name="SERVICE_ID")
-    private Service service;
-    
-    
+    @JoinColumn (name="RESOURCE_ID")
+    private Resource resource;
 
     /**
      * @return the id
      */
     @Id
     @GeneratedValue
-    @Column(name = "HOST_ID")
+    @Column(name = "SERVICE_ID")
     public int getId()
     {
         return id;
@@ -90,18 +87,19 @@ public class Hosts implements Serializable
     }
 
     /**
-     * @return the service
+     * @return the resource
      */
-    public Service getService()
+    public Resource getResource()
     {
-        return service;
+        return resource;
     }
 
     /**
-     * @param service the service to set
+     * @param resource the resource to set
      */
-    public void setService( Service service )
+    public void setResource( Resource resource )
     {
-        this.service = service;
+        this.resource = resource;
     }
+    
 }

@@ -19,13 +19,12 @@ package com.gondor.model;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class Resources
+public enum ResourceType
 {
-
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Resources.class );
+STORAGE,HEAP,PORT
 }

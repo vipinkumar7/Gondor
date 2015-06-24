@@ -17,6 +17,10 @@
  */
 package com.gondor.services;
 
+import java.util.List;
+
+import com.gondor.model.Hosts;
+
 /**
  * @author Vipin Kumar
  * @created 23-Jun-2015
@@ -27,4 +31,6 @@ package com.gondor.services;
 public interface HostManager
 {
 
+    public List<Hosts> getAllHosts();
+    
 }
