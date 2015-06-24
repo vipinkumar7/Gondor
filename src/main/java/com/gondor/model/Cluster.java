@@ -48,10 +48,23 @@ public class Cluster  implements Serializable
     private int id;
     private String name;
     
+    
     @OneToMany
     @JoinColumn(name="HOST_ID")
     private Hosts host;
 
+    
+    /**
+     * each user is responsible for a cluster management 
+     * 
+     * ADMIN all Privileges(Start ,Stop ,Change)
+     * USER  only viewer
+     * Controller (only change)
+     *  
+     */
+    @OneToMany
+    @JoinColumn(name="USER_ID")
+    private User user;
     /**
      * @return the id
      */
@@ -101,6 +114,22 @@ public class Cluster  implements Serializable
     public void setHost( Hosts host )
     {
         this.host = host;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser()
+    {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser( User user )
+    {
+        this.user = user;
     }
 
 }

@@ -21,6 +21,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -46,7 +48,8 @@ public class Role implements Serializable
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Role.class );
 
     private int id;
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleType type;
 
     @Id
     @GeneratedValue
@@ -62,16 +65,24 @@ public class Role implements Serializable
         this.id = id;
     }
 
+   
+
+    /**
+     * @return the type
+     */
     @Column(name = "ROLE_NAME")
-    public String getName()
+    public RoleType getType()
     {
-        return name;
+        return type;
     }
 
 
-    public void setName( String name )
+    /**
+     * @param type the type to set
+     */
+    public void setType( RoleType type )
     {
-        this.name = name;
+        this.type = type;
     }
 
 }

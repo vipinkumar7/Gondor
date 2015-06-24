@@ -24,7 +24,8 @@ package com.gondor.services;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface ServiceManager
+public class ConfigurationManager
 {
 
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationManager.class );
 }

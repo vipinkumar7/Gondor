@@ -44,7 +44,6 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao
         
         return null;
         
-        LOG.trace("Method: list finished.");
     }
 
     /* (non-Javadoc)
@@ -57,7 +56,6 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao
         
         return null;
         
-        LOG.trace("Method: getConfig finished.");
     }
 
     /* (non-Javadoc)
@@ -70,7 +68,6 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao
         
         return false;
         
-        LOG.trace("Method: changeConfig finished.");
     }
 
     /* (non-Javadoc)
@@ -83,6 +80,5 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao
         
         return false;
         
-        LOG.trace("Method: removeConfig finished.");
     }
 }

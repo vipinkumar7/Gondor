@@ -113,7 +113,7 @@ public abstract class BaseConfiguration implements Serializable
     /**
      * @return the description
      */
-    @Column ( name = "DESCRIPTION")
+    @Column ( name = "DESCRIPTION",nullable=true)
     public String getDescription()
     {
         return description;

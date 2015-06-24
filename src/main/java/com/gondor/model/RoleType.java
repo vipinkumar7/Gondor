@@ -15,16 +15,21 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
+package com.gondor.model;
 
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
- * 
- */
-public interface ServiceManager
-{
 
+ * each user is responsible for a cluster management 
+ * 
+ * ADMIN all Privileges(Start ,Stop ,Change)
+ * USER  only viewer
+ * Controller (only change)
+ *  
+ */
+public enum RoleType
+{
+    ADMIN, USER, CONTROLLER
 }

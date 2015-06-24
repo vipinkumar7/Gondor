@@ -74,6 +74,7 @@ public class Resource implements Serializable
     /**
      * @return the name
      */
+    @Column(name = "RESOURCE_NAME")
     public String getName()
     {
         return name;
