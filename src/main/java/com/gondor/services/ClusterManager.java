@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +15,17 @@
  *limitations under the License.
  *
  */
-package com.gondor.dao;
-
-import java.util.List;
-
-import com.gondor.model.AbstarctProperties;
+package com.gondor.services;
 
 /**
  * @author Vipin Kumar
- * @created 22-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface PropertiesDao
+public class ClusterManager
 {
 
-    public List<AbstarctProperties> list();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ClusterManager.class );
 }

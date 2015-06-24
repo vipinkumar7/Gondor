@@ -24,8 +24,12 @@ package com.gondor.model;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class MapredSite
+public class MapredSite extends BaseConfiguration
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1690000213896178585L;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( MapredSite.class );
 }

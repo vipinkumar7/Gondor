@@ -103,4 +103,17 @@ public class UserDAOImpl implements UserDao
         return null;
     }
 
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.UserDao#changeRole(int, int)
+     */
+    @Override
+    public void changeRole( int id, int roleId )
+    {
+        LOG.trace("Method: changeRole called.");
+        
+        
+        LOG.trace("Method: changeRole finished.");
+    }
+
 }

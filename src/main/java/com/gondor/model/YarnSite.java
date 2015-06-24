@@ -24,8 +24,12 @@ package com.gondor.model;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class YarnSite
+public class YarnSite extends BaseConfiguration
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4951682301524961625L;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( YarnSite.class );
 }

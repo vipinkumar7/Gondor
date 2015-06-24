@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,34 +15,17 @@
  *limitations under the License.
  *
  */
-package com.gondor.dao;
-
-import java.util.List;
-
-import com.gondor.model.User;
-
+package com.gondor.services;
 
 /**
  * @author Vipin Kumar
- * @created 22-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface UserDao
+public class ServiceManager
 {
 
-    public List<User> list();
-
-
-    public User get( int id );
-
-
-    public void saveOrUpdate( User user );
-
-
-    public void delete( int id );
-    
-    public void changeRole(int id,int roleId);
-
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceManager.class );
 }

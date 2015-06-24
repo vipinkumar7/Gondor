@@ -17,8 +17,6 @@
  */
 package com.gondor.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -31,17 +29,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="HDFS_SITE")
-public class HdfsSite extends AbstarctProperties implements Serializable
+public class HdfsSite extends BaseConfiguration 
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5607865966505569915L;
 
-
-    
-       
-    
     
 }

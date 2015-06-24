@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,50 +28,66 @@ import javax.persistence.Table;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 24-Jun-2015
  * 
- *          TODO: Write a quick description of what the class is supposed to do.
+ * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
 @Entity
-@Table ( name = "ROLES")
-public class Role implements Serializable
+@Table ( name = "PROCESSES")
+public class Process implements Serializable
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 8167808941083555113L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Role.class );
+    private static final long serialVersionUID = 2408863593485958546L;
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Process.class );
+
 
     private int id;
-    private String name;
+    private int systemId;
+    
 
+
+    /**
+     * @return the id
+     */
     @Id
     @GeneratedValue
-    @Column ( name = "ROLE_ID")
+    @Column(name = "PROCESS_ID")
+
     public int getId()
     {
         return id;
     }
 
 
+    /**
+     * @param id the id to set
+     */
     public void setId( int id )
     {
         this.id = id;
     }
 
-    @Column(name = "ROLE_NAME")
-    public String getName()
+
+    /**
+     * @return the systemId
+     */
+    public int getSystemId()
     {
-        return name;
+        return systemId;
     }
 
 
-    public void setName( String name )
+    /**
+     * @param systemId the systemId to set
+     */
+    public void setSystemId( int systemId )
     {
-        this.name = name;
+        this.systemId = systemId;
     }
+
 
 }

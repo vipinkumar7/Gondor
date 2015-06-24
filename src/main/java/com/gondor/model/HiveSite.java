@@ -24,8 +24,12 @@ package com.gondor.model;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class HiveSite
+public class HiveSite extends BaseConfiguration
 {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 721985205855647690L;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HiveSite.class );
 }

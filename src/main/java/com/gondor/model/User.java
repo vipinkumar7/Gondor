@@ -23,6 +23,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -48,6 +50,9 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 
+	@OneToOne
+	@JoinColumn(name="ROLE_ID")
+	private Role role;
 	@Id
 	@GeneratedValue
 	@Column(name = "USER_ID")

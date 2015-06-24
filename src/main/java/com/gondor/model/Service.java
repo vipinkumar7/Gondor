@@ -27,6 +27,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
@@ -35,32 +36,43 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="SERVICES")
+@Table ( name = "SERVICES")
 public class Service implements Serializable
 {
 
-    
+
     /**
      * 
      */
     private static final long serialVersionUID = -3065584052959688964L;
     private int id;
     private String name;
-    
+
     @OneToMany
-    @JoinColumn (name="RESOURCE_ID")
+    @JoinColumn ( name = "RESOURCE_ID")
     private Resource resource;
+
+
+    @OneToMany
+    @JoinColumn ( name = "PROCESS_ID")
+    private Process process;
+
+    @OneToMany
+    @JoinColumn ( name = "CONF_ID")
+    private BaseConfiguration configuration;
+
 
     /**
      * @return the id
      */
     @Id
     @GeneratedValue
-    @Column(name = "SERVICE_ID")
+    @Column ( name = "SERVICE_ID")
     public int getId()
     {
         return id;
     }
+
 
     /**
      * @param id the id to set
@@ -70,6 +82,7 @@ public class Service implements Serializable
         this.id = id;
     }
 
+
     /**
      * @return the name
      */
@@ -77,6 +90,7 @@ public class Service implements Serializable
     {
         return name;
     }
+
 
     /**
      * @param name the name to set
@@ -86,6 +100,7 @@ public class Service implements Serializable
         this.name = name;
     }
 
+
     /**
      * @return the resource
      */
@@ -94,6 +109,7 @@ public class Service implements Serializable
         return resource;
     }
 
+
     /**
      * @param resource the resource to set
      */
@@ -101,5 +117,5 @@ public class Service implements Serializable
     {
         this.resource = resource;
     }
-    
+
 }

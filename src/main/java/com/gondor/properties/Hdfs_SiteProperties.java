@@ -28,6 +28,5 @@ public class Hdfs_SiteProperties
 {
 
     
-    public static String data_dir;
     
 }

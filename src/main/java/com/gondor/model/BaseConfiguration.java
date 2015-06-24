@@ -17,8 +17,7 @@
  */
 package com.gondor.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -26,7 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+
 
 /**
  * @author Vipin Kumar
@@ -37,38 +36,42 @@ import javax.persistence.Transient;
  */
 
 @MappedSuperclass
-@Inheritance(strategy=InheritanceType.JOINED)
-public abstract class AbstarctProperties 
+@Inheritance ( strategy = InheritanceType.JOINED)
+public abstract class BaseConfiguration implements Serializable
 {
 
-    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5487484778854686415L;
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( AbstarctProperties.class );
-    
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( BaseConfiguration.class );
+
     private int id;
     private String key;
     private String value;
     private String description;
-    
-    @Transient
-    private Map<String, String>  properties=new HashMap<String, String>();
-    
-    
+
+
     @Id
     @GeneratedValue
-    @Column(name = "USER_ID")
-    public int getId() {
+    @Column ( name = "CONF_ID")
+    public int getId()
+    {
         return id;
     }
-    
+
+
     /**
      * @return the key
      */
-    @Column(name="KEY")
+    @Column ( name = "KEY")
     public String getKey()
     {
         return key;
     }
+
+
     /**
      * @param key the key to set
      */
@@ -76,21 +79,28 @@ public abstract class AbstarctProperties
     {
         this.key = key;
     }
+
+
     /**
      * @return the value
      */
-    @Column(name="VALUE")
+    @Column ( name = "VALUE")
     public String getValue()
     {
         return value;
     }
+
+
     /**
      * 
      * @param id
      */
-    public void setId(int id) {
+    public void setId( int id )
+    {
         this.id = id;
     }
+
+
     /**
      * @param value the value to set
      */
@@ -98,14 +108,18 @@ public abstract class AbstarctProperties
     {
         this.value = value;
     }
+
+
     /**
      * @return the description
      */
-    @Column(name="DESCRIPTION")
+    @Column ( name = "DESCRIPTION")
     public String getDescription()
     {
         return description;
     }
+
+
     /**
      * @param description the description to set
      */
