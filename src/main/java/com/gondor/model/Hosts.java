@@ -39,8 +39,6 @@ import javax.persistence.Table;
 @Table(name="HOSTS")
 public class Hosts implements Serializable
 {
-
-    
     /**
      * 
      */
@@ -80,7 +78,6 @@ public class Hosts implements Serializable
     {
         return name;
     }
-
     /**
      * @param name the name to set
      */

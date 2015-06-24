@@ -33,7 +33,6 @@ import javax.persistence.Table;
  * @created 23-Jun-2015
  * 
  *          TODO: Write a quick description of what the class is supposed to do.
- * 
  */
 
 @Entity
@@ -64,8 +63,6 @@ public class Role implements Serializable
     {
         this.id = id;
     }
-
-   
 
     /**
      * @return the type

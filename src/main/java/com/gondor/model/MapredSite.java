@@ -32,4 +32,7 @@ public class MapredSite extends BaseConfiguration
      */
     private static final long serialVersionUID = 1690000213896178585L;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( MapredSite.class );
+    
+    
+    
 }
