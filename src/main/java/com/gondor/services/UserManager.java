@@ -15,34 +15,28 @@
  *limitations under the License.
  *
  */
-package com.gondor.dao;
+package com.gondor.services;
 
 import java.util.List;
 
 import com.gondor.model.User;
 
-
 /**
  * @author Vipin Kumar
- * @created 22-Jun-2015
+ * @created 25-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface UserDao
+public interface UserManager
 {
-
+    
     public List<User> list();
 
+    public User get( int userId );
 
-    public User get( int id );
-
-
-    public void saveOrUpdate( User user );
-
-
-    public void delete( int userId );
+    public void delete( int id );
     
-    public void changeRole(int userId,int roleId);
+    public void changeRole(int id,int roleId);
 
 }

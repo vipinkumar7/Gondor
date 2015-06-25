@@ -54,7 +54,7 @@ import com.gondor.model.User;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("net.codejava.spring")
+@ComponentScan("com.gondor.controller")
 @EnableTransactionManagement
 public class ApplicationContextConfig {
 
