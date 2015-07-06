@@ -87,6 +87,7 @@ public class Cluster  implements Serializable
     /**
      * @return the name
      */
+    @Column(name = "CLUSTER_NAME")
     public String getName()
     {
         return name;
@@ -103,6 +104,8 @@ public class Cluster  implements Serializable
     /**
      * @return the host
      */
+    
+    
     public Hosts getHost()
     {
         return host;

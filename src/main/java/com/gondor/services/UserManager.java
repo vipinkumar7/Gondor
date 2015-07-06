@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.gondor.model.User;
 
+
 /**
  * @author Vipin Kumar
  * @created 25-Jun-2015
@@ -30,13 +31,19 @@ import com.gondor.model.User;
  */
 public interface UserManager
 {
-    
+
     public List<User> list();
+
 
     public User get( int userId );
 
-    public void delete( int id );
-    
-    public void changeRole(int id,int roleId);
+
+    public void delete( int userId );
+
+
+    public void changeRole( int userId, int roleId );
+
+
+    public boolean hasRole( int userId, int roleId );
 
 }

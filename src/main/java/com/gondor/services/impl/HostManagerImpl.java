@@ -42,11 +42,35 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#getAllHosts()
      */
     @Override
-    public List<Hosts> getAllHosts()
+    public List<Hosts> getAllHosts(int clusterId)
     {
         LOG.trace("Method: getAllHosts called.");
         
         return null;
         
+    }
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#createHostOnCluster(int, int)
+     */
+    @Override
+    public void createHostOnCluster( int hostId, int clusterId )
+    {
+        LOG.trace("Method: createHostOnCluster called.");
+        
+        
+        LOG.trace("Method: createHostOnCluster finished.");
+    }
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#decomminsionHost(int, int)
+     */
+    @Override
+    public void decomminsionHost( int hostId, int clusterId )
+    {
+        LOG.trace("Method: decomminsionHost called.");
+        
+        
+        LOG.trace("Method: decomminsionHost finished.");
     }
 }

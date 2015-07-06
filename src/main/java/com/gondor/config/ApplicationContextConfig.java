@@ -41,8 +41,16 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.gondor.dao.impl.UserDAOImpl;
 import com.gondor.dao.UserDao;
+import com.gondor.model.Cluster;
+import com.gondor.model.CoreSite;
 import com.gondor.model.HdfsSite;
+import com.gondor.model.Hosts;
+import com.gondor.model.MapredSite;
+import com.gondor.model.Resource;
+import com.gondor.model.Role;
+import com.gondor.model.Service;
 import com.gondor.model.User;
+import com.gondor.model.YarnSite;
 
 /**
  * 
@@ -94,6 +102,15 @@ public class ApplicationContextConfig {
 				dataSource);
 		sessionBuilder.addAnnotatedClasses(User.class);
 		sessionBuilder.addAnnotatedClasses(HdfsSite.class);
+		sessionBuilder.addAnnotatedClasses(Cluster.class);
+		sessionBuilder.addAnnotatedClasses(Resource.class);
+		sessionBuilder.addAnnotatedClasses(Service.class);
+		sessionBuilder.addAnnotatedClasses(CoreSite.class);
+		sessionBuilder.addAnnotatedClasses(Hosts.class);
+		sessionBuilder.addAnnotatedClasses(MapredSite.class);
+		sessionBuilder.addAnnotatedClasses(com.gondor.model.Process.class);
+		sessionBuilder.addAnnotatedClasses(Role.class);
+		sessionBuilder.addAnnotatedClasses(YarnSite.class);
 		sessionBuilder.scanPackages("com.gondor.model");
 		sessionBuilder.addProperties(getHibernateProperties());
 		return sessionBuilder.buildSessionFactory();

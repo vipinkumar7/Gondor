@@ -46,7 +46,7 @@ public class Process implements Serializable
 
 
     private int id;
-    private int systemId;
+    private int systemPid;
     
 
 
@@ -73,21 +73,25 @@ public class Process implements Serializable
 
 
     /**
-     * @return the systemId
+     * @return the systemPid
      */
-    public int getSystemId()
+    @Column(name = "SYSTEM_PID")
+    public int getSystemPid()
     {
-        return systemId;
+        return systemPid;
     }
 
 
     /**
-     * @param systemId the systemId to set
+     * @param systemPid the systemPid to set
      */
-    public void setSystemId( int systemId )
+    public void setSystemPid( int systemPid )
     {
-        this.systemId = systemId;
+        this.systemPid = systemPid;
     }
+
+
+
 
 
 }

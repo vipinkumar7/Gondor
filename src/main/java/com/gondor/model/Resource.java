@@ -47,7 +47,6 @@ public class Resource implements Serializable
 
     private int id;
     
-    private String name;
     
     @Enumerated(EnumType.STRING)
     private ResourceType type;
@@ -71,22 +70,6 @@ public class Resource implements Serializable
         this.id = id;
     }
 
-    /**
-     * @return the name
-     */
-    @Column(name = "RESOURCE_NAME")
-    public String getName()
-    {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName( String name )
-    {
-        this.name = name;
-    }
 
     /**
      * @return the type

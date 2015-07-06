@@ -74,6 +74,7 @@ public class Hosts implements Serializable
     /**
      * @return the name
      */
+    @Column(name = "HOST_NAME")
     public String getName()
     {
         return name;

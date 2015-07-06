@@ -28,9 +28,16 @@ import com.gondor.model.Hosts;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
+
 public interface HostManager
 {
 
-    public List<Hosts> getAllHosts();
+    public List<Hosts> getAllHosts(int clusterId);
+    
+    public void createHostOnCluster(int hostId,int clusterId);
+    
+    public void decomminsionHost(int hostId,int clusterId);
+    
+    
     
 }

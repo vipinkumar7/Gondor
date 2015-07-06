@@ -86,6 +86,7 @@ public class Service implements Serializable
     /**
      * @return the name
      */
+    @Column ( name = "SERVICE_NAME")
     public String getName()
     {
         return name;

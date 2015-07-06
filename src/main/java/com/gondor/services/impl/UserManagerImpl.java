@@ -20,6 +20,7 @@ package com.gondor.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gondor.dao.UserDao;
 import com.gondor.model.User;
@@ -33,6 +34,8 @@ import com.gondor.services.UserManager;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
+
+@Service("userManager")
 public class UserManagerImpl implements UserManager
 {
 
@@ -90,6 +93,19 @@ public class UserManagerImpl implements UserManager
         userDao.changeRole( userId, roleId );
 
         LOG.trace( "Method: changeRole finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.UserManager#hasRole(int, int)
+     */
+    @Override
+    public boolean hasRole( int userId, int roleId )
+    {
+        LOG.trace("Method: hasRole called.");
+        
+        return false;
+        
     }
 
 }
