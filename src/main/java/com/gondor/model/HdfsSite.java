@@ -20,6 +20,7 @@ package com.gondor.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+
 /**
  * @author Vipin Kumar
  * @created 21-Jun-2015
@@ -28,8 +29,8 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="HDFS_SITE")
-public class HdfsSite extends BaseConfiguration 
+@Table ( name = "HDFS_SITE")
+public class HdfsSite extends BaseConfiguration
 {
 
     /**
@@ -37,5 +38,5 @@ public class HdfsSite extends BaseConfiguration
      */
     private static final long serialVersionUID = -5607865966505569915L;
 
-    
+
 }

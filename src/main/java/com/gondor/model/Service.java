@@ -21,10 +21,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -46,20 +48,14 @@ public class Service implements Serializable
      */
     private static final long serialVersionUID = -3065584052959688964L;
     private int id;
-    private String name;
 
-    @OneToMany
-    @JoinColumn ( name = "RESOURCE_ID")
-    private Resource resource;
+    @Enumerated ( EnumType.STRING)
+    private ServiceType name;
 
 
-    @OneToMany
-    @JoinColumn ( name = "PROCESS_ID")
-    private Process process;
-
-    @OneToMany
-    @JoinColumn ( name = "CONF_ID")
-    private BaseConfiguration configuration;
+    @ManyToOne
+    @JoinColumn ( name = "HOST_ID")
+    private Host host;
 
 
     /**
@@ -84,10 +80,32 @@ public class Service implements Serializable
 
 
     /**
+     * @return the host
+     */
+    @Column ( name = "HOST_ID")
+    public Host getHost()
+    {
+        return host;
+    }
+
+
+    /**
+     * @param host the host to set
+     */
+    public void setHost( Host host )
+    {
+        this.host = host;
+    }
+
+
+    /**
+     * @return the name
+     */
+    /**
      * @return the name
      */
     @Column ( name = "SERVICE_NAME")
-    public String getName()
+    public ServiceType getName()
     {
         return name;
     }
@@ -96,27 +114,9 @@ public class Service implements Serializable
     /**
      * @param name the name to set
      */
-    public void setName( String name )
+    public void setName( ServiceType name )
     {
         this.name = name;
-    }
-
-
-    /**
-     * @return the resource
-     */
-    public Resource getResource()
-    {
-        return resource;
-    }
-
-
-    /**
-     * @param resource the resource to set
-     */
-    public void setResource( Resource resource )
-    {
-        this.resource = resource;
     }
 
 }

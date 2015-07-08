@@ -17,6 +17,10 @@
  */
 package com.gondor.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
 /**
  * @author Vipin Kumar
  * @created 23-Jun-2015
@@ -24,6 +28,8 @@ package com.gondor.model;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
+@Entity
+@Table ( name = "HIVE_SITE")
 public class HiveSite extends BaseConfiguration
 {
 
@@ -31,5 +37,4 @@ public class HiveSite extends BaseConfiguration
      * 
      */
     private static final long serialVersionUID = 721985205855647690L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HiveSite.class );
 }

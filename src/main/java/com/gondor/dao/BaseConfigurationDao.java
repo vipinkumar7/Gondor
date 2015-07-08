@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.gondor.model.BaseConfiguration;
 
+
 /**
  * @author Vipin Kumar
  * @created 22-Jun-2015
@@ -37,16 +38,18 @@ public interface BaseConfigurationDao
      * @return
      * get all the configuration related to this service id
      */
-    public List<BaseConfiguration> list(int serviceId);
-    
+    public List<BaseConfiguration> list( int serviceId );
+
+
     /**
      * 
      * @param baseConfigId
      * @return
      * get the configuration for this config id
      */
-    public BaseConfiguration getConfig(int baseConfigId);
-    
+    public BaseConfiguration getConfig( int baseConfigId );
+
+
     /**
      * 
      * @param baseConfigId
@@ -55,13 +58,14 @@ public interface BaseConfigurationDao
      * 
      * change the  configuration  of given name in the Configuration file 
      */
-    public boolean changeConfig(int baseConfigId,String configName);
-    
+    public boolean changeConfig( int baseConfigId, String configName );
+
+
     /**
      * 
      * @param baseConfigId
      * @param configName
      * @return
      */
-    public boolean removeConfig(int baseConfigId,String configName);
+    public boolean removeConfig( int baseConfigId, String configName );
 }

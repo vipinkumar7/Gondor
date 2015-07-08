@@ -17,9 +17,8 @@
  */
 package com.gondor.services;
 
-import java.util.List;
+import com.gondor.model.Host;
 
-import com.gondor.model.Hosts;
 
 /**
  * @author Vipin Kumar
@@ -32,12 +31,26 @@ import com.gondor.model.Hosts;
 public interface HostManager
 {
 
-    public List<Hosts> getAllHosts(int clusterId);
-    
-    public void createHostOnCluster(int hostId,int clusterId);
-    
-    public void decomminsionHost(int hostId,int clusterId);
-    
-    
-    
+    /**
+     * create new host with the IP or host name provided
+     * @param hostname
+     */
+    public void createHost( String hostname );
+
+
+    public void validateHost( String hostname );
+
+
+    /**
+     * remove all services from this host
+     * @param hostId
+     */
+    public void decomminsionHost( int hostId );
+
+
+    public boolean isHostExists( int hostId );
+
+
+    public Host getHost( int hostId );
+
 }

@@ -17,6 +17,12 @@
  */
 package com.gondor.services;
 
+import java.util.Set;
+
+import com.gondor.model.BaseConfiguration;
+import com.gondor.model.ServiceType;
+
+
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
@@ -27,4 +33,21 @@ package com.gondor.services;
 public interface ServiceManager
 {
 
+    public void startService( ServiceType serviceType );
+
+
+    public void stopService( ServiceType serviceType );
+
+
+    public void checkService( ServiceType serviceType );
+
+
+    public Set<BaseConfiguration> getAllServiceconfig( ServiceType serviceType );
+
+
+    public String getServiceConfig( String property, String value, Class<? extends BaseConfiguration> configObject );
+
+
+    public boolean changeConfiguration( ServiceType serviceType, String property, String value,
+        Class<? extends BaseConfiguration> configObject );
 }

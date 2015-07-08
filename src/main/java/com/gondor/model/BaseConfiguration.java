@@ -24,6 +24,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 
@@ -45,12 +47,15 @@ public abstract class BaseConfiguration implements Serializable
      */
     private static final long serialVersionUID = 5487484778854686415L;
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( BaseConfiguration.class );
 
     private int id;
     private String key;
     private String value;
     private String description;
+
+    @ManyToOne
+    @JoinColumn ( name = "SERVICE_ID")
+    private Service service;
 
 
     @Id
@@ -113,7 +118,7 @@ public abstract class BaseConfiguration implements Serializable
     /**
      * @return the description
      */
-    @Column ( name = "DESCRIPTION",nullable=true)
+    @Column ( name = "DESCRIPTION", nullable = true)
     public String getDescription()
     {
         return description;
@@ -126,6 +131,25 @@ public abstract class BaseConfiguration implements Serializable
     public void setDescription( String description )
     {
         this.description = description;
+    }
+
+
+    /**
+     * @return the service
+     */
+    @Column ( name = "SERVICE_ID")
+    public Service getService()
+    {
+        return service;
+    }
+
+
+    /**
+     * @param service the service to set
+     */
+    public void setService( Service service )
+    {
+        this.service = service;
     }
 
 }

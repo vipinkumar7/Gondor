@@ -26,5 +26,5 @@ package com.gondor.model;
  */
 public enum ResourceType
 {
-STORAGE,HEAP,PORT
+    STORAGE, HEAP, PORT
 }

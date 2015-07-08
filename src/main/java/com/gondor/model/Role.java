@@ -44,11 +44,11 @@ public class Role implements Serializable
      * 
      */
     private static final long serialVersionUID = 8167808941083555113L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Role.class );
 
     private int id;
-    @Enumerated(EnumType.STRING)
+    @Enumerated ( EnumType.STRING)
     private RoleType type;
+
 
     @Id
     @GeneratedValue
@@ -64,10 +64,11 @@ public class Role implements Serializable
         this.id = id;
     }
 
+
     /**
      * @return the type
      */
-    @Column(name = "ROLE_NAME")
+    @Column ( name = "ROLE_NAME")
     public RoleType getType()
     {
         return type;

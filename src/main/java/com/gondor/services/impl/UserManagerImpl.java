@@ -35,7 +35,7 @@ import com.gondor.services.UserManager;
  * 
  */
 
-@Service("userManager")
+@Service ( "userManager")
 public class UserManagerImpl implements UserManager
 {
 
@@ -102,10 +102,10 @@ public class UserManagerImpl implements UserManager
     @Override
     public boolean hasRole( int userId, int roleId )
     {
-        LOG.trace("Method: hasRole called.");
-        
+        LOG.trace( "Method: hasRole called." );
+
         return false;
-        
+
     }
 
 }

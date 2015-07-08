@@ -25,6 +25,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+
 /**
  * 
  * @author Vipin Kumar
@@ -33,22 +34,23 @@ import org.springframework.web.servlet.DispatcherServlet;
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public class SpringWebAppInitializer implements WebApplicationInitializer{
+public class SpringWebAppInitializer implements WebApplicationInitializer
+{
 
-	public void onStartup(ServletContext servletContext) throws ServletException {
+    public void onStartup( ServletContext servletContext ) throws ServletException
+    {
 
-		
-		AnnotationConfigWebApplicationContext appContext=new AnnotationConfigWebApplicationContext();
-		appContext.register(ApplicationContextConfig.class);
-		
-		appContext.setServletContext(servletContext);
-		
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
-                "SpringDispatcher", new DispatcherServlet(appContext));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/");
-		
-		
-		
-	}
+
+        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+        appContext.register( ApplicationContextConfig.class );
+
+        appContext.setServletContext( servletContext );
+
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet( "SpringDispatcher", new DispatcherServlet(
+            appContext ) );
+        dispatcher.setLoadOnStartup( 1 );
+        dispatcher.addMapping( "/" );
+
+
+    }
 }

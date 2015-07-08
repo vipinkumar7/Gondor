@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gondor.dao.UserDao;
 import com.gondor.model.User;
 
+
 /**
  * 
  * @author Vipin Kumar
@@ -43,66 +44,81 @@ import com.gondor.model.User;
  *
  */
 @Controller
-public class AdminController {
+public class AdminController
+{
 
-	@Autowired
-	private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
-	@RequestMapping(value = "/rest/users", method = RequestMethod.GET)
-	public @ResponseBody User getDummyEmployee() {
-		List<User> listUsers = userDao.list();
-		return listUsers.get(0);
-	}
 
-	@RequestMapping("/")
-	public ModelAndView handleRequest() throws Exception {
-		List<User> listUsers = userDao.list();
-		ModelAndView model = new ModelAndView("UserList");
-		model.addObject("userList", listUsers);
-		return model;
-	}
+    @RequestMapping ( value = "/rest/users", method = RequestMethod.GET)
+    public @ResponseBody User getDummyEmployee()
+    {
+        List<User> listUsers = userDao.list();
+        return listUsers.get( 0 );
+    }
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public ModelAndView newUser() {
-		ModelAndView model = new ModelAndView("UserForm");
-		model.addObject("user", new User());
-		return model;
-	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView editUser(HttpServletRequest request) {
-		int userId = Integer.parseInt(request.getParameter("id"));
-		User user = userDao.get(userId);
-		ModelAndView model = new ModelAndView("UserForm");
-		model.addObject("user", user);
-		return model;
-	}
-	
-	
+    @RequestMapping ( "/")
+    public ModelAndView handleRequest() throws Exception
+    {
+        List<User> listUsers = userDao.list();
+        ModelAndView model = new ModelAndView( "UserList" );
+        model.addObject( "userList", listUsers );
+        return model;
+    }
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView deleteUser(HttpServletRequest request) {
-		int userId = Integer.parseInt(request.getParameter("id"));
-		userDao.delete(userId);
-		return new ModelAndView("redirect:/");
-	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView saveUser(@ModelAttribute User user) {
-		userDao.saveOrUpdate(user);
-		return new ModelAndView("redirect:/");
-	}
-	
-	@RequestMapping(value = "/saveone", method = RequestMethod.POST)
-	public HttpStatus saveUsers(@RequestBody User user) {
-		userDao.saveOrUpdate(user);
-		return HttpStatus.OK;
-	}
+    @RequestMapping ( value = "/new", method = RequestMethod.GET)
+    public ModelAndView newUser()
+    {
+        ModelAndView model = new ModelAndView( "UserForm" );
+        model.addObject( "user", new User() );
+        return model;
+    }
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody User getUser() {
-		return userDao.get(1);
-	}
-	
-	
+
+    @RequestMapping ( value = "/edit", method = RequestMethod.GET)
+    public ModelAndView editUser( HttpServletRequest request )
+    {
+        int userId = Integer.parseInt( request.getParameter( "id" ) );
+        User user = userDao.get( userId );
+        ModelAndView model = new ModelAndView( "UserForm" );
+        model.addObject( "user", user );
+        return model;
+    }
+
+
+    @RequestMapping ( value = "/delete", method = RequestMethod.GET)
+    public ModelAndView deleteUser( HttpServletRequest request )
+    {
+        int userId = Integer.parseInt( request.getParameter( "id" ) );
+        userDao.delete( userId );
+        return new ModelAndView( "redirect:/" );
+    }
+
+
+    @RequestMapping ( value = "/save", method = RequestMethod.POST)
+    public ModelAndView saveUser( @ModelAttribute User user )
+    {
+        userDao.saveOrUpdate( user );
+        return new ModelAndView( "redirect:/" );
+    }
+
+
+    @RequestMapping ( value = "/saveone", method = RequestMethod.POST)
+    public HttpStatus saveUsers( @RequestBody User user )
+    {
+        userDao.saveOrUpdate( user );
+        return HttpStatus.OK;
+    }
+
+
+    @RequestMapping ( value = "/get", method = RequestMethod.GET)
+    public @ResponseBody User getUser()
+    {
+        return userDao.get( 1 );
+    }
+
+
 }

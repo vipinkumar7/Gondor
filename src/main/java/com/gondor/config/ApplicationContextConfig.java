@@ -44,13 +44,14 @@ import com.gondor.dao.UserDao;
 import com.gondor.model.Cluster;
 import com.gondor.model.CoreSite;
 import com.gondor.model.HdfsSite;
-import com.gondor.model.Hosts;
+import com.gondor.model.Host;
 import com.gondor.model.MapredSite;
 import com.gondor.model.Resource;
 import com.gondor.model.Role;
 import com.gondor.model.Service;
 import com.gondor.model.User;
 import com.gondor.model.YarnSite;
+
 
 /**
  * 
@@ -62,88 +63,98 @@ import com.gondor.model.YarnSite;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.gondor.controller")
+@ComponentScan ( "com.gondor.controller")
 @EnableTransactionManagement
-public class ApplicationContextConfig {
+public class ApplicationContextConfig
+{
 
-	@Bean(name = "viewResolver")
-	public InternalResourceViewResolver getViewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-		return viewResolver;
-	}
+    @Bean ( name = "viewResolver")
+    public InternalResourceViewResolver getViewResolver()
+    {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix( "/WEB-INF/views/" );
+        viewResolver.setSuffix( ".jsp" );
+        return viewResolver;
+    }
 
-	@Bean(name = "dataSource")
-	public DataSource getDataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/usersdb");
-		dataSource.setUsername("root");
-		dataSource.setPassword("root");
 
-		return dataSource;
-	}
+    @Bean ( name = "dataSource")
+    public DataSource getDataSource()
+    {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName( "com.mysql.jdbc.Driver" );
+        dataSource.setUrl( "jdbc:mysql://localhost:3306/usersdb" );
+        dataSource.setUsername( "root" );
+        dataSource.setPassword( "root" );
 
-	private Properties getHibernateProperties() {
-		Properties properties = new Properties();
-		properties.put("hibernate.show_sql", "true");
-		properties.put("hibernate.dialect",
-				"org.hibernate.dialect.MySQLDialect");
-		properties.put("hibernate.hbm2ddl.auto", "create");
-		return properties;
-	}
+        return dataSource;
+    }
 
-	@Autowired
-	@Bean(name = "sessionFactory")
-	public SessionFactory getSessionFactory(DataSource dataSource) {
 
-		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(
-				dataSource);
-		sessionBuilder.addAnnotatedClasses(User.class);
-		sessionBuilder.addAnnotatedClasses(HdfsSite.class);
-		sessionBuilder.addAnnotatedClasses(Cluster.class);
-		sessionBuilder.addAnnotatedClasses(Resource.class);
-		sessionBuilder.addAnnotatedClasses(Service.class);
-		sessionBuilder.addAnnotatedClasses(CoreSite.class);
-		sessionBuilder.addAnnotatedClasses(Hosts.class);
-		sessionBuilder.addAnnotatedClasses(MapredSite.class);
-		sessionBuilder.addAnnotatedClasses(com.gondor.model.Process.class);
-		sessionBuilder.addAnnotatedClasses(Role.class);
-		sessionBuilder.addAnnotatedClasses(YarnSite.class);
-		sessionBuilder.scanPackages("com.gondor.model");
-		sessionBuilder.addProperties(getHibernateProperties());
-		return sessionBuilder.buildSessionFactory();
-	}
+    private Properties getHibernateProperties()
+    {
+        Properties properties = new Properties();
+        properties.put( "hibernate.show_sql", "true" );
+        properties.put( "hibernate.dialect", "org.hibernate.dialect.MySQLDialect" );
+        properties.put( "hibernate.hbm2ddl.auto", "create" );
+        return properties;
+    }
 
-	@Autowired
-	@Bean(name = "transactionManager")
-	public HibernateTransactionManager getTransactionManager(
-			SessionFactory sessionFactory) {
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager(
-				sessionFactory);
 
-		return transactionManager;
-	}
+    @Autowired
+    @Bean ( name = "sessionFactory")
+    public SessionFactory getSessionFactory( DataSource dataSource )
+    {
 
-	@Autowired
-	@Bean(name = "userDao")
-	public UserDao getUserDao(SessionFactory sessionFactory) {
-		return new UserDAOImpl(sessionFactory);
-	}
+        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
+        sessionBuilder.addAnnotatedClasses( User.class );
+        sessionBuilder.addAnnotatedClasses( HdfsSite.class );
+        sessionBuilder.addAnnotatedClasses( Cluster.class );
+        sessionBuilder.addAnnotatedClasses( Resource.class );
+        sessionBuilder.addAnnotatedClasses( Service.class );
+        sessionBuilder.addAnnotatedClasses( CoreSite.class );
+        sessionBuilder.addAnnotatedClasses( Host.class );
+        sessionBuilder.addAnnotatedClasses( MapredSite.class );
+        sessionBuilder.addAnnotatedClasses( com.gondor.model.Process.class );
+        sessionBuilder.addAnnotatedClasses( Role.class );
+        sessionBuilder.addAnnotatedClasses( YarnSite.class );
+        sessionBuilder.scanPackages( "com.gondor.model" );
+        sessionBuilder.addProperties( getHibernateProperties() );
+        return sessionBuilder.buildSessionFactory();
+    }
 
-	@Autowired
-	@Bean(name="messageConeverter")
-	public RequestMappingHandlerAdapter getbean() {
-		RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
 
-		MappingJackson2HttpMessageConverter httpMessageConverter = new MappingJackson2HttpMessageConverter();
+    @Autowired
+    @Bean ( name = "transactionManager")
+    public HibernateTransactionManager getTransactionManager( SessionFactory sessionFactory )
+    {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager( sessionFactory );
 
-		List<HttpMessageConverter<?>> msgcon = new ArrayList<HttpMessageConverter<?>>();
-		msgcon.add(httpMessageConverter);
-		handlerAdapter.setMessageConverters(msgcon);
-		return handlerAdapter;
-	}
-	
-	
+        return transactionManager;
+    }
+
+
+    @Autowired
+    @Bean ( name = "userDao")
+    public UserDao getUserDao( SessionFactory sessionFactory )
+    {
+        return new UserDAOImpl( sessionFactory );
+    }
+
+
+    @Autowired
+    @Bean ( name = "messageConeverter")
+    public RequestMappingHandlerAdapter getbean()
+    {
+        RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
+
+        MappingJackson2HttpMessageConverter httpMessageConverter = new MappingJackson2HttpMessageConverter();
+
+        List<HttpMessageConverter<?>> msgcon = new ArrayList<HttpMessageConverter<?>>();
+        msgcon.add( httpMessageConverter );
+        handlerAdapter.setMessageConverters( msgcon );
+        return handlerAdapter;
+    }
+
+
 }

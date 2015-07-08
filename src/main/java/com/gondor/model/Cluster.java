@@ -23,9 +23,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 /**
  * @author Vipin Kumar
@@ -36,45 +35,30 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="CLUSTERS")
-public class Cluster  implements Serializable
+@Table ( name = "CLUSTERS")
+public class Cluster implements Serializable
 {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
-    
+
     private int id;
     private String name;
-    
-    
-    @OneToMany
-    @JoinColumn(name="HOST_ID")
-    private Hosts host;
 
-    
-    /**
-     * each user is responsible for a cluster management 
-     * 
-     * ADMIN all Privileges(Start ,Stop ,Change)
-     * USER  only viewer
-     * Controller (only change)
-     *  
-     */
-    @OneToMany
-    @JoinColumn(name="USER_ID")
-    private User user;
+
     /**
      * @return the id
      */
     @Id
     @GeneratedValue
-    @Column(name = "CLUSTER_ID")
+    @Column ( name = "CLUSTER_ID")
     public int getId()
     {
         return id;
     }
+
 
     /**
      * @param id the id to set
@@ -84,14 +68,16 @@ public class Cluster  implements Serializable
         this.id = id;
     }
 
+
     /**
      * @return the name
      */
-    @Column(name = "CLUSTER_NAME")
+    @Column ( name = "CLUSTER_NAME")
     public String getName()
     {
         return name;
     }
+
 
     /**
      * @param name the name to set
@@ -104,35 +90,6 @@ public class Cluster  implements Serializable
     /**
      * @return the host
      */
-    
-    
-    public Hosts getHost()
-    {
-        return host;
-    }
 
-    /**
-     * @param host the host to set
-     */
-    public void setHost( Hosts host )
-    {
-        this.host = host;
-    }
-
-    /**
-     * @return the user
-     */
-    public User getUser()
-    {
-        return user;
-    }
-
-    /**
-     * @param user the user to set
-     */
-    public void setUser( User user )
-    {
-        this.user = user;
-    }
 
 }

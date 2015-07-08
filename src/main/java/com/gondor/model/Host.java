@@ -24,8 +24,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 /**
  * @author Vipin Kumar
@@ -36,8 +37,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="HOSTS")
-public class Hosts implements Serializable
+@Table ( name = "HOSTS")
+public class Host implements Serializable
 {
     /**
      * 
@@ -45,23 +46,24 @@ public class Hosts implements Serializable
     private static final long serialVersionUID = 2885427806050671647L;
     private int id;
     private String name;
-    
-    @OneToMany
-    @JoinColumn(name="SERVICE_ID")
-    private Service service;
-    
-    
+
+
+    @ManyToOne
+    @JoinColumn ( name = "CLUSTER_ID")
+    private Cluster cluster;
+
 
     /**
      * @return the id
      */
     @Id
     @GeneratedValue
-    @Column(name = "HOST_ID")
+    @Column ( name = "HOST_ID")
     public int getId()
     {
         return id;
     }
+
 
     /**
      * @param id the id to set
@@ -71,14 +73,17 @@ public class Hosts implements Serializable
         this.id = id;
     }
 
+
     /**
      * @return the name
      */
-    @Column(name = "HOST_NAME")
+    @Column ( name = "HOST_NAME")
     public String getName()
     {
         return name;
     }
+
+
     /**
      * @param name the name to set
      */
@@ -87,19 +92,24 @@ public class Hosts implements Serializable
         this.name = name;
     }
 
-    /**
-     * @return the service
-     */
-    public Service getService()
-    {
-        return service;
-    }
 
     /**
-     * @param service the service to set
+     * @return the cluster
      */
-    public void setService( Service service )
+    @Column ( name = "CLUSTER_ID")
+    public Cluster getCluster()
     {
-        this.service = service;
+        return cluster;
     }
+
+
+    /**
+     * @param cluster the cluster to set
+     */
+    public void setCluster( Cluster cluster )
+    {
+        this.cluster = cluster;
+    }
+
+
 }

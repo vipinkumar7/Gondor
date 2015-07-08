@@ -37,58 +37,97 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "USERS")
-public class User implements Serializable {
+@Table ( name = "USERS")
+public class User implements Serializable
+{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	private int id;
-	private String username;
-	private String password;
-	private String email;
+    private int id;
+    private String username;
+    private String password;
+    private String email;
 
-	@OneToOne
-	@JoinColumn(name="ROLE_ID")
-	private Role role;
-	@Id
-	@GeneratedValue
-	@Column(name = "USER_ID")
-	public int getId() {
-		return id;
-	}
 
-	@Column(name = "USER_NAME")
-	public String getUsername() {
-		return username;
-	}
+    @OneToOne
+    @JoinColumn ( name = "ROLE_ID")
+    private Role role;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
-	@Column(name = "PASSWORD")
-	public String getPassword() {
-		return password;
-	}
+    @Id
+    @GeneratedValue
+    @Column ( name = "USER_ID")
+    public int getId()
+    {
+        return id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
-	@Column(name = "EMAIL")
-	public String getEmail() {
-		return email;
-	}
+    @Column ( name = "USER_NAME")
+    public String getUsername()
+    {
+        return username;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setUsername( String username )
+    {
+        this.username = username;
+    }
+
+
+    @Column ( name = "PASSWORD")
+    public String getPassword()
+    {
+        return password;
+    }
+
+
+    public void setPassword( String password )
+    {
+        this.password = password;
+    }
+
+
+    @Column ( name = "EMAIL")
+    public String getEmail()
+    {
+        return email;
+    }
+
+
+    public void setEmail( String email )
+    {
+        this.email = email;
+    }
+
+
+    public void setId( int id )
+    {
+        this.id = id;
+    }
+
+
+    /**
+     * @return the role
+     */
+    @Column ( name = "ROLE_ID")
+    public Role getRole()
+    {
+        return role;
+    }
+
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole( Role role )
+    {
+        this.role = role;
+    }
+
 
 }

@@ -25,7 +25,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 /**
  * @author Vipin Kumar
@@ -36,7 +39,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="RESOURCES")
+@Table ( name = "RESOURCES")
 public class Resource implements Serializable
 {
 
@@ -46,21 +49,27 @@ public class Resource implements Serializable
     private static final long serialVersionUID = -8644773993023277569L;
 
     private int id;
-    
-    
-    @Enumerated(EnumType.STRING)
+
+    @ManyToOne
+    @JoinColumn ( name = "SERVICE_ID")
+    private Service service;
+
+    @Enumerated ( EnumType.STRING)
     private ResourceType type;
+
+
     /**
      * @return the id
      */
-    
+
     @Id
     @GeneratedValue
-    @Column(name = "RESOURCE_ID")
+    @Column ( name = "RESOURCE_ID")
     public int getId()
     {
         return id;
     }
+
 
     /**
      * @param id the id to set
@@ -74,10 +83,12 @@ public class Resource implements Serializable
     /**
      * @return the type
      */
+    @Column ( name = "TYPE")
     public ResourceType getType()
     {
         return type;
     }
+
 
     /**
      * @param type the type to set
@@ -85,5 +96,24 @@ public class Resource implements Serializable
     public void setType( ResourceType type )
     {
         this.type = type;
+    }
+
+
+    /**
+     * @return the service
+     */
+    @Column ( name = "SERVICE_ID")
+    public Service getService()
+    {
+        return service;
+    }
+
+
+    /**
+     * @param service the service to set
+     */
+    public void setService( Service service )
+    {
+        this.service = service;
     }
 }

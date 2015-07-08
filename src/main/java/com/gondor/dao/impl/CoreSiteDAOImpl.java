@@ -22,6 +22,7 @@ import java.util.List;
 import com.gondor.dao.BaseConfigurationDao;
 import com.gondor.model.BaseConfiguration;
 
+
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
@@ -29,10 +30,11 @@ import com.gondor.model.BaseConfiguration;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class CoreSiteDAOImpl  implements BaseConfigurationDao
+public class CoreSiteDAOImpl implements BaseConfigurationDao
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSiteDAOImpl.class );
+
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#list(int)
@@ -40,11 +42,12 @@ public class CoreSiteDAOImpl  implements BaseConfigurationDao
     @Override
     public List<BaseConfiguration> list( int serviceId )
     {
-        LOG.trace("Method: list called.");
-        
+        LOG.trace( "Method: list called." );
+
         return null;
-        
+
     }
+
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#getConfig(int)
@@ -52,11 +55,12 @@ public class CoreSiteDAOImpl  implements BaseConfigurationDao
     @Override
     public BaseConfiguration getConfig( int baseConfigId )
     {
-        LOG.trace("Method: getConfig called.");
-        
+        LOG.trace( "Method: getConfig called." );
+
         return null;
-        
+
     }
+
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String)
@@ -64,11 +68,12 @@ public class CoreSiteDAOImpl  implements BaseConfigurationDao
     @Override
     public boolean changeConfig( int baseConfigId, String configName )
     {
-        LOG.trace("Method: changeConfig called.");
-        
+        LOG.trace( "Method: changeConfig called." );
+
         return false;
-        
+
     }
+
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#removeConfig(int, java.lang.String)
@@ -76,9 +81,9 @@ public class CoreSiteDAOImpl  implements BaseConfigurationDao
     @Override
     public boolean removeConfig( int baseConfigId, String configName )
     {
-        LOG.trace("Method: removeConfig called.");
-        
+        LOG.trace( "Method: removeConfig called." );
+
         return false;
-        
+
     }
 }

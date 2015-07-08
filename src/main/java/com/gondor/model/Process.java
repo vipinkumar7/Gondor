@@ -23,6 +23,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -42,12 +44,15 @@ public class Process implements Serializable
      * 
      */
     private static final long serialVersionUID = 2408863593485958546L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Process.class );
 
 
     private int id;
     private int systemPid;
-    
+
+
+    @ManyToOne
+    @JoinColumn ( name = "SERVICE_ID")
+    private Service service;
 
 
     /**
@@ -55,8 +60,7 @@ public class Process implements Serializable
      */
     @Id
     @GeneratedValue
-    @Column(name = "PROCESS_ID")
-
+    @Column ( name = "PROCESS_ID")
     public int getId()
     {
         return id;
@@ -75,7 +79,7 @@ public class Process implements Serializable
     /**
      * @return the systemPid
      */
-    @Column(name = "SYSTEM_PID")
+    @Column ( name = "SYSTEM_PID")
     public int getSystemPid()
     {
         return systemPid;
@@ -91,7 +95,23 @@ public class Process implements Serializable
     }
 
 
+    /**
+     * @return the service
+     */
+    @Column ( name = "SERVICE_ID")
+    public Service getService()
+    {
+        return service;
+    }
 
+
+    /**
+     * @param service the service to set
+     */
+    public void setService( Service service )
+    {
+        this.service = service;
+    }
 
 
 }

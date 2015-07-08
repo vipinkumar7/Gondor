@@ -29,6 +29,7 @@ import com.gondor.model.BaseConfiguration;
 import com.gondor.model.HdfsSite;
 import com.gondor.model.User;
 
+
 /**
  * @author Vipin Kumar
  * @created 22-Jun-2015
@@ -41,35 +42,36 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HdfsSiteDAOImpl.class );
 
-    
+
     @Autowired
     private SessionFactory sessionFactory;
 
 
     public HdfsSiteDAOImpl()
     {
-        
+
     }
-    
-    
-    public HdfsSiteDAOImpl(SessionFactory sessionFactory)
+
+
+    public HdfsSiteDAOImpl( SessionFactory sessionFactory )
     {
-        this.sessionFactory=sessionFactory;
+        this.sessionFactory = sessionFactory;
     }
-    
+
+
     /* (non-Javadoc)
      * @see com.gondor.dao.PropertiesDao#list()
      */
     @Override
     @Transactional
-    public List<BaseConfiguration> list(int baseConfigId)
+    public List<BaseConfiguration> list( int baseConfigId )
     {
-        LOG.trace("Method: list called.");
-        @SuppressWarnings ( "unchecked") List<BaseConfiguration> listpro = (List<BaseConfiguration>) sessionFactory.getCurrentSession()
-            .createCriteria( HdfsSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        LOG.trace( "Method: list called." );
+        @SuppressWarnings ( "unchecked") List<BaseConfiguration> listpro = (List<BaseConfiguration>) sessionFactory
+            .getCurrentSession().createCriteria( HdfsSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return listpro;
-        
+
     }
 
 
@@ -79,10 +81,10 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
     @Override
     public BaseConfiguration getConfig( int baseConfigId )
     {
-        LOG.trace("Method: getConfig called.");
-        
+        LOG.trace( "Method: getConfig called." );
+
         return null;
-        
+
     }
 
 
@@ -92,10 +94,10 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
     @Override
     public boolean changeConfig( int baseConfigId, String configName )
     {
-        LOG.trace("Method: changeConfig called.");
-        
+        LOG.trace( "Method: changeConfig called." );
+
         return false;
-        
+
     }
 
 
@@ -105,12 +107,11 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
     @Override
     public boolean removeConfig( int baseConfigId, String configName )
     {
-        LOG.trace("Method: removeConfig called.");
-        
+        LOG.trace( "Method: removeConfig called." );
+
         return false;
-        
+
     }
 
 
-   
 }

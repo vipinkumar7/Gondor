@@ -17,6 +17,11 @@
  */
 package com.gondor.services;
 
+import java.util.List;
+
+import com.gondor.model.Host;
+
+
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
@@ -24,8 +29,44 @@ package com.gondor.services;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class ClusterManager
+public interface ClusterManager
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ClusterManager.class );
+
+    /**
+     * get all hosts in the cluster
+     * @param clusterId
+     * @return
+     */
+    public List<Host> getAllhosts( int clusterId );
+
+
+    /**
+     * create new cluster
+     */
+    public void createCluster( String name );
+
+
+    /**
+     * add this host(hostId) to this cluster(clusterId)
+     * @param hostId
+     * @param clusterId
+     */
+    public void addHostToCluster( int hostId, int clusterId );
+
+
+    /**
+     * remove all installed services from system
+     * @param clusterId
+     */
+    public void decommissionCluster( int clusterId );
+
+
+    /**
+     * delete this cluster
+     * @param clusterId
+     */
+    public void deleteCluster( int clusterId );
+
+
 }

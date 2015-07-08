@@ -90,7 +90,7 @@ public class UserDAOImpl implements UserDao
     @Transactional
     public User get( int id )
     {
-        LOG.debug( "searching user id ="+id );
+        LOG.debug( "searching user id =" + id );
         String hql = "from User where id=" + id;
         Query query = sessionFactory.getCurrentSession().createQuery( hql );
 
@@ -110,10 +110,10 @@ public class UserDAOImpl implements UserDao
     @Override
     public void changeRole( int id, int roleId )
     {
-        LOG.trace("Method: changeRole called.");
-        
-        
-        LOG.trace("Method: changeRole finished.");
+        LOG.trace( "Method: changeRole called." );
+
+
+        LOG.trace( "Method: changeRole finished." );
     }
 
 }

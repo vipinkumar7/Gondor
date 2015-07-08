@@ -17,6 +17,10 @@
  */
 package com.gondor.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
 /**
  * @author Vipin Kumar
  * @created 23-Jun-2015
@@ -24,6 +28,9 @@ package com.gondor.model;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
+
+@Entity
+@Table ( name = "CORE_SITE")
 public class CoreSite extends BaseConfiguration
 {
 
@@ -31,5 +38,4 @@ public class CoreSite extends BaseConfiguration
      * 
      */
     private static final long serialVersionUID = 8557322524484283394L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSite.class );
 }
