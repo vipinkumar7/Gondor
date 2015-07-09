@@ -39,8 +39,6 @@ public class SpringWebAppInitializer implements WebApplicationInitializer
 
     public void onStartup( ServletContext servletContext ) throws ServletException
     {
-
-
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register( ApplicationContextConfig.class );
 

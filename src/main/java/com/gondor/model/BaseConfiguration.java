@@ -24,8 +24,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 
@@ -49,13 +47,9 @@ public abstract class BaseConfiguration implements Serializable
 
 
     private int id;
-    private String key;
+    private String property;
     private String value;
     private String description;
-
-    @ManyToOne
-    @JoinColumn ( name = "SERVICE_ID")
-    private Service service;
 
 
     @Id
@@ -68,28 +62,9 @@ public abstract class BaseConfiguration implements Serializable
 
 
     /**
-     * @return the key
-     */
-    @Column ( name = "KEY")
-    public String getKey()
-    {
-        return key;
-    }
-
-
-    /**
-     * @param key the key to set
-     */
-    public void setKey( String key )
-    {
-        this.key = key;
-    }
-
-
-    /**
      * @return the value
      */
-    @Column ( name = "VALUE")
+    @Column ( name = "VALUE", columnDefinition = "varchar(1000)")
     public String getValue()
     {
         return value;
@@ -118,7 +93,7 @@ public abstract class BaseConfiguration implements Serializable
     /**
      * @return the description
      */
-    @Column ( name = "DESCRIPTION", nullable = true)
+    @Column ( name = "DESCRIPTION", nullable = true, columnDefinition = "varchar(1000)")
     public String getDescription()
     {
         return description;
@@ -135,21 +110,21 @@ public abstract class BaseConfiguration implements Serializable
 
 
     /**
-     * @return the service
+     * @return the property
      */
-    @Column ( name = "SERVICE_ID")
-    public Service getService()
+    @Column ( name = "PROPERTY", columnDefinition = "varchar(1000)")
+    public String getProperty()
     {
-        return service;
+        return property;
     }
 
 
     /**
-     * @param service the service to set
+     * @param property the property to set
      */
-    public void setService( Service service )
+    public void setProperty( String property )
     {
-        this.service = service;
+        this.property = property;
     }
 
 }

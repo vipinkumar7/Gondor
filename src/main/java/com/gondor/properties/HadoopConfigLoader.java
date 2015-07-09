@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor. 
+ *  * Copyright (c) 2015 Gondor
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,15 +17,33 @@
  */
 package com.gondor.properties;
 
+import org.springframework.stereotype.Component;
+
+
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 09-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class Yarn_SiteProperties
+@Component
+public class HadoopConfigLoader
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( Yarn_SiteProperties.class );
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HadoopConfigLoader.class );
+
+
+    public void loadHdfsSite()
+    {
+
+        //TODO swaraj
+        //TODO create configurationobject for hdfs-site.xml in resources load it here and 
+
+        //use Xmlconverter to create object 
+
+        //save object to db 
+    }
+
+
 }
