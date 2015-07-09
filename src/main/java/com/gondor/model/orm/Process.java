@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import java.io.Serializable;
 
@@ -30,27 +30,29 @@ import javax.persistence.Table;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
 @Entity
-@Table ( name = "HOSTS")
-public class Host implements Serializable
+@Table ( name = "PROCESSES")
+public class Process implements Serializable
 {
+
     /**
      * 
      */
-    private static final long serialVersionUID = 2885427806050671647L;
+    private static final long serialVersionUID = 2408863593485958546L;
+
+
     private int id;
-    private String name;
+    private int systemPid;
 
 
     @ManyToOne
-    @JoinColumn ( name = "CLUSTER_ID")
-    private Cluster cluster;
+    @JoinColumn ( name = "SERVICE_ID")
+    private Service service;
 
 
     /**
@@ -58,7 +60,7 @@ public class Host implements Serializable
      */
     @Id
     @GeneratedValue
-    @Column ( name = "HOST_ID")
+    @Column ( name = "PROCESS_ID")
     public int getId()
     {
         return id;
@@ -75,40 +77,40 @@ public class Host implements Serializable
 
 
     /**
-     * @return the name
+     * @return the systemPid
      */
-    @Column ( name = "HOST_NAME")
-    public String getName()
+    @Column ( name = "SYSTEM_PID")
+    public int getSystemPid()
     {
-        return name;
+        return systemPid;
     }
 
 
     /**
-     * @param name the name to set
+     * @param systemPid the systemPid to set
      */
-    public void setName( String name )
+    public void setSystemPid( int systemPid )
     {
-        this.name = name;
+        this.systemPid = systemPid;
     }
 
 
     /**
-     * @return the cluster
+     * @return the service
      */
-    @Column ( name = "CLUSTER_ID")
-    public Cluster getCluster()
+    @Column ( name = "SERVICE_ID")
+    public Service getService()
     {
-        return cluster;
+        return service;
     }
 
 
     /**
-     * @param cluster the cluster to set
+     * @param service the service to set
      */
-    public void setCluster( Cluster cluster )
+    public void setService( Service service )
     {
-        this.cluster = cluster;
+        this.service = service;
     }
 
 

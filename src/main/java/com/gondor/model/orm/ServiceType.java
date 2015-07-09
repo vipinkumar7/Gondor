@@ -15,26 +15,16 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+package com.gondor.model.orm;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 08-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-@Entity
-@Table ( name = "HIVE_SITE")
-public class HiveSite extends BaseConfiguration
+public enum ServiceType
 {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 721985205855647690L;
+    NAMENODE, DATANODE, RESOURCEMANAGER, NODEMANAGER, HIVE, ZOOKEEPER, HBASE_REGION, HBASE_MASTER
 }

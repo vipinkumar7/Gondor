@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +15,21 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+package com.gondor.model.orm;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 24-Jun-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
- * 
- */
-@Entity
-@Table ( name = "YARN_SITE")
-public class YarnSite extends BaseConfiguration
-{
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 4951682301524961625L;
+ * each user is responsible for a cluster management 
+ * 
+ * ADMIN all Privileges(Start ,Stop ,Change)
+ * USER  only viewer
+ * Controller (only change)
+ *  
+ */
+public enum RoleType
+{
+    ADMIN, USER, CONTROLLER
 }

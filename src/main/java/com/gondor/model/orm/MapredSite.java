@@ -15,9 +15,10 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
+package com.gondor.model.orm;
 
-import com.gondor.model.orm.Host;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 /**
@@ -27,30 +28,15 @@ import com.gondor.model.orm.Host;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
-public interface HostManager
+@Entity
+@Table ( name = "MAPRED_SITE")
+public class MapredSite extends BaseConfiguration
 {
 
     /**
-     * create new host with the IP or host name provided
-     * @param hostname
+     * 
      */
-    public void createHost( String hostname );
+    private static final long serialVersionUID = 1690000213896178585L;
 
-
-    public void validateHost( String hostname );
-
-
-    /**
-     * remove all services from this host
-     * @param hostId
-     */
-    public void decomminsionHost( int hostId );
-
-
-    public boolean isHostExists( int hostId );
-
-
-    public Host getHost( int hostId );
 
 }

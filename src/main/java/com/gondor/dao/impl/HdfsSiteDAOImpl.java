@@ -25,9 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.BaseConfigurationDao;
-import com.gondor.model.BaseConfiguration;
-import com.gondor.model.HdfsSite;
-import com.gondor.model.User;
+import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.HdfsSite;
+import com.gondor.model.orm.User;
 
 
 /**

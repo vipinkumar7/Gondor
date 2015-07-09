@@ -19,7 +19,7 @@ package com.gondor.services.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.gondor.model.Host;
+import com.gondor.model.orm.Host;
 import com.gondor.services.HostManager;
 
 

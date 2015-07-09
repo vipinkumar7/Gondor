@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gondor.dao.UserDao;
-import com.gondor.model.User;
+import com.gondor.model.orm.User;
 
 
 /**

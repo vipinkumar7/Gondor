@@ -15,16 +15,27 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 23-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public enum ResourceType
+
+@Entity
+@Table ( name = "CORE_SITE")
+public class CoreSite extends BaseConfiguration
 {
-    STORAGE, HEAP, PORT
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8557322524484283394L;
 }

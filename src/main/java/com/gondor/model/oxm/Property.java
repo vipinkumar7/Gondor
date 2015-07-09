@@ -15,28 +15,54 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+package com.gondor.model.oxm;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 09-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-@Entity
-@Table ( name = "MAPRED_SITE")
-public class MapredSite extends BaseConfiguration
+public class Property
 {
 
+    private String name;
+    private String value;
+
+
     /**
-     * 
+     * @return the name
      */
-    private static final long serialVersionUID = 1690000213896178585L;
+    public String getName()
+    {
+        return name;
+    }
 
 
+    /**
+     * @param name the name to set
+     */
+    public void setName( String name )
+    {
+        this.name = name;
+    }
+
+
+    /**
+     * @return the value
+     */
+    public String getValue()
+    {
+        return value;
+    }
+
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue( String value )
+    {
+        this.value = value;
+    }
 }

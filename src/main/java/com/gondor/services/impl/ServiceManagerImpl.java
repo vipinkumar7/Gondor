@@ -19,8 +19,8 @@ package com.gondor.services.impl;
 
 import java.util.Set;
 
-import com.gondor.model.BaseConfiguration;
-import com.gondor.model.ServiceType;
+import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.ServiceType;
 import com.gondor.services.ServiceManager;
 
 

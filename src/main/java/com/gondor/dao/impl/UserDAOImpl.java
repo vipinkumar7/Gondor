@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.UserDao;
-import com.gondor.model.User;
+import com.gondor.model.orm.User;
 
 
 /**

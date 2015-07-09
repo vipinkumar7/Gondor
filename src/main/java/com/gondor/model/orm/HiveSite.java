@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor. 
+ *  * Copyright (c) 2015 Gondor
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +15,26 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 23-Jun-2015
  * 
-
- * each user is responsible for a cluster management 
+ * TODO: Write a quick description of what the class is supposed to do.
  * 
- * ADMIN all Privileges(Start ,Stop ,Change)
- * USER  only viewer
- * Controller (only change)
- *  
  */
-public enum RoleType
+@Entity
+@Table ( name = "HIVE_SITE")
+public class HiveSite extends BaseConfiguration
 {
-    ADMIN, USER, CONTROLLER
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 721985205855647690L;
 }

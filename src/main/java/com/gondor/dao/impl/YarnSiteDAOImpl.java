@@ -20,7 +20,7 @@ package com.gondor.dao.impl;
 import java.util.List;
 
 import com.gondor.dao.BaseConfigurationDao;
-import com.gondor.model.BaseConfiguration;
+import com.gondor.model.orm.BaseConfiguration;
 
 
 /**

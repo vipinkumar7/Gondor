@@ -15,12 +15,14 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -28,41 +30,35 @@ import javax.persistence.Table;
 
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 23-Jun-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
- * 
+ *          TODO: Write a quick description of what the class is supposed to do.
  */
 
 @Entity
-@Table ( name = "CLUSTERS")
-public class Cluster implements Serializable
+@Table ( name = "ROLES")
+public class Role implements Serializable
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8167808941083555113L;
 
     private int id;
-    private String name;
+    @Enumerated ( EnumType.STRING)
+    private RoleType type;
 
 
-    /**
-     * @return the id
-     */
     @Id
     @GeneratedValue
-    @Column ( name = "CLUSTER_ID")
+    @Column ( name = "ROLE_ID")
     public int getId()
     {
         return id;
     }
 
 
-    /**
-     * @param id the id to set
-     */
     public void setId( int id )
     {
         this.id = id;
@@ -70,26 +66,21 @@ public class Cluster implements Serializable
 
 
     /**
-     * @return the name
+     * @return the type
      */
-    @Column ( name = "CLUSTER_NAME")
-    public String getName()
+    @Column ( name = "ROLE_NAME")
+    public RoleType getType()
     {
-        return name;
+        return type;
     }
 
 
     /**
-     * @param name the name to set
+     * @param type the type to set
      */
-    public void setName( String name )
+    public void setType( RoleType type )
     {
-        this.name = name;
+        this.type = type;
     }
-
-    /**
-     * @return the host
-     */
-
 
 }

@@ -15,14 +15,12 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,32 +37,28 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table ( name = "RESOURCES")
-public class Resource implements Serializable
+@Table ( name = "HOSTS")
+public class Host implements Serializable
 {
-
     /**
      * 
      */
-    private static final long serialVersionUID = -8644773993023277569L;
-
+    private static final long serialVersionUID = 2885427806050671647L;
     private int id;
+    private String name;
+
 
     @ManyToOne
-    @JoinColumn ( name = "SERVICE_ID")
-    private Service service;
-
-    @Enumerated ( EnumType.STRING)
-    private ResourceType type;
+    @JoinColumn ( name = "CLUSTER_ID")
+    private Cluster cluster;
 
 
     /**
      * @return the id
      */
-
     @Id
     @GeneratedValue
-    @Column ( name = "RESOURCE_ID")
+    @Column ( name = "HOST_ID")
     public int getId()
     {
         return id;
@@ -81,39 +75,41 @@ public class Resource implements Serializable
 
 
     /**
-     * @return the type
+     * @return the name
      */
-    @Column ( name = "TYPE")
-    public ResourceType getType()
+    @Column ( name = "HOST_NAME")
+    public String getName()
     {
-        return type;
+        return name;
     }
 
 
     /**
-     * @param type the type to set
+     * @param name the name to set
      */
-    public void setType( ResourceType type )
+    public void setName( String name )
     {
-        this.type = type;
+        this.name = name;
     }
 
 
     /**
-     * @return the service
+     * @return the cluster
      */
-    @Column ( name = "SERVICE_ID")
-    public Service getService()
+    @Column ( name = "CLUSTER_ID")
+    public Cluster getCluster()
     {
-        return service;
+        return cluster;
     }
 
 
     /**
-     * @param service the service to set
+     * @param cluster the cluster to set
      */
-    public void setService( Service service )
+    public void setCluster( Cluster cluster )
     {
-        this.service = service;
+        this.cluster = cluster;
     }
+
+
 }

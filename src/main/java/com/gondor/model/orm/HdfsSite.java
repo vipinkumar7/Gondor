@@ -15,16 +15,28 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 /**
  * @author Vipin Kumar
- * @created 08-Jul-2015
+ * @created 21-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public enum ServiceType
+@Entity
+@Table ( name = "HDFS_SITE")
+public class HdfsSite extends BaseConfiguration
 {
-    NAMENODE, DATANODE, RESOURCEMANAGER, NODEMANAGER, HIVE, ZOOKEEPER, HBASE_REGION, HBASE_MASTER
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5607865966505569915L;
+
+
 }

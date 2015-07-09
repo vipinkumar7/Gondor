@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import java.io.Serializable;
 
@@ -23,22 +23,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 /**
- * 
  * @author Vipin Kumar
- * @created 22-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
- *
+ * 
  */
+
 @Entity
-@Table ( name = "USERS")
-public class User implements Serializable
+@Table ( name = "CLUSTERS")
+public class Cluster implements Serializable
 {
 
     /**
@@ -47,64 +45,24 @@ public class User implements Serializable
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private String username;
-    private String password;
-    private String email;
+    private String name;
 
 
-    @OneToOne
-    @JoinColumn ( name = "ROLE_ID")
-    private Role role;
-
-
+    /**
+     * @return the id
+     */
     @Id
     @GeneratedValue
-    @Column ( name = "USER_ID")
+    @Column ( name = "CLUSTER_ID")
     public int getId()
     {
         return id;
     }
 
 
-    @Column ( name = "USER_NAME")
-    public String getUsername()
-    {
-        return username;
-    }
-
-
-    public void setUsername( String username )
-    {
-        this.username = username;
-    }
-
-
-    @Column ( name = "PASSWORD")
-    public String getPassword()
-    {
-        return password;
-    }
-
-
-    public void setPassword( String password )
-    {
-        this.password = password;
-    }
-
-
-    @Column ( name = "EMAIL")
-    public String getEmail()
-    {
-        return email;
-    }
-
-
-    public void setEmail( String email )
-    {
-        this.email = email;
-    }
-
-
+    /**
+     * @param id the id to set
+     */
     public void setId( int id )
     {
         this.id = id;
@@ -112,22 +70,26 @@ public class User implements Serializable
 
 
     /**
-     * @return the role
+     * @return the name
      */
-    @Column ( name = "ROLE_ID")
-    public Role getRole()
+    @Column ( name = "CLUSTER_NAME")
+    public String getName()
     {
-        return role;
+        return name;
     }
 
 
     /**
-     * @param role the role to set
+     * @param name the name to set
      */
-    public void setRole( Role role )
+    public void setName( String name )
     {
-        this.role = role;
+        this.name = name;
     }
+
+    /**
+     * @return the host
+     */
 
 
 }

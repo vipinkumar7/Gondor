@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -28,14 +28,13 @@ import javax.persistence.Table;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
 @Entity
-@Table ( name = "CORE_SITE")
-public class CoreSite extends BaseConfiguration
+@Table ( name = "YARN_SITE")
+public class YarnSite extends BaseConfiguration
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 8557322524484283394L;
+    private static final long serialVersionUID = 4951682301524961625L;
 }

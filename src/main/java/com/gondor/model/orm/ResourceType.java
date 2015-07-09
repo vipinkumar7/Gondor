@@ -15,42 +15,16 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
-
-import com.gondor.model.orm.Host;
-
+package com.gondor.model.orm;
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 24-Jun-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
-public interface HostManager
+public enum ResourceType
 {
-
-    /**
-     * create new host with the IP or host name provided
-     * @param hostname
-     */
-    public void createHost( String hostname );
-
-
-    public void validateHost( String hostname );
-
-
-    /**
-     * remove all services from this host
-     * @param hostId
-     */
-    public void decomminsionHost( int hostId );
-
-
-    public boolean isHostExists( int hostId );
-
-
-    public Host getHost( int hostId );
-
+    STORAGE, HEAP, PORT
 }

@@ -41,16 +41,16 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.gondor.dao.impl.UserDAOImpl;
 import com.gondor.dao.UserDao;
-import com.gondor.model.Cluster;
-import com.gondor.model.CoreSite;
-import com.gondor.model.HdfsSite;
-import com.gondor.model.Host;
-import com.gondor.model.MapredSite;
-import com.gondor.model.Resource;
-import com.gondor.model.Role;
-import com.gondor.model.Service;
-import com.gondor.model.User;
-import com.gondor.model.YarnSite;
+import com.gondor.model.orm.Cluster;
+import com.gondor.model.orm.CoreSite;
+import com.gondor.model.orm.HdfsSite;
+import com.gondor.model.orm.Host;
+import com.gondor.model.orm.MapredSite;
+import com.gondor.model.orm.Resource;
+import com.gondor.model.orm.Role;
+import com.gondor.model.orm.Service;
+import com.gondor.model.orm.User;
+import com.gondor.model.orm.YarnSite;
 
 
 /**
@@ -115,7 +115,7 @@ public class ApplicationContextConfig
         sessionBuilder.addAnnotatedClasses( CoreSite.class );
         sessionBuilder.addAnnotatedClasses( Host.class );
         sessionBuilder.addAnnotatedClasses( MapredSite.class );
-        sessionBuilder.addAnnotatedClasses( com.gondor.model.Process.class );
+        sessionBuilder.addAnnotatedClasses( com.gondor.model.orm.Process.class );
         sessionBuilder.addAnnotatedClasses( Role.class );
         sessionBuilder.addAnnotatedClasses( YarnSite.class );
         sessionBuilder.scanPackages( "com.gondor.model" );

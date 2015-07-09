@@ -19,7 +19,7 @@ package com.gondor.services;
 
 import java.util.List;
 
-import com.gondor.model.Host;
+import com.gondor.model.orm.Host;
 
 
 /**

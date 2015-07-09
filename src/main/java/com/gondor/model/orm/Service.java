@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import java.io.Serializable;
 

@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gondor.dao.UserDao;
-import com.gondor.model.User;
+import com.gondor.model.orm.User;
 import com.gondor.services.UserManager;
 
 

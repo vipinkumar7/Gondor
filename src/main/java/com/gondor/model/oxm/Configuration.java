@@ -15,28 +15,40 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.oxm;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * @author Vipin Kumar
- * @created 21-Jun-2015
+ * @created 09-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-@Entity
-@Table ( name = "HDFS_SITE")
-public class HdfsSite extends BaseConfiguration
+public class Configuration
 {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -5607865966505569915L;
+    private List<Property> property = new ArrayList<Property>();
 
+
+    /**
+     * @return the property
+     */
+    public List<Property> getProperty()
+    {
+        return property;
+    }
+
+
+    /**
+     * @param property the property to set
+     */
+    public void setProperty( List<Property> property )
+    {
+        this.property = property;
+    }
 
 }

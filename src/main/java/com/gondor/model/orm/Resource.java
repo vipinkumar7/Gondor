@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.model;
+package com.gondor.model.orm;
 
 import java.io.Serializable;
 
@@ -25,6 +25,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -32,33 +34,46 @@ import javax.persistence.Table;
  * @author Vipin Kumar
  * @created 23-Jun-2015
  * 
- *          TODO: Write a quick description of what the class is supposed to do.
+ * TODO: Write a quick description of what the class is supposed to do.
+ * 
  */
 
 @Entity
-@Table ( name = "ROLES")
-public class Role implements Serializable
+@Table ( name = "RESOURCES")
+public class Resource implements Serializable
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 8167808941083555113L;
+    private static final long serialVersionUID = -8644773993023277569L;
 
     private int id;
-    @Enumerated ( EnumType.STRING)
-    private RoleType type;
 
+    @ManyToOne
+    @JoinColumn ( name = "SERVICE_ID")
+    private Service service;
+
+    @Enumerated ( EnumType.STRING)
+    private ResourceType type;
+
+
+    /**
+     * @return the id
+     */
 
     @Id
     @GeneratedValue
-    @Column ( name = "ROLE_ID")
+    @Column ( name = "RESOURCE_ID")
     public int getId()
     {
         return id;
     }
 
 
+    /**
+     * @param id the id to set
+     */
     public void setId( int id )
     {
         this.id = id;
@@ -68,8 +83,8 @@ public class Role implements Serializable
     /**
      * @return the type
      */
-    @Column ( name = "ROLE_NAME")
-    public RoleType getType()
+    @Column ( name = "TYPE")
+    public ResourceType getType()
     {
         return type;
     }
@@ -78,9 +93,27 @@ public class Role implements Serializable
     /**
      * @param type the type to set
      */
-    public void setType( RoleType type )
+    public void setType( ResourceType type )
     {
         this.type = type;
     }
 
+
+    /**
+     * @return the service
+     */
+    @Column ( name = "SERVICE_ID")
+    public Service getService()
+    {
+        return service;
+    }
+
+
+    /**
+     * @param service the service to set
+     */
+    public void setService( Service service )
+    {
+        this.service = service;
+    }
 }
