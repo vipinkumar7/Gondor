@@ -1,7 +1,7 @@
 /**
  *  * Copyright (c) 2015 Gondor
- * All rights reserved. 
- * 
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -25,15 +25,15 @@ import com.gondor.model.orm.BaseConfiguration;
 /**
  * @author Vipin Kumar
  * @created 22-Jun-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
- * 
+ *
  */
 public interface BaseConfigurationDao
 {
 
     /**
-     * 
+     *
      * @param serviceId
      * @return
      * get all the configuration related to this service id
@@ -42,7 +42,7 @@ public interface BaseConfigurationDao
 
 
     /**
-     * 
+     *
      * @param baseConfigId
      * @return
      * get the configuration for this config id
@@ -51,21 +51,29 @@ public interface BaseConfigurationDao
 
 
     /**
-     * 
+     *
      * @param baseConfigId
      * @param configName
      * @return
-     * 
-     * change the  configuration  of given name in the Configuration file 
+     *
+     * change the  configuration  of given name in the Configuration file
      */
     public boolean changeConfig( int baseConfigId, String configName );
 
 
     /**
-     * 
+     *
      * @param baseConfigId
      * @param configName
      * @return
      */
     public boolean removeConfig( int baseConfigId, String configName );
+
+
+    /**
+     * @param configList
+     * @return
+     * Method to save list of configurations
+     */
+    public void saveConfigs( List<? extends BaseConfiguration> configList );
 }

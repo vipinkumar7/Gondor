@@ -1,7 +1,7 @@
 /**
  *  * Copyright (c) 2015 Gondor
- * All rights reserved. 
- * 
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -22,6 +22,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.BaseConfigurationDao;
@@ -32,10 +33,11 @@ import com.gondor.model.orm.HdfsSite;
 /**
  * @author Vipin Kumar
  * @created 22-Jun-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
- * 
+ *
  */
+@Repository
 public class HdfsSiteDAOImpl implements BaseConfigurationDao
 {
 
@@ -46,28 +48,15 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
     private SessionFactory sessionFactory;
 
 
-    public HdfsSiteDAOImpl()
-    {
-
-    }
-
-
-    public HdfsSiteDAOImpl( SessionFactory sessionFactory )
-    {
-        this.sessionFactory = sessionFactory;
-    }
-
-
     /* (non-Javadoc)
      * @see com.gondor.dao.PropertiesDao#list()
      */
     @Override
-    @Transactional
     public List<BaseConfiguration> list( int baseConfigId )
     {
         LOG.trace( "Method: list called." );
-        @SuppressWarnings ( "unchecked") List<BaseConfiguration> listpro = (List<BaseConfiguration>) sessionFactory
-            .getCurrentSession().createCriteria( HdfsSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<BaseConfiguration> listpro = sessionFactory.getCurrentSession()
+            .createCriteria( HdfsSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return listpro;
 
@@ -109,6 +98,22 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
         LOG.trace( "Method: removeConfig called." );
 
         return false;
+
+    }
+
+
+    @SuppressWarnings ( "unchecked")
+    @Override
+    @Transactional
+    public void saveConfigs( List<? extends BaseConfiguration> configList )
+    {
+        LOG.trace( "Method: saveConfigs called." );
+
+        for ( HdfsSite hdfsSite : (List<HdfsSite>) configList ) {
+            sessionFactory.getCurrentSession().saveOrUpdate( hdfsSite );
+        }
+
+        LOG.trace( "Method: saveConfigs finished." );
 
     }
 

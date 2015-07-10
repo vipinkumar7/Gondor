@@ -1,7 +1,7 @@
 /**
  *  * Copyright (c) 2015 Gondor
- * All rights reserved. 
- * 
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -33,9 +33,9 @@ import com.gondor.model.orm.User;
 /**
  * @author Vipin Kumar
  * @created 22-Jun-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
- * 
+ *
  */
 @Repository
 public class UserDAOImpl implements UserDao
@@ -48,29 +48,18 @@ public class UserDAOImpl implements UserDao
     private SessionFactory sessionFactory;
 
 
-    public UserDAOImpl()
-    {
-
-    }
-
-
-    public UserDAOImpl( SessionFactory sessionFactory )
-    {
-
-        this.sessionFactory = sessionFactory;
-    }
-
-
+    @Override
     @Transactional
     public List<User> list()
     {
-        @SuppressWarnings ( "unchecked") List<User> listUser = (List<User>) sessionFactory.getCurrentSession()
-            .createCriteria( User.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<User> listUser = sessionFactory.getCurrentSession().createCriteria( User.class )
+            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return listUser;
     }
 
 
+    @Override
     @Transactional
     public void saveOrUpdate( User user )
     {
@@ -78,6 +67,7 @@ public class UserDAOImpl implements UserDao
     }
 
 
+    @Override
     @Transactional
     public void delete( int id )
     {
@@ -87,6 +77,7 @@ public class UserDAOImpl implements UserDao
     }
 
 
+    @Override
     @Transactional
     public User get( int id )
     {
@@ -94,7 +85,7 @@ public class UserDAOImpl implements UserDao
         String hql = "from User where id=" + id;
         Query query = sessionFactory.getCurrentSession().createQuery( hql );
 
-        @SuppressWarnings ( "unchecked") List<User> listUser = (List<User>) query.list();
+        @SuppressWarnings ( "unchecked") List<User> listUser = query.list();
 
         if ( listUser != null && !listUser.isEmpty() ) {
             return listUser.get( 0 );

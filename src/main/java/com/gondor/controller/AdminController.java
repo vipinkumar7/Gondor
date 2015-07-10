@@ -1,7 +1,7 @@
 /**
  *  * Copyright (c) 2015 Gondor
- * All rights reserved. 
- * 
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -36,10 +36,10 @@ import com.gondor.model.orm.User;
 
 
 /**
- * 
+ *
  * @author Vipin Kumar
  * @created 22-Jun-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */

@@ -1,7 +1,7 @@
 /**
  *  * Copyright (c) 2015 Gondor
- * All rights reserved. 
- * 
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -26,21 +26,22 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.oxm.castor.CastorMarshaller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.gondor.dao.impl.UserDAOImpl;
-import com.gondor.dao.UserDao;
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.CoreSite;
 import com.gondor.model.orm.HdfsSite;
@@ -51,19 +52,21 @@ import com.gondor.model.orm.Role;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.User;
 import com.gondor.model.orm.YarnSite;
+import com.gondor.util.XmlConverter;
 
 
 /**
- * 
+ *
  * @author Vipin Kumar
  * @created 22-Jun-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan ( "com.gondor.controller")
+@ComponentScan ( "com.gondor.*")
+@PropertySource ( "classpath:config.properties")
 @EnableTransactionManagement
 public class ApplicationContextConfig
 {
@@ -78,7 +81,7 @@ public class ApplicationContextConfig
     }
 
 
-    @Bean ( name = "dataSource")
+    @Bean ( autowire = Autowire.BY_TYPE)
     public DataSource getDataSource()
     {
         BasicDataSource dataSource = new BasicDataSource();
@@ -96,17 +99,17 @@ public class ApplicationContextConfig
         Properties properties = new Properties();
         properties.put( "hibernate.show_sql", "true" );
         properties.put( "hibernate.dialect", "org.hibernate.dialect.MySQLDialect" );
-        properties.put( "hibernate.hbm2ddl.auto", "create" );
+        properties.put( "hibernate.hbm2ddl.auto", "update" );
+        properties.put( "hibernate.jdbc.batch_size ", 25 );
         return properties;
     }
 
 
-    @Autowired
-    @Bean ( name = "sessionFactory")
-    public SessionFactory getSessionFactory( DataSource dataSource )
+    @Bean ( autowire = Autowire.BY_TYPE)
+    public SessionFactory getSessionFactory()
     {
 
-        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
+        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( getDataSource() );
         sessionBuilder.addAnnotatedClasses( User.class );
         sessionBuilder.addAnnotatedClasses( HdfsSite.class );
         sessionBuilder.addAnnotatedClasses( Cluster.class );
@@ -124,25 +127,15 @@ public class ApplicationContextConfig
     }
 
 
-    @Autowired
-    @Bean ( name = "transactionManager")
-    public HibernateTransactionManager getTransactionManager( SessionFactory sessionFactory )
+    @Bean ( autowire = Autowire.BY_TYPE)
+    public HibernateTransactionManager getTransactionManager()
     {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager( sessionFactory );
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager( getSessionFactory() );
 
         return transactionManager;
     }
 
 
-    @Autowired
-    @Bean ( name = "userDao")
-    public UserDao getUserDao( SessionFactory sessionFactory )
-    {
-        return new UserDAOImpl( sessionFactory );
-    }
-
-
-    @Autowired
     @Bean ( name = "messageConeverter")
     public RequestMappingHandlerAdapter getbean()
     {
@@ -157,4 +150,28 @@ public class ApplicationContextConfig
     }
 
 
+    @Bean ( autowire = Autowire.BY_TYPE)
+    public CastorMarshaller getMarshaller()
+    {
+        CastorMarshaller marshaller = new CastorMarshaller();
+        marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
+        return marshaller;
+
+    }
+
+
+    @Bean ( autowire = Autowire.BY_TYPE)
+    public XmlConverter getXmlConverter()
+    {
+        return new XmlConverter( getMarshaller(), getMarshaller() );
+    }
+
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
+    {
+        PropertySourcesPlaceholderConfigurer propertySource = new PropertySourcesPlaceholderConfigurer();
+        propertySource.setIgnoreUnresolvablePlaceholders( true );
+        return propertySource;
+    }
 }

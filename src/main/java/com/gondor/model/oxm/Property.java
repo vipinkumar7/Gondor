@@ -1,7 +1,7 @@
 /**
  *  * Copyright (c) 2015 Gondor
- * All rights reserved. 
- * 
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -17,17 +17,31 @@
  */
 package com.gondor.model.oxm;
 
+import java.io.Serializable;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
 /**
  * @author Vipin Kumar
  * @created 09-Jul-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
- * 
+ *
  */
-public class Property
+@XmlRootElement ( name = "property")
+public class Property implements Serializable
 {
 
+    /**
+     *Serial Version UID
+     */
+    private static final long serialVersionUID = 1540313373330934649L;
+
+    @XmlElement ( name = "name")
     private String name;
+    @XmlElement ( name = "value")
     private String value;
 
 

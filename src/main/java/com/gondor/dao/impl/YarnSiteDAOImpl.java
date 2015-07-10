@@ -1,7 +1,7 @@
 /**
- *  * Copyright (c) 2015 Gondor. 
- * All rights reserved. 
- * 
+ *  * Copyright (c) 2015 Gondor.
+ * All rights reserved.
+ *
  *Licensed under the Apache License, Version 2.0 (the "License");
  *you may not use this file except in compliance with the License.
  *You may obtain a copy of the License at
@@ -26,9 +26,9 @@ import com.gondor.model.orm.BaseConfiguration;
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
- * 
+ *
  * TODO: Write a quick description of what the class is supposed to do.
- * 
+ *
  */
 public class YarnSiteDAOImpl implements BaseConfigurationDao
 {
@@ -85,5 +85,15 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao
 
         return false;
 
+    }
+
+
+    @Override
+    public void saveConfigs( List<? extends BaseConfiguration> configList )
+    {
+        LOG.trace( "Method: saveConfigs called." );
+
+
+        LOG.trace( "Method: saveConfigs finished." );
     }
 }
