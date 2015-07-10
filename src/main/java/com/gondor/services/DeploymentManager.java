@@ -17,43 +17,31 @@
  */
 package com.gondor.services;
 
-import com.gondor.model.orm.Host;
+import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.PackageType;
 
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 10-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
-public interface HostManager
+public interface DeploymentManager
 {
 
-    /**
-     * create new host with the IP or host name provided
-     * @param hostname
-     */
-    public void createHost( String hostname );
+    public boolean getHeartbeat( int hostId );
 
 
-    public void validateHost( String hostname );
+    public boolean deploy( int hostID, PackageType packageType );
 
 
-    /**
-     * remove all services from this host
-     * @param hostId
-     */
-    public void decomminsionHost( int hostId );
+    public void applyChangedConfig( int clusterId, BaseConfiguration baseConfiguration,
+        Class<? extends BaseConfiguration> configObject );
 
 
-    public boolean isHostExists( int hostId );
-
-
-    public Host getHost( int hostId );
-
-
-    public Host getHost( String hostname );
+    public void applyChangedConfig( int clusterId, int hostId, BaseConfiguration baseConfiguration,
+        Class<? extends BaseConfiguration> configObject );
 
 }

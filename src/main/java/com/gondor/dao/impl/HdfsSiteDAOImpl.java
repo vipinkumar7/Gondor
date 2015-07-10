@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gondor.dao.BaseConfigurationDao;
 import com.gondor.model.orm.BaseConfiguration;
 import com.gondor.model.orm.HdfsSite;
-import com.gondor.model.orm.User;
 
 
 /**

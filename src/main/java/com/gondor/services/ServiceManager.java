@@ -39,6 +39,9 @@ public interface ServiceManager
     public void stopService( ServiceType serviceType );
 
 
+    public void restartService( ServiceType serviceType );
+
+
     public void checkService( ServiceType serviceType );
 
 

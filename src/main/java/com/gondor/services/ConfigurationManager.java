@@ -17,6 +17,9 @@
  */
 package com.gondor.services;
 
+import com.gondor.model.orm.BaseConfiguration;
+
+
 /**
  * @author Vipin Kumar
  * @created 24-Jun-2015
@@ -24,8 +27,16 @@ package com.gondor.services;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class ConfigurationManager
+public interface ConfigurationManager
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationManager.class );
+
+    public void changeConfiguration( String property, String value, Class<? extends BaseConfiguration> configObject );
+
+
+    public void changeConfiguration( BaseConfiguration baseObj, Class<? extends BaseConfiguration> configObject );
+
+
+    public void validateConfiguration( BaseConfiguration baseObj, Class<? extends BaseConfiguration> configObject );
+
 }

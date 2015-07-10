@@ -114,4 +114,17 @@ public class ServiceManagerImpl implements ServiceManager
         return false;
 
     }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ServiceManager#restartService(com.gondor.model.orm.ServiceType)
+     */
+    @Override
+    public void restartService( ServiceType serviceType )
+    {
+        LOG.trace( "Method: restartService called." );
+
+
+        LOG.trace( "Method: restartService finished." );
+    }
 }

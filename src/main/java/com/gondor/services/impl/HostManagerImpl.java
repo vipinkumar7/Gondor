@@ -101,4 +101,17 @@ public class HostManagerImpl implements HostManager
         return null;
 
     }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#getHost(java.lang.String)
+     */
+    @Override
+    public Host getHost( String hostname )
+    {
+        LOG.trace( "Method: getHost called." );
+
+        return null;
+
+    }
 }
