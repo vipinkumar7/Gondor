@@ -1,1 +1,1 @@
-This froject is for automation of hadoop deployment and monitoring
+This project is for automation of hadoop deployment and monitoring
