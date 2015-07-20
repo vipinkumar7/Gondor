@@ -29,25 +29,16 @@ import com.gondor.model.orm.BaseConfiguration;
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public interface BaseConfigurationDao
+public interface BaseConfigurationDao<T extends BaseConfiguration>
 {
 
     /**
      *
      * @param serviceId
      * @return
-     * get all the configuration related to this service id
+     * get all the configuration 
      */
-    public List<BaseConfiguration> list( int serviceId );
-
-
-    /**
-     *
-     * @param baseConfigId
-     * @return
-     * get the configuration for this config id
-     */
-    public BaseConfiguration getConfig( int baseConfigId );
+    public List<T> getConf();
 
 
     /**
@@ -58,7 +49,7 @@ public interface BaseConfigurationDao
      *
      * change the  configuration  of given name in the Configuration file
      */
-    public boolean changeConfig( int baseConfigId, String configName );
+    public boolean changeConfig( int baseConfigId, String property, String value );
 
 
     /**
@@ -67,7 +58,7 @@ public interface BaseConfigurationDao
      * @param configName
      * @return
      */
-    public boolean removeConfig( int baseConfigId, String configName );
+    public boolean removeConfig( int baseConfigId, String property );
 
 
     /**
@@ -75,5 +66,5 @@ public interface BaseConfigurationDao
      * @return
      * Method to save list of configurations
      */
-    public void saveConfigs( List<? extends BaseConfiguration> configList );
+    public void saveConfigs( T config );
 }

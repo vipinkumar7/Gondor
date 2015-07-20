@@ -20,13 +20,12 @@ package com.gondor.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.BaseConfigurationDao;
-import com.gondor.model.orm.BaseConfiguration;
 import com.gondor.model.orm.HdfsSite;
 
 
@@ -38,7 +37,7 @@ import com.gondor.model.orm.HdfsSite;
  *
  */
 @Repository
-public class HdfsSiteDAOImpl implements BaseConfigurationDao
+public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HdfsSiteDAOImpl.class );
@@ -49,29 +48,17 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
 
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.PropertiesDao#list()
+     * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<BaseConfiguration> list( int baseConfigId )
+    public List<HdfsSite> getConf()
     {
-        LOG.trace( "Method: list called." );
-        @SuppressWarnings ( "unchecked") List<BaseConfiguration> listpro = sessionFactory.getCurrentSession()
+        LOG.trace( "Method: getConf called." );
+        @SuppressWarnings ( "unchecked") List<HdfsSite> hdfsSiteConfig = sessionFactory.getCurrentSession()
             .createCriteria( HdfsSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
-        return listpro;
+        return hdfsSiteConfig;
 
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#getConfig(int)
-     */
-    @Override
-    public BaseConfiguration getConfig( int baseConfigId )
-    {
-        LOG.trace( "Method: getConfig called." );
-
-        return null;
 
     }
 
@@ -80,11 +67,20 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
      * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String)
      */
     @Override
-    public boolean changeConfig( int baseConfigId, String configName )
+    public boolean changeConfig( int baseConfigId, String property, String value )
     {
         LOG.trace( "Method: changeConfig called." );
 
-        return false;
+        String hql = "from HdfsSite where id= " + baseConfigId;
+        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        @SuppressWarnings ( "unchecked") List<HdfsSite> lHdfsSites = query.list();
+        if ( lHdfsSites != null && !lHdfsSites.isEmpty() ) {
+            HdfsSite obj = lHdfsSites.get( 0 );
+            if ( obj.getProperty().equals( property ) )
+                obj.setValue( value );
+        }
+        sessionFactory.getCurrentSession().saveOrUpdate( lHdfsSites.get( 0 ) );
+        return true;
 
     }
 
@@ -93,28 +89,29 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao
      * @see com.gondor.dao.BaseConfigurationDao#removeConfig(int, java.lang.String)
      */
     @Override
-    public boolean removeConfig( int baseConfigId, String configName )
+    public boolean removeConfig( int baseConfigId, String property )
     {
         LOG.trace( "Method: removeConfig called." );
 
-        return false;
+        //TODO has to check for property
+        HdfsSite hdfsSite = new HdfsSite();
+        hdfsSite.setId( baseConfigId );
+        sessionFactory.getCurrentSession().delete( hdfsSite );
+        return true;
 
     }
 
 
-    @SuppressWarnings ( "unchecked")
+    /* (non-Javadoc)
+     * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
+     */
     @Override
-    @Transactional
-    public void saveConfigs( List<? extends BaseConfiguration> configList )
+    public void saveConfigs( HdfsSite config )
     {
         LOG.trace( "Method: saveConfigs called." );
 
-        for ( HdfsSite hdfsSite : (List<HdfsSite>) configList ) {
-            sessionFactory.getCurrentSession().saveOrUpdate( hdfsSite );
-        }
-
+        sessionFactory.getCurrentSession().saveOrUpdate( config );
         LOG.trace( "Method: saveConfigs finished." );
-
     }
 
 

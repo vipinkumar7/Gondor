@@ -19,8 +19,13 @@ package com.gondor.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gondor.dao.BaseConfigurationDao;
-import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.CoreSite;
 
 
 /**
@@ -30,47 +35,48 @@ import com.gondor.model.orm.BaseConfiguration;
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public class CoreSiteDAOImpl implements BaseConfigurationDao
+public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSiteDAOImpl.class );
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#list(int)
+     * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<BaseConfiguration> list( int serviceId )
+    public List<CoreSite> getConf()
     {
-        LOG.trace( "Method: list called." );
+        LOG.trace( "Method: getConf called." );
+        @SuppressWarnings ( "unchecked") List<CoreSite> coreSiteConfig = sessionFactory.getCurrentSession()
+            .createCriteria( CoreSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
-        return null;
+        return coreSiteConfig;
 
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#getConfig(int)
+     * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String, java.lang.String)
      */
     @Override
-    public BaseConfiguration getConfig( int baseConfigId )
-    {
-        LOG.trace( "Method: getConfig called." );
-
-        return null;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String)
-     */
-    @Override
-    public boolean changeConfig( int baseConfigId, String configName )
+    public boolean changeConfig( int baseConfigId, String property, String value )
     {
         LOG.trace( "Method: changeConfig called." );
+        String hql = "from CoreSite where id= " + baseConfigId;
+        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        @SuppressWarnings ( "unchecked") List<CoreSite> lcoreSites = query.list();
+        if ( lcoreSites != null && !lcoreSites.isEmpty() ) {
+            CoreSite obj = lcoreSites.get( 0 );
+            if ( obj.getProperty().equals( property ) )
+                obj.setValue( value );
+        }
+        sessionFactory.getCurrentSession().saveOrUpdate( lcoreSites.get( 0 ) );
+        return true;
 
-        return false;
 
     }
 
@@ -79,20 +85,29 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao
      * @see com.gondor.dao.BaseConfigurationDao#removeConfig(int, java.lang.String)
      */
     @Override
-    public boolean removeConfig( int baseConfigId, String configName )
+    public boolean removeConfig( int baseConfigId, String property )
     {
         LOG.trace( "Method: removeConfig called." );
 
-        return false;
+        CoreSite coreSite = new CoreSite();
+        coreSite.setId( baseConfigId );
+        sessionFactory.getCurrentSession().delete( coreSite );
+        return true;
 
     }
 
 
+    /* (non-Javadoc)
+     * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
+     */
     @Override
-    public void saveConfigs( List<? extends BaseConfiguration> configList )
+    public void saveConfigs( CoreSite config )
     {
         LOG.trace( "Method: saveConfigs called." );
-        LOG.trace( "Method: saveConfigs finished." );
+        sessionFactory.getCurrentSession().saveOrUpdate( config );
 
+        LOG.trace( "Method: saveConfigs finished." );
     }
+
+
 }

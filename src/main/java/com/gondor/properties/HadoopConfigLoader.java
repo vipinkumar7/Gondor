@@ -19,8 +19,6 @@ package com.gondor.properties;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -29,7 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Component;
 
-import com.gondor.dao.BaseConfigurationDao;
+import com.gondor.dao.impl.HdfsSiteDAOImpl;
 import com.gondor.model.orm.HdfsSite;
 import com.gondor.model.oxm.Configuration;
 import com.gondor.model.oxm.Property;
@@ -58,7 +56,7 @@ public class HadoopConfigLoader
     private XmlConverter xmlConverter;
 
     @Autowired
-    private BaseConfigurationDao hdfsSiteDAOImpl;
+    private HdfsSiteDAOImpl hdfsSiteDAOImpl;
 
 
     @PostConstruct
@@ -67,16 +65,15 @@ public class HadoopConfigLoader
         LOG.trace( "Method: loadHdfsSite called." );
         InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + hdfsFileName );
         Configuration hdfsConfig = (Configuration) xmlConverter.convertFromXMLToObject( input );
-        List<HdfsSite> hdfsSiteList = new ArrayList<HdfsSite>();
+        HdfsSite hdfsSite = new HdfsSite();
         Property[] hdfsProperties = hdfsConfig.getProperty();
         for ( Property property : hdfsProperties ) {
-            HdfsSite hdfsSite = new HdfsSite();
             hdfsSite.setProperty( property.getName() );
             hdfsSite.setValue( property.getValue() );
-            hdfsSiteList.add( hdfsSite );
         }
-        hdfsSiteDAOImpl.saveConfigs( hdfsSiteList );
+        hdfsSiteDAOImpl.saveConfigs( hdfsSite );
         LOG.trace( "Method: loadHdfsSite finished." );
     }
+
 
 }
