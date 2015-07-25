@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gondor.dao.UserDao;
+import com.gondor.model.orm.RoleType;
 import com.gondor.model.orm.User;
 import com.gondor.services.UserManager;
 
@@ -87,10 +88,10 @@ public class UserManagerImpl implements UserManager
      * @see com.gondor.services.UserManager#changeRole(int, int)
      */
     @Override
-    public void changeRole( int userId, int roleId )
+    public void changeRole( int userId, RoleType roleType )
     {
         LOG.trace( "Method: changeRole called." );
-        userDao.changeRole( userId, roleId );
+        userDao.changeRole( userId, roleType );
 
         LOG.trace( "Method: changeRole finished." );
     }
@@ -100,7 +101,7 @@ public class UserManagerImpl implements UserManager
      * @see com.gondor.services.UserManager#hasRole(int, int)
      */
     @Override
-    public boolean hasRole( int userId, int roleId )
+    public boolean hasRole( int userId, RoleType roleType )
     {
         LOG.trace( "Method: hasRole called." );
 

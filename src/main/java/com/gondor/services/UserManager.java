@@ -19,6 +19,7 @@ package com.gondor.services;
 
 import java.util.List;
 
+import com.gondor.model.orm.RoleType;
 import com.gondor.model.orm.User;
 
 
@@ -41,9 +42,9 @@ public interface UserManager
     public void delete( int userId );
 
 
-    public void changeRole( int userId, int roleId );
+    public void changeRole( int userId, RoleType roleType );
 
 
-    public boolean hasRole( int userId, int roleId );
+    public boolean hasRole( int userId, RoleType roleType );
 
 }

@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.UserDao;
+import com.gondor.model.orm.RoleType;
 import com.gondor.model.orm.User;
 
 
@@ -99,7 +100,7 @@ public class UserDAOImpl implements UserDao
      * @see com.gondor.dao.UserDao#changeRole(int, int)
      */
     @Override
-    public void changeRole( int id, int roleId )
+    public void changeRole( int id, RoleType roleType )
     {
         LOG.trace( "Method: changeRole called." );
 

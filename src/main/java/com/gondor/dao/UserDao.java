@@ -19,6 +19,7 @@ package com.gondor.dao;
 
 import java.util.List;
 
+import com.gondor.model.orm.RoleType;
 import com.gondor.model.orm.User;
 
 
@@ -44,6 +45,6 @@ public interface UserDao
     public void delete( int userId );
 
 
-    public void changeRole( int userId, int roleId );
+    public void changeRole( int userId, RoleType roleType );
 
 }
