@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor. 
+ *  * Copyright (c) 2015 Gondor
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
+package com.gondor.dao;
 
 import java.util.Set;
 
@@ -25,31 +25,58 @@ import com.gondor.model.orm.ServiceType;
 
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 25-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface ServiceManager
+public interface ServiceDao
 {
 
+
+    /**
+     * 
+     * @param serviceid
+     * @return
+     * Check the status for all the Instances running under this service
+     */
     public String getStatus( Integer serviceid );
 
 
+    /**
+     * 
+     * @param serviceType
+     * <p>
+     * Start the service of particular type
+     * </p>
+     */
     public Integer startService( ServiceType serviceType );
 
 
     public void stopService( Integer serviceid );
 
 
-    public void restartService( Integer serviceid );
-
-
     public void checkService( Integer serviceid );
 
 
+    /**
+     * 
+     * @param serviceid
+     * @return
+     * 
+     * <p>Return all the configuration belongs to this Service</p>
+     */
     public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid );
 
 
+    /**
+     * 
+     * @param serviceid
+     * @param configObject
+     * @return
+     * <p>Change the particular service configuration object </p>
+     */
     public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject );
+
+
 }

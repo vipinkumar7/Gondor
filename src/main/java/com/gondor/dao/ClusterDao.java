@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor. 
+ *  * Copyright (c) 2015 Gondor
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
+package com.gondor.dao;
 
 import java.util.List;
 
@@ -24,52 +24,24 @@ import com.gondor.model.orm.Host;
 
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 25-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface ClusterManager
+public interface ClusterDao
 {
-
-
     public String getStatus( int clusterId );
 
 
-    /**
-     * get all hosts in the cluster
-     * @param clusterId
-     * @return
-     */
     public List<Host> getAllhosts( int clusterId );
 
 
-    /**
-     * create new cluster
-     */
     public void createCluster( String name );
 
 
-    /**
-     * add this host(hostId) to this cluster(clusterId)
-     * @param hostId
-     * @param clusterId
-     */
     public void addHostToCluster( int hostId, int clusterId );
 
 
-    /**
-     * remove all installed services from system
-     * @param clusterId
-     */
     public void decommissionCluster( int clusterId );
-
-
-    /**
-     * delete this cluster
-     * @param clusterId
-     */
-    public void deleteCluster( int clusterId );
-
-
 }

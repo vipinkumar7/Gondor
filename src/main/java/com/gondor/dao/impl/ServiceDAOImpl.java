@@ -15,115 +15,33 @@
  *limitations under the License.
  *
  */
-package com.gondor.services.impl;
+package com.gondor.dao.impl;
 
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.gondor.dao.ServiceDao;
 import com.gondor.model.orm.BaseConfiguration;
 import com.gondor.model.orm.ServiceType;
-import com.gondor.services.ServiceManager;
 
 
 /**
  * @author Vipin Kumar
- * @created 08-Jul-2015
+ * @created 26-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-@Service ( "serviceManager")
-public class ServiceManagerImpl implements ServiceManager
+@Repository
+public class ServiceDAOImpl implements ServiceDao
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceManagerImpl.class );
-
-    @Autowired
-    private ServiceDao serviceDao;
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceDAOImpl.class );
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#startService(com.gondor.model.ServiceType)
-     */
-    @Override
-    public Integer startService( ServiceType serviceType )
-    {
-        LOG.trace( "Method: startService called." );
-        return serviceDao.startService( serviceType );
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#stopService(com.gondor.model.ServiceType)
-     */
-    @Override
-    public void stopService( Integer serviceid )
-    {
-        LOG.trace( "Method: stopService called." );
-        serviceDao.stopService( serviceid );
-
-        LOG.trace( "Method: stopService finished." );
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#checkService(com.gondor.model.ServiceType)
-     */
-    @Override
-    public void checkService( Integer serviceid )
-    {
-        LOG.trace( "Method: checkService called." );
-
-        serviceDao.checkService( serviceid );
-        LOG.trace( "Method: checkService finished." );
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#getAllServiceconfig(com.gondor.model.ServiceType)
-     */
-    @Override
-    public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid )
-    {
-        LOG.trace( "Method: getAllServiceconfig called." );
-
-        return serviceDao.getAllServiceconfig( serviceid );
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#changeConfiguration(com.gondor.model.ServiceType, java.lang.String, java.lang.String, java.lang.Class)
-     */
-    @Override
-    public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject )
-    {
-        LOG.trace( "Method: changeConfiguration called." );
-
-        return false;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#restartService(com.gondor.model.orm.ServiceType)
-     */
-    @Override
-    public void restartService( Integer serviceid )
-    {
-        LOG.trace( "Method: restartService called." );
-
-
-        LOG.trace( "Method: restartService finished." );
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#getStatus(int)
+     * @see com.gondor.dao.ServiceDao#getStatus(java.lang.Integer)
      */
     @Override
     public String getStatus( Integer serviceid )
@@ -131,6 +49,70 @@ public class ServiceManagerImpl implements ServiceManager
         LOG.trace( "Method: getStatus called." );
 
         return null;
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#startService(com.gondor.model.orm.ServiceType)
+     */
+    @Override
+    public Integer startService( ServiceType serviceType )
+    {
+        LOG.trace( "Method: startService called." );
+
+        return 0;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#stopService(java.lang.Integer)
+     */
+    @Override
+    public void stopService( Integer serviceid )
+    {
+        LOG.trace( "Method: stopService called." );
+
+
+        LOG.trace( "Method: stopService finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#checkService(java.lang.Integer)
+     */
+    @Override
+    public void checkService( Integer serviceid )
+    {
+        LOG.trace( "Method: checkService called." );
+
+
+        LOG.trace( "Method: checkService finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#getAllServiceconfig(java.lang.Integer)
+     */
+    @Override
+    public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid )
+    {
+        LOG.trace( "Method: getAllServiceconfig called." );
+
+        return null;
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#changeConfiguration(java.lang.Integer, com.gondor.model.orm.BaseConfiguration)
+     */
+    @Override
+    public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject )
+    {
+        LOG.trace( "Method: changeConfiguration called." );
+
+        return false;
 
     }
 }

@@ -71,7 +71,7 @@ public class HadoopConfigLoader
             hdfsSite.setProperty( property.getName() );
             hdfsSite.setValue( property.getValue() );
         }
-        hdfsSiteDAOImpl.saveConfigs( hdfsSite );
+        //hdfsSiteDAOImpl.saveConfigs( hdfsSite );
         LOG.trace( "Method: loadHdfsSite finished." );
     }
 

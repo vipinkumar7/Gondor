@@ -15,55 +15,34 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
+package com.gondor.dao;
 
 import com.gondor.model.orm.Host;
 
 
 /**
  * @author Vipin Kumar
- * @created 23-Jun-2015
+ * @created 25-Jul-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
-public interface HostManager
+public interface HostDao
 {
+    public String getStatus( int hostID );
 
 
-    public String getStatus( int hostId );
+    public void cretateHost( String hostname );
 
 
-    /**
-     * create new host with the IP or host name provided
-     * @param hostname
-     */
-    public void createHost( String hostIdentifier, Integer clusterId );
-
-
-    /**
-     * 
-     * @param hostIdentifier
-     * @return
-     * hostIdentifier can be IP or Hostname
-     */
-    public Boolean validateHost( String hostIdentifier, Integer clusterId );
-
-
-    /**
-     * remove all services from this host
-     * @param hostId
-     */
     public void decomminsionHost( int hostId );
+
+
+    public Boolean validateHost( String hostIdentifier, Integer clusterId );
 
 
     public Boolean checkHost( String hostIdentifier );
 
 
     public Host getHost( int hostId );
-
-
-    public Host getHost( String hostname );
-
 }
