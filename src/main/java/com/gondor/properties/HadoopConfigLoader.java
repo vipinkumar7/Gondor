@@ -61,8 +61,7 @@ public class HadoopConfigLoader
     private BaseConfigurationDao<HdfsSite> hdfsSiteDAOImpl;
 
 
-    @PostConstruct
-    public void deleteAllConfig()
+    public HadoopConfigLoader()
     {
         hdfsSiteDAOImpl.deleteAllConfig();
     }

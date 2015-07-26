@@ -101,7 +101,7 @@ public class ApplicationContextConfig
         sessionBuilder.addAnnotatedClasses( CoreSite.class );
         sessionBuilder.addAnnotatedClasses( Host.class );
         sessionBuilder.addAnnotatedClasses( MapredSite.class );
-        sessionBuilder.addAnnotatedClasses( com.gondor.model.orm.Process.class );
+        sessionBuilder.addAnnotatedClasses( Process.class );
         sessionBuilder.addAnnotatedClasses( Role.class );
         sessionBuilder.addAnnotatedClasses( YarnSite.class );
         sessionBuilder.scanPackages( "com.gondor.model" );
