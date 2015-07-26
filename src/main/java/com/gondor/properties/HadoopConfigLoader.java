@@ -19,6 +19,8 @@ package com.gondor.properties;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -65,13 +67,16 @@ public class HadoopConfigLoader
         LOG.trace( "Method: loadHdfsSite called." );
         InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + hdfsFileName );
         Configuration hdfsConfig = (Configuration) xmlConverter.convertFromXMLToObject( input );
-        HdfsSite hdfsSite = new HdfsSite();
+
+        List<HdfsSite> lHdfsSites = new ArrayList<HdfsSite>();
         Property[] hdfsProperties = hdfsConfig.getProperty();
         for ( Property property : hdfsProperties ) {
+            HdfsSite hdfsSite = new HdfsSite();
             hdfsSite.setProperty( property.getName() );
             hdfsSite.setValue( property.getValue() );
+            lHdfsSites.add( hdfsSite );
         }
-        hdfsSiteDAOImpl.saveConfigs( hdfsSite );
+        hdfsSiteDAOImpl.saveConfigs( lHdfsSites );
         LOG.trace( "Method: loadHdfsSite finished." );
     }
 

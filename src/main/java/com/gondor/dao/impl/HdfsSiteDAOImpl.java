@@ -115,7 +115,7 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
      */
     @Override
     @Transactional
-    public void saveConfigs( HdfsSite config )
+    public void saveConfigs( List<HdfsSite> config )
     {
         LOG.trace( "Method: saveConfigs called." );
 

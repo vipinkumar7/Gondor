@@ -19,6 +19,7 @@ package com.gondor.dao;
 
 import java.util.List;
 
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 
 
@@ -34,10 +35,13 @@ public interface ClusterDao
     public String getStatus( int clusterId );
 
 
+    public List<Cluster> listAllClusters();
+
+
     public List<Host> getAllhosts( int clusterId );
 
 
-    public void createCluster( String name );
+    public void createCluster( Cluster cluster );
 
 
     public void addHostToCluster( int hostId, int clusterId );

@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gondor.dao.ClusterDao;
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.services.ClusterManager;
 
@@ -61,11 +62,11 @@ public class ClusterManagerImpl implements ClusterManager
      * @see com.gondor.services.ClusterManager#createCluster(java.lang.String)
      */
     @Override
-    public void createCluster( String name )
+    public void createCluster( Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
 
-        clusterDao.createCluster( name );
+        clusterDao.createCluster( cluster );
 
         LOG.trace( "Method: createCluster finished." );
     }

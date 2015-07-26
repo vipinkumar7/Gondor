@@ -19,6 +19,7 @@ package com.gondor.services;
 
 import java.util.List;
 
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 
 
@@ -47,7 +48,7 @@ public interface ClusterManager
     /**
      * create new cluster
      */
-    public void createCluster( String name );
+    public void createCluster( Cluster cluster );
 
 
     /**
