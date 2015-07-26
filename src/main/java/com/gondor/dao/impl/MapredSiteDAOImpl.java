@@ -101,12 +101,25 @@ public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
      * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
      */
     @Override
-    public void saveConfigs( List<MapredSite> config )
+    public void saveConfigs( List<MapredSite> configs )
     {
         LOG.trace( "Method: saveConfigs called." );
-        sessionFactory.getCurrentSession().saveOrUpdate( config );
+
+        for ( MapredSite config : configs ) {
+            sessionFactory.getCurrentSession().saveOrUpdate( config );
+        }
 
         LOG.trace( "Method: saveConfigs finished." );
+    }
+
+
+    @Override
+    public void deleteAllConfig()
+    {
+        LOG.trace( "Method: deleteAllConfig called." );
+
+
+        LOG.trace( "Method: deleteAllConfig finished." );
     }
 
 

@@ -67,4 +67,7 @@ public interface BaseConfigurationDao<T extends BaseConfiguration>
      * Method to save list of configurations
      */
     public void saveConfigs( List<T> config );
+
+
+    public void deleteAllConfig();
 }

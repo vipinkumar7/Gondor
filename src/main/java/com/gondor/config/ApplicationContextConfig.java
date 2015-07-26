@@ -18,8 +18,6 @@
 
 package com.gondor.config;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -32,15 +30,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.oxm.castor.CastorMarshaller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.CoreSite;
@@ -70,16 +64,6 @@ import com.gondor.util.XmlConverter;
 @EnableTransactionManagement
 public class ApplicationContextConfig
 {
-
-    @Bean ( name = "viewResolver")
-    public InternalResourceViewResolver getViewResolver()
-    {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix( "/WEB-INF/views/" );
-        viewResolver.setSuffix( ".jsp" );
-        return viewResolver;
-    }
-
 
     @Bean ( name = "dataSource")
     public DataSource getDataSource()
@@ -135,27 +119,12 @@ public class ApplicationContextConfig
     }
 
 
-    @Bean ( name = "messageConeverter")
-    public RequestMappingHandlerAdapter getbean()
-    {
-        RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
-
-        MappingJackson2HttpMessageConverter httpMessageConverter = new MappingJackson2HttpMessageConverter();
-
-        List<HttpMessageConverter<?>> msgcon = new ArrayList<HttpMessageConverter<?>>();
-        msgcon.add( httpMessageConverter );
-        handlerAdapter.setMessageConverters( msgcon );
-        return handlerAdapter;
-    }
-
-
     @Bean ( autowire = Autowire.BY_TYPE)
     public CastorMarshaller getMarshaller()
     {
         CastorMarshaller marshaller = new CastorMarshaller();
         marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
         return marshaller;
-
     }
 
 
