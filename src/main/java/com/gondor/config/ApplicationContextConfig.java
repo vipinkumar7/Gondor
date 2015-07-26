@@ -65,7 +65,7 @@ import com.gondor.util.XmlConverter;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan ( "com.gondor.*")
+@ComponentScan ( "com.gondor")
 @PropertySource ( "classpath:config.properties")
 @EnableTransactionManagement
 public class ApplicationContextConfig
@@ -81,7 +81,7 @@ public class ApplicationContextConfig
     }
 
 
-    @Bean ( autowire = Autowire.BY_TYPE)
+    @Bean ( name = "dataSource")
     public DataSource getDataSource()
     {
         BasicDataSource dataSource = new BasicDataSource();
@@ -105,11 +105,10 @@ public class ApplicationContextConfig
     }
 
 
-    @Bean ( autowire = Autowire.BY_TYPE)
-    public SessionFactory getSessionFactory()
+    @Bean ( name = "sessionFactory")
+    public SessionFactory getSessionFactory( DataSource dataSource )
     {
-
-        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( getDataSource() );
+        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
         sessionBuilder.addAnnotatedClasses( User.class );
         sessionBuilder.addAnnotatedClasses( HdfsSite.class );
         sessionBuilder.addAnnotatedClasses( Cluster.class );
@@ -127,10 +126,10 @@ public class ApplicationContextConfig
     }
 
 
-    @Bean ( autowire = Autowire.BY_TYPE)
-    public HibernateTransactionManager getTransactionManager()
+    @Bean ( name = "transactionManager")
+    public HibernateTransactionManager getTransactionManager( SessionFactory sessionFactory )
     {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager( getSessionFactory() );
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager( sessionFactory );
 
         return transactionManager;
     }

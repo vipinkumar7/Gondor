@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Component;
 
-import com.gondor.dao.impl.HdfsSiteDAOImpl;
+import com.gondor.dao.BaseConfigurationDao;
 import com.gondor.model.orm.HdfsSite;
 import com.gondor.model.oxm.Configuration;
 import com.gondor.model.oxm.Property;
@@ -56,7 +56,7 @@ public class HadoopConfigLoader
     private XmlConverter xmlConverter;
 
     @Autowired
-    private HdfsSiteDAOImpl hdfsSiteDAOImpl;
+    private BaseConfigurationDao<HdfsSite> hdfsSiteDAOImpl;
 
 
     @PostConstruct
@@ -71,7 +71,7 @@ public class HadoopConfigLoader
             hdfsSite.setProperty( property.getName() );
             hdfsSite.setValue( property.getValue() );
         }
-        //hdfsSiteDAOImpl.saveConfigs( hdfsSite );
+        hdfsSiteDAOImpl.saveConfigs( hdfsSite );
         LOG.trace( "Method: loadHdfsSite finished." );
     }
 

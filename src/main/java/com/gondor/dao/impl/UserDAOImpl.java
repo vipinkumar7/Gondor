@@ -45,8 +45,15 @@ public class UserDAOImpl implements UserDao
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( UserDAOImpl.class );
 
-    @Autowired
+
     private SessionFactory sessionFactory;
+
+
+    @Autowired
+    public UserDAOImpl( SessionFactory sessionFactory )
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     @Override

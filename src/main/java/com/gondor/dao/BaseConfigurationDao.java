@@ -36,7 +36,7 @@ public interface BaseConfigurationDao<T extends BaseConfiguration>
      *
      * @param serviceId
      * @return
-     * get all the configuration 
+     * get all the configuration
      */
     public List<T> getConf();
 

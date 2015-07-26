@@ -19,6 +19,8 @@ package com.gondor.dao.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -43,8 +45,14 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HdfsSiteDAOImpl.class );
 
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+
+    @Autowired
+    public HdfsSiteDAOImpl( SessionFactory sessionFactory )
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
@@ -106,6 +114,7 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
      * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
      */
     @Override
+    @Transactional
     public void saveConfigs( HdfsSite config )
     {
         LOG.trace( "Method: saveConfigs called." );
