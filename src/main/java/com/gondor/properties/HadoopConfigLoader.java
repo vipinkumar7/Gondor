@@ -19,6 +19,8 @@ package com.gondor.properties;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -60,18 +62,26 @@ public class HadoopConfigLoader
 
 
     @PostConstruct
+    public void deleteAllConfig()
+    {
+        hdfsSiteDAOImpl.deleteAllConfig();
+    }
+
+
+    @PostConstruct
     public void loadHdfsSite() throws XmlMappingException, IOException
     {
         LOG.trace( "Method: loadHdfsSite called." );
         InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + hdfsFileName );
         Configuration hdfsConfig = (Configuration) xmlConverter.convertFromXMLToObject( input );
-        HdfsSite hdfsSite = new HdfsSite();
+        List<HdfsSite> hdfsSites = new ArrayList<>();
         Property[] hdfsProperties = hdfsConfig.getProperty();
         for ( Property property : hdfsProperties ) {
+            HdfsSite hdfsSite = new HdfsSite();
             hdfsSite.setProperty( property.getName() );
             hdfsSite.setValue( property.getValue() );
         }
-        hdfsSiteDAOImpl.saveConfigs( hdfsSite );
+        hdfsSiteDAOImpl.saveConfigs( hdfsSites );
         LOG.trace( "Method: loadHdfsSite finished." );
     }
 

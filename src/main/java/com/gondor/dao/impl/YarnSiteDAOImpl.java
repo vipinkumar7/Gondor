@@ -102,12 +102,23 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
      * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
      */
     @Override
-    public void saveConfigs( YarnSite config )
+    public void saveConfigs( List<YarnSite> configs )
     {
         LOG.trace( "Method: saveConfigs called." );
-
-        sessionFactory.getCurrentSession().saveOrUpdate( config );
+        for ( YarnSite config : configs ) {
+            sessionFactory.getCurrentSession().saveOrUpdate( config );
+        }
         LOG.trace( "Method: saveConfigs finished." );
+    }
+
+
+    @Override
+    public void deleteAllConfig()
+    {
+        LOG.trace( "Method: deleteAllConfig called." );
+
+
+        LOG.trace( "Method: deleteAllConfig finished." );
     }
 
 

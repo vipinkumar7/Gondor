@@ -115,12 +115,26 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
      */
     @Override
     @Transactional
-    public void saveConfigs( HdfsSite config )
+    public void saveConfigs( List<HdfsSite> configs )
     {
         LOG.trace( "Method: saveConfigs called." );
 
-        sessionFactory.getCurrentSession().saveOrUpdate( config );
+        for ( HdfsSite config : configs ) {
+            sessionFactory.getCurrentSession().saveOrUpdate( config );
+        }
         LOG.trace( "Method: saveConfigs finished." );
+    }
+
+
+    @Override
+    @Transactional
+    public void deleteAllConfig()
+    {
+        LOG.trace( "Method: deleteConfig called." );
+
+        sessionFactory.getCurrentSession().createQuery( "delete from HdfsSite" ).executeUpdate();
+
+        LOG.trace( "Method: deleteConfig finished." );
     }
 
 
