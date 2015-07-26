@@ -97,7 +97,7 @@ public class HostController
     }
 
 
-    @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
+    @RequestMapping ( value = "/{id}/decomminsion", method = RequestMethod.GET)
     public void decomminsionHost( @PathVariable Integer id )
     {
         hostManager.decomminsionHost( id );

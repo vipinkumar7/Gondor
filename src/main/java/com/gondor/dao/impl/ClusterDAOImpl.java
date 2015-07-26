@@ -19,6 +19,8 @@ package com.gondor.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gondor.dao.ClusterDao;
@@ -37,6 +39,11 @@ public class ClusterDAOImpl implements ClusterDao
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ClusterDAOImpl.class );
+
+    
+    @Autowired
+    private SessionFactory sessionFactory;
+
 
 
     /* (non-Javadoc)
