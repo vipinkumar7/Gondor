@@ -101,7 +101,6 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
      * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
      */
     @Override
-
     public void saveConfigs( List<CoreSite> configs )
     {
         LOG.trace( "Method: saveConfigs called." );

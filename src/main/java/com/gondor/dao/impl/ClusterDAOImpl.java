@@ -45,8 +45,17 @@ public class ClusterDAOImpl implements ClusterDao
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ClusterDAOImpl.class );
 
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+
+    /**
+     * 
+     */
+    @Autowired
+    public ClusterDAOImpl( SessionFactory sessionFactory )
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
@@ -59,7 +68,6 @@ public class ClusterDAOImpl implements ClusterDao
         LOG.trace( "Method: listAll called." );
         @SuppressWarnings ( "unchecked") List<Cluster> listCluster = sessionFactory.getCurrentSession()
             .createCriteria( Cluster.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
-
         return listCluster;
 
     }
@@ -120,7 +128,7 @@ public class ClusterDAOImpl implements ClusterDao
         Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
         Cluster cluster = (Cluster) sessionFactory.getCurrentSession().get( Cluster.class, clusterId );
         host.setCluster( cluster );
-
+        sessionFactory.getCurrentSession().saveOrUpdate( host );
         LOG.trace( "Method: addHostToCluster finished." );
     }
 

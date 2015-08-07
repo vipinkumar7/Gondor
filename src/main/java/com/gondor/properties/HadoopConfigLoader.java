@@ -62,9 +62,7 @@ public class HadoopConfigLoader
 
 
     public HadoopConfigLoader()
-    {
-        hdfsSiteDAOImpl.deleteAllConfig();
-    }
+    {}
 
 
     @PostConstruct

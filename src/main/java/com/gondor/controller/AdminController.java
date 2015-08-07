@@ -19,17 +19,14 @@ package com.gondor.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.gondor.dao.UserDao;
 import com.gondor.model.orm.User;
@@ -51,58 +48,22 @@ public class AdminController
     private UserDao userDao;
 
 
+    /**
+     * 
+     * @return
+     */
     @RequestMapping ( value = "/rest/users", method = RequestMethod.GET)
-    public @ResponseBody User getDummyEmployee()
+    public @ResponseBody List<User> getAllUsers()
     {
         List<User> listUsers = userDao.list();
-        return listUsers.get( 0 );
+        return listUsers;
     }
 
 
-    @RequestMapping ( "/")
-    public ModelAndView handleRequest() throws Exception
+    @RequestMapping ( value = "/delete/{userId}", method = RequestMethod.GET)
+    public void deleteUser( @PathVariable int userId )
     {
-        List<User> listUsers = userDao.list();
-        ModelAndView model = new ModelAndView( "UserList" );
-        model.addObject( "userList", listUsers );
-        return model;
-    }
-
-
-    @RequestMapping ( value = "/new", method = RequestMethod.GET)
-    public ModelAndView newUser()
-    {
-        ModelAndView model = new ModelAndView( "UserForm" );
-        model.addObject( "user", new User() );
-        return model;
-    }
-
-
-    @RequestMapping ( value = "/edit", method = RequestMethod.GET)
-    public ModelAndView editUser( HttpServletRequest request )
-    {
-        int userId = Integer.parseInt( request.getParameter( "id" ) );
-        User user = userDao.get( userId );
-        ModelAndView model = new ModelAndView( "UserForm" );
-        model.addObject( "user", user );
-        return model;
-    }
-
-
-    @RequestMapping ( value = "/delete", method = RequestMethod.GET)
-    public ModelAndView deleteUser( HttpServletRequest request )
-    {
-        int userId = Integer.parseInt( request.getParameter( "id" ) );
         userDao.delete( userId );
-        return new ModelAndView( "redirect:/" );
-    }
-
-
-    @RequestMapping ( value = "/save", method = RequestMethod.POST)
-    public ModelAndView saveUser( @ModelAttribute User user )
-    {
-        userDao.saveOrUpdate( user );
-        return new ModelAndView( "redirect:/" );
     }
 
 
@@ -114,10 +75,10 @@ public class AdminController
     }
 
 
-    @RequestMapping ( value = "/get", method = RequestMethod.GET)
-    public @ResponseBody User getUser()
+    @RequestMapping ( value = "/get/{userId}", method = RequestMethod.GET)
+    public @ResponseBody User getUser( @PathVariable int userId )
     {
-        return userDao.get( 1 );
+        return userDao.get( userId );
     }
 
 

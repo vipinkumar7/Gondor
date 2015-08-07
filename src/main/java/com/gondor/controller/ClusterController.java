@@ -25,7 +25,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -91,11 +90,11 @@ public class ClusterController
      * 
      * Add existing host to cluster
      */
-    @RequestMapping ( value = "/{id}/add/host", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String addHostToCluster( @PathVariable Integer id, @RequestBody Host host )
+    @RequestMapping ( value = "/{clusterId}/add/{hostId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addHostToCluster( @PathVariable Integer hostId, @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: addHostToCluster called." );
-        return null;
+        clusterManager.addHostToCluster( hostId, clusterId );
     }
 
 
