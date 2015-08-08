@@ -117,23 +117,6 @@ public class ClusterDAOImpl implements ClusterDao
 
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.ClusterDao#addHostToCluster(int, int)
-     */
-    @Override
-    @Transactional
-    public void addHostToCluster( int hostId, int clusterId )
-    {
-        LOG.trace( "Method: addHostToCluster called." );
-
-        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
-        Cluster cluster = (Cluster) sessionFactory.getCurrentSession().get( Cluster.class, clusterId );
-        host.setCluster( cluster );
-        sessionFactory.getCurrentSession().saveOrUpdate( host );
-        LOG.trace( "Method: addHostToCluster finished." );
-    }
-
-
-    /* (non-Javadoc)
      * @see com.gondor.dao.ClusterDao#decommissionCluster(int)
      */
     @Override

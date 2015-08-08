@@ -52,14 +52,6 @@ public interface ClusterManager
 
 
     /**
-     * add this host(hostId) to this cluster(clusterId)
-     * @param hostId
-     * @param clusterId
-     */
-    public void addHostToCluster( int hostId, int clusterId );
-
-
-    /**
      * remove all installed services from system
      * @param clusterId
      */

@@ -44,8 +44,5 @@ public interface ClusterDao
     public void createCluster( Cluster cluster );
 
 
-    public void addHostToCluster( int hostId, int clusterId );
-
-
     public void decommissionCluster( int clusterId );
 }

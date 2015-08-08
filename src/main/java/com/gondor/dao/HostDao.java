@@ -17,6 +17,8 @@
  */
 package com.gondor.dao;
 
+import java.util.List;
+
 import com.gondor.model.orm.Host;
 
 
@@ -32,13 +34,22 @@ public interface HostDao
     public String getStatus( int hostID );
 
 
-    public void cretateHost( String hostname );
+    public List<Host> getAllHosts();
+
+
+    public int cretateHost( Host host );
 
 
     public void decomminsionHost( int hostId );
 
 
-    public Boolean validateHost( String hostIdentifier, Integer clusterId );
+    public Boolean validateHostAlreadyPresent( String hostIdentifier );
+
+
+    public Boolean validateHostAlreadyPresent( String hostIdentifier, Integer clusterId );
+
+
+    public void addHostToCluster( int hostId, int clusterId );
 
 
     public Boolean checkHost( String hostIdentifier );

@@ -46,6 +46,7 @@ public class Host implements Serializable
     private static final long serialVersionUID = 2885427806050671647L;
     private int id;
     private String name;
+    private String ip;
 
 
     @ManyToOne
@@ -109,6 +110,25 @@ public class Host implements Serializable
     public void setCluster( Cluster cluster )
     {
         this.cluster = cluster;
+    }
+
+
+    /**
+     * @return the ip
+     */
+    @Column ( name = "HOST_IP")
+    public String getIp()
+    {
+        return ip;
+    }
+
+
+    /**
+     * @param ip the ip to set
+     */
+    public void setIp( String ip )
+    {
+        this.ip = ip;
     }
 
 

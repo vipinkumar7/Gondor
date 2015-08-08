@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,22 +78,6 @@ public class ClusterController
     {
         LOG.trace( "Method: getAllHosts called." );
         return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( id ), HttpStatus.OK );
-    }
-
-
-    /**
-     * 
-     * @param id
-     * @param host
-     * @return 
-     * 
-     * Add existing host to cluster
-     */
-    @RequestMapping ( value = "/{clusterId}/add/{hostId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addHostToCluster( @PathVariable Integer hostId, @PathVariable Integer clusterId )
-    {
-        LOG.trace( "Method: addHostToCluster called." );
-        clusterManager.addHostToCluster( hostId, clusterId );
     }
 
 

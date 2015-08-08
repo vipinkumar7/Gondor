@@ -17,12 +17,19 @@
  */
 package com.gondor.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.HostDao;
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
+import com.gondor.model.orm.Service;
 
 
 /**
@@ -69,12 +76,12 @@ public class HostDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#cretateHost(java.lang.String)
      */
     @Override
-    public void cretateHost( String hostname )
+    public int cretateHost( Host host )
     {
         LOG.trace( "Method: cretateHost called." );
 
-
-        LOG.trace( "Method: cretateHost finished." );
+        sessionFactory.getCurrentSession().save( host );
+        return host.getId();
     }
 
 
@@ -95,11 +102,18 @@ public class HostDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#validateHost(java.lang.String, java.lang.Integer)
      */
     @Override
-    public Boolean validateHost( String hostIdentifier, Integer clusterId )
+    public Boolean validateHostAlreadyPresent( String hostIdentifier, Integer clusterId )
     {
         LOG.trace( "Method: validateHost called." );
-
-        return null;
+        String hql = "from Host where HOST_IP= :ip  or   HOST_NAME =:name and CLUSTER_ID=:cluster";
+        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        query.setParameter( "ip", hostIdentifier );
+        query.setParameter( "name", hostIdentifier );
+        query.setParameter( "cluster", clusterId );
+        @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
+        if ( lServices != null && !lServices.isEmpty() )
+            return true;
+        return false;
 
     }
 
@@ -111,7 +125,7 @@ public class HostDAOImpl implements HostDao
     public Boolean checkHost( String hostIdentifier )
     {
         LOG.trace( "Method: checkHost called." );
-
+        //TODO native class for network check 
         return null;
 
     }
@@ -124,8 +138,61 @@ public class HostDAOImpl implements HostDao
     public Host getHost( int hostId )
     {
         LOG.trace( "Method: getHost called." );
+        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
+        return host;
 
-        return null;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.HostDao#addHostToCluster(int, int)
+     */
+    @Override
+    @Transactional
+    public void addHostToCluster( int hostId, int clusterId )
+    {
+        LOG.trace( "Method: addHostToCluster called." );
+
+        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
+        Cluster cluster = (Cluster) sessionFactory.getCurrentSession().get( Cluster.class, clusterId );
+        host.setCluster( cluster );
+        sessionFactory.getCurrentSession().saveOrUpdate( host );
+        LOG.trace( "Method: addHostToCluster finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.HostDao#getAllHosts()
+     */
+    @Override
+    public List<Host> getAllHosts()
+    {
+        LOG.trace( "Method: getAllHosts called." );
+
+        LOG.trace( "Method: listAll called." );
+        @SuppressWarnings ( "unchecked") List<Host> listhHosts = sessionFactory.getCurrentSession().createCriteria( Host.class )
+            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        return listhHosts;
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.HostDao#validateHostAlreadyPresent(java.lang.String)
+     */
+    @Override
+    public Boolean validateHostAlreadyPresent( String hostIdentifier )
+    {
+        LOG.trace( "Method: validateHostAlreadyPresent called." );
+        LOG.trace( "Method: validateHost called." );
+        String hql = "from Host where HOST_IP= :ip  or   HOST_NAME =:name ";
+        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        query.setParameter( "ip", hostIdentifier );
+        query.setParameter( "name", hostIdentifier );
+        @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
+        if ( lServices != null && !lServices.isEmpty() )
+            return true;
+        return false;
 
     }
 }

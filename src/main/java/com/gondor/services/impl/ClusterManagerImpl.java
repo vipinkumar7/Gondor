@@ -73,19 +73,6 @@ public class ClusterManagerImpl implements ClusterManager
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ClusterManager#addHostToCluster(int, int)
-     */
-    @Override
-    public void addHostToCluster( int hostId, int clusterId )
-    {
-        LOG.trace( "Method: addHostToCluster called." );
-        clusterDao.addHostToCluster( hostId, clusterId );
-
-        LOG.trace( "Method: addHostToCluster finished." );
-    }
-
-
-    /* (non-Javadoc)
      * @see com.gondor.services.ClusterManager#decommissionCluster(int)
      */
     @Override
