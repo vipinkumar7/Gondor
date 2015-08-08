@@ -59,7 +59,7 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
      * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<HdfsSite> getConf()
+    public List<HdfsSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
         @SuppressWarnings ( "unchecked") List<HdfsSite> hdfsSiteConfig = sessionFactory.getCurrentSession()

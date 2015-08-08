@@ -36,7 +36,7 @@ public interface ServiceManager
     public String getStatus( Integer serviceid );
 
 
-    public Integer startService( ServiceType serviceType );
+    public Integer startService( ServiceType serviceType, Integer hostId );
 
 
     public void stopService( Integer serviceid );
@@ -51,5 +51,4 @@ public interface ServiceManager
     public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid );
 
 
-    public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject );
 }

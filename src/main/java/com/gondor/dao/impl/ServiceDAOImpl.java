@@ -17,12 +17,17 @@
  */
 package com.gondor.dao.impl;
 
-import java.util.Set;
+import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gondor.dao.ServiceDao;
-import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.exceptions.EntityNotFoundException;
+import com.gondor.model.orm.Host;
+import com.gondor.model.orm.Service;
 import com.gondor.model.orm.ServiceType;
 
 
@@ -38,6 +43,18 @@ public class ServiceDAOImpl implements ServiceDao
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceDAOImpl.class );
+
+    private SessionFactory sessionFactory;
+
+
+    /**
+     * 
+     */
+    @Autowired
+    public ServiceDAOImpl( SessionFactory sessionFactory )
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
@@ -57,11 +74,19 @@ public class ServiceDAOImpl implements ServiceDao
      * @see com.gondor.dao.ServiceDao#startService(com.gondor.model.orm.ServiceType)
      */
     @Override
-    public Integer startService( ServiceType serviceType )
+    public Integer createService( ServiceType serviceType, Integer hostId )
     {
         LOG.trace( "Method: startService called." );
 
-        return 0;
+        Service service = new Service();
+        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
+        if ( host == null )
+            throw new EntityNotFoundException( "Host object  not found" );
+        service.setHost( host );
+        service.setName( serviceType );
+        sessionFactory.getCurrentSession().save( service );
+        return service.getId();
+        //TODO python service call
     }
 
 
@@ -72,7 +97,9 @@ public class ServiceDAOImpl implements ServiceDao
     public void stopService( Integer serviceid )
     {
         LOG.trace( "Method: stopService called." );
-
+        Service service = (Service) sessionFactory.getCurrentSession().get( Service.class, serviceid );
+        service.setRunning( false );
+        sessionFactory.getCurrentSession().saveOrUpdate( service );
 
         LOG.trace( "Method: stopService finished." );
     }
@@ -82,37 +109,61 @@ public class ServiceDAOImpl implements ServiceDao
      * @see com.gondor.dao.ServiceDao#checkService(java.lang.Integer)
      */
     @Override
-    public void checkService( Integer serviceid )
+    public boolean checkService( Integer serviceid )
     {
         LOG.trace( "Method: checkService called." );
-
-
-        LOG.trace( "Method: checkService finished." );
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.ServiceDao#getAllServiceconfig(java.lang.Integer)
-     */
-    @Override
-    public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid )
-    {
-        LOG.trace( "Method: getAllServiceconfig called." );
-
-        return null;
+        Service service = (Service) sessionFactory.getCurrentSession().get( Service.class, serviceid );
+        return service.isRunning();
 
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.ServiceDao#changeConfiguration(java.lang.Integer, com.gondor.model.orm.BaseConfiguration)
+     * @see com.gondor.dao.ServiceDao#checkService(com.gondor.model.orm.ServiceType, java.lang.Integer)
      */
     @Override
-    public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject )
+    public boolean checkIfServiceExists( ServiceType serviceType, Integer hostId )
     {
-        LOG.trace( "Method: changeConfiguration called." );
-
+        LOG.trace( "Method: checkIfServiceExists called." );
+        String hql = "from Service where HOST_ID= :host  and  SERVICE_NAME =:service";
+        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        query.setParameter( "host", hostId );
+        query.setParameter( "service", serviceType );
+        @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
+        if ( lServices != null && !lServices.isEmpty() )
+            return true;
         return false;
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#startService(com.gondor.model.orm.ServiceType, java.lang.Integer)
+     */
+    @Override
+    public Integer startService( ServiceType serviceType, Integer hostId )
+    {
+        LOG.trace( "Method: startService called." );
+        String hql = "UPDATE Service set STATE=:state where HOST_ID=:host  and  SERVICE_NAME =:service";
+        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        query.setParameter( "state", true );
+        query.setParameter( "host", hostId );
+        query.setParameter( "service", serviceType );
+        return query.executeUpdate();
+        //TODO python service call
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#getServiceType(java.lang.Integer)
+     */
+    @Override
+    public ServiceType getServiceType( Integer serviceid )
+    {
+        LOG.trace( "Method: getServiceType called." );
+        Service service = (Service) sessionFactory.getCurrentSession().get( Service.class, serviceid );
+        return service.getName();
+
 
     }
 }

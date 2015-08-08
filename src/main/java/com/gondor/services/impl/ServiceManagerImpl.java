@@ -17,14 +17,20 @@
  */
 package com.gondor.services.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gondor.dao.BaseConfigurationDao;
 import com.gondor.dao.ServiceDao;
 import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.CoreSite;
+import com.gondor.model.orm.HdfsSite;
+import com.gondor.model.orm.MapredSite;
 import com.gondor.model.orm.ServiceType;
+import com.gondor.model.orm.YarnSite;
 import com.gondor.services.ServiceManager;
 
 
@@ -32,7 +38,7 @@ import com.gondor.services.ServiceManager;
  * @author Vipin Kumar
  * @created 08-Jul-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Service manager is responsible for managing all the services 
  * 
  */
 @Service ( "serviceManager")
@@ -44,15 +50,27 @@ public class ServiceManagerImpl implements ServiceManager
     @Autowired
     private ServiceDao serviceDao;
 
+    @Autowired
+    private BaseConfigurationDao<HdfsSite> hdfsSiteDAOImpl;
+
+    @Autowired
+    private BaseConfigurationDao<CoreSite> coreSiteDAOImpl;
+
+    @Autowired
+    private BaseConfigurationDao<YarnSite> yarnSiteDAOImpl;
+
+    @Autowired
+    private BaseConfigurationDao<MapredSite> mapredSiteDAOImpl;
+
 
     /* (non-Javadoc)
      * @see com.gondor.services.ServiceManager#startService(com.gondor.model.ServiceType)
      */
     @Override
-    public Integer startService( ServiceType serviceType )
+    public Integer startService( ServiceType serviceType, Integer hostId )
     {
         LOG.trace( "Method: startService called." );
-        return serviceDao.startService( serviceType );
+        return serviceDao.startService( serviceType, hostId );
 
     }
 
@@ -91,20 +109,26 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getAllServiceconfig called." );
 
-        return serviceDao.getAllServiceconfig( serviceid );
+        Set<BaseConfiguration> baseConfigurations = new HashSet<BaseConfiguration>();
+        ServiceType serviceType = serviceDao.getServiceType( serviceid );
 
-    }
+        switch ( serviceType ) {
+            case HDFS:
+                baseConfigurations.addAll( hdfsSiteDAOImpl.getAllConf() );
+                baseConfigurations.addAll( coreSiteDAOImpl.getAllConf() );
+                baseConfigurations.addAll( mapredSiteDAOImpl.getAllConf() );
+                break;
+            case HBASE:
+                break;
+            case HIVE:
+            case ZOOKEEPER:
+                break;
+            case YARN:
+                baseConfigurations.addAll( yarnSiteDAOImpl.getAllConf() );
+                break;
+        }
 
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#changeConfiguration(com.gondor.model.ServiceType, java.lang.String, java.lang.String, java.lang.Class)
-     */
-    @Override
-    public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject )
-    {
-        LOG.trace( "Method: changeConfiguration called." );
-
-        return false;
+        return null;
 
     }
 
@@ -130,7 +154,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getStatus called." );
 
-        return null;
+        return serviceDao.getStatus( serviceid );
 
     }
 }

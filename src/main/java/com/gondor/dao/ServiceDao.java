@@ -17,9 +17,6 @@
  */
 package com.gondor.dao;
 
-import java.util.Set;
-
-import com.gondor.model.orm.BaseConfiguration;
 import com.gondor.model.orm.ServiceType;
 
 
@@ -47,36 +44,50 @@ public interface ServiceDao
      * 
      * @param serviceType
      * <p>
-     * Start the service of particular type
+     * create the service of particular type
      * </p>
      */
-    public Integer startService( ServiceType serviceType );
+    public Integer createService( ServiceType serviceType, Integer hostId );
 
 
+    /**
+     * 
+     * @param serviceType
+     * @param hostId
+     * @return
+     * 
+     * <p>
+     * Start the service of particular type
+     *</p>
+     */
+    public Integer startService( ServiceType serviceType, Integer hostId );
+
+
+    /**
+     * 
+     * @param serviceid
+     */
     public void stopService( Integer serviceid );
 
 
-    public void checkService( Integer serviceid );
+    public ServiceType getServiceType( Integer serviceid );
+
+
+    /**
+     * 
+     * @param serviceType
+     * @param hostId
+     * <p>check if particular service exists   on host</p>
+     */
+    public boolean checkIfServiceExists( ServiceType serviceType, Integer hostId );
 
 
     /**
      * 
      * @param serviceid
-     * @return
-     * 
-     * <p>Return all the configuration belongs to this Service</p>
+     * <p>check the state of service</p>
      */
-    public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid );
-
-
-    /**
-     * 
-     * @param serviceid
-     * @param configObject
-     * @return
-     * <p>Change the particular service configuration object </p>
-     */
-    public boolean changeConfiguration( Integer serviceid, BaseConfiguration configObject );
+    public boolean checkService( Integer serviceid );
 
 
 }

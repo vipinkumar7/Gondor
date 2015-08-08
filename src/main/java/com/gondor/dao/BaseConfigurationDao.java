@@ -38,7 +38,7 @@ public interface BaseConfigurationDao<T extends BaseConfiguration>
      * @return
      * get all the configuration
      */
-    public List<T> getConf();
+    public List<T> getAllConf();
 
 
     /**

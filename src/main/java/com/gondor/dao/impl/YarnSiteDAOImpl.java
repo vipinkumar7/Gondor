@@ -40,15 +40,25 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( YarnSiteDAOImpl.class );
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+
+    /**
+     * 
+     */
+    @Autowired
+    public YarnSiteDAOImpl( SessionFactory sessionFactory )
+    {
+
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<YarnSite> getConf()
+    public List<YarnSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
         @SuppressWarnings ( "unchecked") List<YarnSite> yarnSiteConfig = sessionFactory.getCurrentSession()

@@ -40,15 +40,24 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSiteDAOImpl.class );
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+
+    /**
+     * 
+     */
+    @Autowired
+    public CoreSiteDAOImpl( SessionFactory sessionFactory )
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<CoreSite> getConf()
+    public List<CoreSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
         @SuppressWarnings ( "unchecked") List<CoreSite> coreSiteConfig = sessionFactory.getCurrentSession()

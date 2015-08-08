@@ -24,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,11 +61,11 @@ public class ServiceController
     }
 
 
-    @RequestMapping ( value = "/{serviceType}/start", method = RequestMethod.GET)
-    public void startService( @PathVariable ServiceType serviceType )
+    @RequestMapping ( value = "/{serviceType}/start/{hostId}", method = RequestMethod.GET)
+    public void startService( @PathVariable ServiceType serviceType, @PathVariable Integer hostId )
     {
         LOG.trace( "Method: getClusters called." );
-        serviceManager.startService( serviceType );
+        serviceManager.startService( serviceType, hostId );
     }
 
 
@@ -84,14 +83,6 @@ public class ServiceController
     {
         LOG.trace( "Method: getClusters called." );
         return new ResponseEntity<Set<BaseConfiguration>>( serviceManager.getAllServiceconfig( id ), HttpStatus.OK );
-    }
-
-
-    @RequestMapping ( value = "/{id}/config/update", method = RequestMethod.POST)
-    public void changeConfiguration( @PathVariable Integer id, @RequestBody BaseConfiguration configObj )
-    {
-        LOG.trace( "Method: getClusters called." );
-        serviceManager.changeConfiguration( id, configObj );
     }
 
 }

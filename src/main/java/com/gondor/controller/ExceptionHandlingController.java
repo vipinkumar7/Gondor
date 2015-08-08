@@ -15,16 +15,32 @@
  *limitations under the License.
  *
  */
-package com.gondor.model.orm;
+package com.gondor.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 /**
  * @author Vipin Kumar
- * @created 08-Jul-2015
+ * @created 08-Aug-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public enum ServiceType
+
+@Controller
+public class ExceptionHandlingController
 {
-    HDFS, YARN, HIVE, ZOOKEEPER, HBASE
+
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ExceptionHandlingController.class );
+
+
+    @ResponseStatus ( value = HttpStatus.NOT_FOUND, reason = "entity not found")
+    public void entityNotFound()
+    {
+        LOG.error( "Entity not found" );
+
+    }
 }

@@ -29,6 +29,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 
 /**
  * @author Vipin Kumar
@@ -48,6 +50,9 @@ public class Service implements Serializable
      */
     private static final long serialVersionUID = -3065584052959688964L;
     private int id;
+
+    @Type ( type = "numeric_boolean")
+    private boolean isRunning;
 
     @Enumerated ( EnumType.STRING)
     private ServiceType name;
@@ -118,5 +123,25 @@ public class Service implements Serializable
     {
         this.name = name;
     }
+
+
+    /**
+     * @return the isRunning
+     */
+    @Column ( name = "STATE")
+    public boolean isRunning()
+    {
+        return isRunning;
+    }
+
+
+    /**
+     * @param isRunning the isRunning to set
+     */
+    public void setRunning( boolean isRunning )
+    {
+        this.isRunning = isRunning;
+    }
+
 
 }

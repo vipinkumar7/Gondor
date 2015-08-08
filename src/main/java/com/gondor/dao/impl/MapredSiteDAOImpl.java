@@ -40,15 +40,25 @@ public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( MapredSiteDAOImpl.class );
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+
+    /**
+     * 
+     */
+    @Autowired
+    public MapredSiteDAOImpl( SessionFactory sessionFactory )
+    {
+
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<MapredSite> getConf()
+    public List<MapredSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
 

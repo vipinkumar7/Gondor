@@ -17,6 +17,8 @@
  */
 package com.gondor.dao.impl;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gondor.dao.HostDao;
@@ -35,6 +37,19 @@ public class HostDAOImpl implements HostDao
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HostDAOImpl.class );
+
+    private SessionFactory sessionFactory;
+
+
+    /**
+     * 
+     */
+    @Autowired
+    public HostDAOImpl( SessionFactory sessionFactory )
+
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 
     /* (non-Javadoc)
