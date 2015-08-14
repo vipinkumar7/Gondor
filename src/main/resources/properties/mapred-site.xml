@@ -12,16 +12,37 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
+
 	<property>
-		<name>dfs.namenode.name.dir</name>
-		<value>file:///dfs/nn</value>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
+	</property>
+
+
+	<property>
+		<name>mapreduce.task.timeout</name>
+		<value>600000</value>
+	</property>
+
+	<property>
+		<name>mapreduce.jobhistory.address</name>
+		<value>hadoopdev01:10020</value>
 	</property>
 	<property>
-		<name>dfs.namenode.servicerpc-address</name>
-		<value>hadoopdev01.ev.com:8022</value>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>hadoopdev01:19888</value>
 	</property>
 	<property>
-		<name>dfs.https.address</name>
-		<value>hadoopdev01.ev.com:50470</value>
+		<name>mapreduce.jobhistory.webapp.https.address</name>
+		<value>hadoopdev01:19890</value>
 	</property>
+	<property>
+		<name>mapreduce.jobhistory.admin.address</name>
+		<value>hadoopdev01:10033</value>
+	</property>
+	<property>
+		<name>yarn.app.mapreduce.am.staging-dir</name>
+		<value>/user</value>
+	</property>
+
 </configuration>
