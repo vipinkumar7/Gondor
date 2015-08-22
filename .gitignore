@@ -1,4 +1,4 @@
-target/
-.project
-.settings/*
-.classpath
+gondor-core/target/
+gondor-core/.project
+gondor-core/.settings/*
+gondor-core/.classpath
