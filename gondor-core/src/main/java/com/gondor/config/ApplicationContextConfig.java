@@ -122,6 +122,7 @@ public class ApplicationContextConfig
     @Bean ( autowire = Autowire.BY_TYPE)
     public CastorMarshaller getMarshaller()
     {
+
         CastorMarshaller marshaller = new CastorMarshaller();
         marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
         return marshaller;

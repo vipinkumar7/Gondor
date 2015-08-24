@@ -35,22 +35,20 @@ import com.gondor.model.orm.CoreSite;
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
+public class CoreSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao<CoreSite>
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSiteDAOImpl.class );
-
-    private SessionFactory sessionFactory;
-
-
     /**
-     * 
+     * @param sessionFactory
      */
     @Autowired
     public CoreSiteDAOImpl( SessionFactory sessionFactory )
     {
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
+
+
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSiteDAOImpl.class );
 
 
     /* (non-Javadoc)
@@ -60,8 +58,8 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
     public List<CoreSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
-        @SuppressWarnings ( "unchecked") List<CoreSite> coreSiteConfig = sessionFactory.getCurrentSession()
-            .createCriteria( CoreSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<CoreSite> coreSiteConfig = getCurrentSession().createCriteria( CoreSite.class )
+            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return coreSiteConfig;
 
@@ -76,14 +74,14 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
     {
         LOG.trace( "Method: changeConfig called." );
         String hql = "from CoreSite where id= " + baseConfigId;
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         @SuppressWarnings ( "unchecked") List<CoreSite> lcoreSites = query.list();
         if ( lcoreSites != null && !lcoreSites.isEmpty() ) {
             CoreSite obj = lcoreSites.get( 0 );
             if ( obj.getProperty().equals( property ) )
                 obj.setValue( value );
         }
-        sessionFactory.getCurrentSession().saveOrUpdate( lcoreSites.get( 0 ) );
+        getCurrentSession().saveOrUpdate( lcoreSites.get( 0 ) );
         return true;
 
 
@@ -100,7 +98,7 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
 
         CoreSite coreSite = new CoreSite();
         coreSite.setId( baseConfigId );
-        sessionFactory.getCurrentSession().delete( coreSite );
+        getCurrentSession().delete( coreSite );
         return true;
 
     }
@@ -114,7 +112,7 @@ public class CoreSiteDAOImpl implements BaseConfigurationDao<CoreSite>
     {
         LOG.trace( "Method: saveConfigs called." );
         for ( CoreSite config : configs ) {
-            sessionFactory.getCurrentSession().saveOrUpdate( config );
+            getCurrentSession().saveOrUpdate( config );
         }
         LOG.trace( "Method: saveConfigs finished." );
     }

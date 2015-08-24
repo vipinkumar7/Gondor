@@ -35,22 +35,20 @@ import com.gondor.model.orm.MapredSite;
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
+public class MapredSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao<MapredSite>
 {
+
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( MapredSiteDAOImpl.class );
 
-    private SessionFactory sessionFactory;
-
 
     /**
-     * 
+     * @param sessionFactory
      */
     @Autowired
     public MapredSiteDAOImpl( SessionFactory sessionFactory )
     {
-
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
 
 
@@ -62,7 +60,7 @@ public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
     {
         LOG.trace( "Method: getConf called." );
 
-        @SuppressWarnings ( "unchecked") List<MapredSite> mapredSiteConfig = sessionFactory.getCurrentSession()
+        @SuppressWarnings ( "unchecked") List<MapredSite> mapredSiteConfig = getCurrentSession()
             .createCriteria( MapredSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return mapredSiteConfig;
@@ -78,14 +76,14 @@ public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
     {
         LOG.trace( "Method: changeConfig called." );
         String hql = "from MapredSite where id= " + baseConfigId;
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         @SuppressWarnings ( "unchecked") List<MapredSite> lmapredSites = query.list();
         if ( lmapredSites != null && !lmapredSites.isEmpty() ) {
             MapredSite obj = lmapredSites.get( 0 );
             if ( obj.getProperty().equals( property ) )
                 obj.setValue( value );
         }
-        sessionFactory.getCurrentSession().saveOrUpdate( lmapredSites.get( 0 ) );
+        getCurrentSession().saveOrUpdate( lmapredSites.get( 0 ) );
         return true;
 
     }
@@ -101,7 +99,7 @@ public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
 
         MapredSite mapredSite = new MapredSite();
         mapredSite.setId( baseConfigId );
-        sessionFactory.getCurrentSession().delete( mapredSite );
+        getCurrentSession().delete( mapredSite );
         return true;
 
     }
@@ -116,7 +114,7 @@ public class MapredSiteDAOImpl implements BaseConfigurationDao<MapredSite>
         LOG.trace( "Method: saveConfigs called." );
 
         for ( MapredSite config : configs ) {
-            sessionFactory.getCurrentSession().saveOrUpdate( config );
+            getCurrentSession().saveOrUpdate( config );
         }
 
         LOG.trace( "Method: saveConfigs finished." );

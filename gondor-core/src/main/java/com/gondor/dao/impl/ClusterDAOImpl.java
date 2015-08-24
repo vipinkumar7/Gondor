@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.ClusterDao;
+import com.gondor.exceptions.EntityNotFoundException;
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 
@@ -39,22 +40,20 @@ import com.gondor.model.orm.Host;
  * 
  */
 @Repository
-public class ClusterDAOImpl implements ClusterDao
+public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
 {
+
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ClusterDAOImpl.class );
 
 
-    private SessionFactory sessionFactory;
-
-
     /**
-     * 
+     * @param sessionFactory
      */
     @Autowired
     public ClusterDAOImpl( SessionFactory sessionFactory )
     {
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
 
 
@@ -66,8 +65,8 @@ public class ClusterDAOImpl implements ClusterDao
     public List<Cluster> listAllClusters()
     {
         LOG.trace( "Method: listAll called." );
-        @SuppressWarnings ( "unchecked") List<Cluster> listCluster = sessionFactory.getCurrentSession()
-            .createCriteria( Cluster.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<Cluster> listCluster = getCurrentSession().createCriteria( Cluster.class )
+            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
         return listCluster;
 
     }
@@ -95,7 +94,7 @@ public class ClusterDAOImpl implements ClusterDao
     {
         LOG.trace( "Method: getAllhosts called." );
 
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria( Host.class );
+        Criteria criteria = getCurrentSession().createCriteria( Host.class );
         criteria.add( Restrictions.eq( "CLUSTER_ID", clusterId ) );
         return criteria.list();
 
@@ -106,13 +105,13 @@ public class ClusterDAOImpl implements ClusterDao
      * @see com.gondor.dao.ClusterDao#createCluster(java.lang.String)
      */
     @Override
-    public void createCluster( Cluster cluster )
+    public int createCluster( Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
 
-        sessionFactory.getCurrentSession().saveOrUpdate( cluster );
+        getCurrentSession().saveOrUpdate( cluster );
 
-        LOG.trace( "Method: createCluster finished." );
+        return cluster.getId();
     }
 
 
@@ -123,9 +122,28 @@ public class ClusterDAOImpl implements ClusterDao
     public void decommissionCluster( int clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
-
-
+        Cluster cluster = (Cluster) getCurrentSession().get( Cluster.class, clusterId );
+        cluster.setActive( false );
+        getCurrentSession().saveOrUpdate( cluster );
         LOG.trace( "Method: decommissionCluster finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ClusterDao#getCluster(int)
+     */
+    @Override
+    public Cluster getCluster( int clusterId )
+    {
+        LOG.trace( "Method: getCluster called." );
+
+        Cluster cluster = (Cluster) getCurrentSession().get( Cluster.class, clusterId );
+
+        if ( cluster == null )
+            throw new EntityNotFoundException( String.format( "%s  %d  %s \n", "cluster with id :", clusterId, " not found" ) );
+        else
+            return cluster;
+
     }
 
 

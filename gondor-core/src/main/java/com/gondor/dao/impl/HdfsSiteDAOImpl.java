@@ -39,20 +39,20 @@ import com.gondor.model.orm.HdfsSite;
  *
  */
 @Repository
-public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
+public class HdfsSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao<HdfsSite>
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HdfsSiteDAOImpl.class );
-
-
-    private SessionFactory sessionFactory;
-
-
+    /**
+     * @param sessionFactory
+     */
     @Autowired
     public HdfsSiteDAOImpl( SessionFactory sessionFactory )
     {
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
+
+
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HdfsSiteDAOImpl.class );
 
 
     /* (non-Javadoc)
@@ -62,8 +62,8 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
     public List<HdfsSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
-        @SuppressWarnings ( "unchecked") List<HdfsSite> hdfsSiteConfig = sessionFactory.getCurrentSession()
-            .createCriteria( HdfsSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<HdfsSite> hdfsSiteConfig = getCurrentSession().createCriteria( HdfsSite.class )
+            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return hdfsSiteConfig;
 
@@ -80,14 +80,14 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
         LOG.trace( "Method: changeConfig called." );
 
         String hql = "from HdfsSite where id= " + baseConfigId;
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         @SuppressWarnings ( "unchecked") List<HdfsSite> lHdfsSites = query.list();
         if ( lHdfsSites != null && !lHdfsSites.isEmpty() ) {
             HdfsSite obj = lHdfsSites.get( 0 );
             if ( obj.getProperty().equals( property ) )
                 obj.setValue( value );
         }
-        sessionFactory.getCurrentSession().saveOrUpdate( lHdfsSites.get( 0 ) );
+        getCurrentSession().saveOrUpdate( lHdfsSites.get( 0 ) );
         return true;
 
     }
@@ -104,7 +104,7 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
         //TODO has to check for property
         HdfsSite hdfsSite = new HdfsSite();
         hdfsSite.setId( baseConfigId );
-        sessionFactory.getCurrentSession().delete( hdfsSite );
+        getCurrentSession().delete( hdfsSite );
         return true;
 
     }
@@ -120,7 +120,7 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
         LOG.trace( "Method: saveConfigs called." );
 
         for ( HdfsSite config : configs ) {
-            sessionFactory.getCurrentSession().saveOrUpdate( config );
+            getCurrentSession().saveOrUpdate( config );
         }
         LOG.trace( "Method: saveConfigs finished." );
     }
@@ -132,7 +132,7 @@ public class HdfsSiteDAOImpl implements BaseConfigurationDao<HdfsSite>
     {
         LOG.trace( "Method: deleteConfig called." );
 
-        sessionFactory.getCurrentSession().createQuery( "delete from HdfsSite" ).executeUpdate();
+        getCurrentSession().createQuery( "delete from HdfsSite" ).executeUpdate();
 
         LOG.trace( "Method: deleteConfig finished." );
     }

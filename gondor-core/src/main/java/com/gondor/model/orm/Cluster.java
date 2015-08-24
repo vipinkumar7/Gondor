@@ -46,6 +46,7 @@ public class Cluster implements Serializable
 
     private int id;
     private String name;
+    private boolean isActive;
 
 
     /**
@@ -85,6 +86,25 @@ public class Cluster implements Serializable
     public void setName( String name )
     {
         this.name = name;
+    }
+
+
+    /**
+     * @return the isActive
+     */
+    @Column ( name = "IS_ACTIVE")
+    public boolean isActive()
+    {
+        return isActive;
+    }
+
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setActive( boolean isActive )
+    {
+        this.isActive = isActive;
     }
 
     /**

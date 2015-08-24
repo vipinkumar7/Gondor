@@ -39,21 +39,20 @@ import com.gondor.model.orm.ServiceType;
  * 
  */
 @Repository
-public class ServiceDAOImpl implements ServiceDao
+public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
 {
+
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceDAOImpl.class );
 
-    private SessionFactory sessionFactory;
-
 
     /**
-     * 
+     * @param sessionFactory
      */
     @Autowired
     public ServiceDAOImpl( SessionFactory sessionFactory )
     {
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
 
 
@@ -79,12 +78,12 @@ public class ServiceDAOImpl implements ServiceDao
         LOG.trace( "Method: startService called." );
 
         Service service = new Service();
-        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
+        Host host = (Host) getCurrentSession().get( Host.class, hostId );
         if ( host == null )
             throw new EntityNotFoundException( "Host object  not found" );
         service.setHost( host );
         service.setName( serviceType );
-        sessionFactory.getCurrentSession().save( service );
+        getCurrentSession().save( service );
         return service.getId();
         //TODO python service call
     }
@@ -97,9 +96,9 @@ public class ServiceDAOImpl implements ServiceDao
     public void stopService( Integer serviceid )
     {
         LOG.trace( "Method: stopService called." );
-        Service service = (Service) sessionFactory.getCurrentSession().get( Service.class, serviceid );
+        Service service = (Service) getCurrentSession().get( Service.class, serviceid );
         service.setRunning( false );
-        sessionFactory.getCurrentSession().saveOrUpdate( service );
+        getCurrentSession().saveOrUpdate( service );
 
         LOG.trace( "Method: stopService finished." );
     }
@@ -112,7 +111,7 @@ public class ServiceDAOImpl implements ServiceDao
     public boolean checkService( Integer serviceid )
     {
         LOG.trace( "Method: checkService called." );
-        Service service = (Service) sessionFactory.getCurrentSession().get( Service.class, serviceid );
+        Service service = (Service) getCurrentSession().get( Service.class, serviceid );
         return service.isRunning();
 
     }
@@ -126,7 +125,7 @@ public class ServiceDAOImpl implements ServiceDao
     {
         LOG.trace( "Method: checkIfServiceExists called." );
         String hql = "from Service where HOST_ID= :host  and  SERVICE_NAME =:service";
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         query.setParameter( "host", hostId );
         query.setParameter( "service", serviceType );
         @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
@@ -145,7 +144,7 @@ public class ServiceDAOImpl implements ServiceDao
     {
         LOG.trace( "Method: startService called." );
         String hql = "UPDATE Service set STATE=:state where HOST_ID=:host  and  SERVICE_NAME =:service";
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         query.setParameter( "state", true );
         query.setParameter( "host", hostId );
         query.setParameter( "service", serviceType );
@@ -161,7 +160,7 @@ public class ServiceDAOImpl implements ServiceDao
     public ServiceType getServiceType( Integer serviceid )
     {
         LOG.trace( "Method: getServiceType called." );
-        Service service = (Service) sessionFactory.getCurrentSession().get( Service.class, serviceid );
+        Service service = (Service) getCurrentSession().get( Service.class, serviceid );
         return service.getName();
 
 

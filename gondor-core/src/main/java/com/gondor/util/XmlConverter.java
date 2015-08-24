@@ -47,6 +47,7 @@ public class XmlConverter
 
     public XmlConverter( Marshaller marshaller, Unmarshaller unmarshaller )
     {
+
         this.marshaller = marshaller;
         this.unmarshaller = unmarshaller;
     }

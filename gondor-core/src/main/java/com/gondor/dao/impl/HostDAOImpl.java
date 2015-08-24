@@ -40,22 +40,20 @@ import com.gondor.model.orm.Service;
  * 
  */
 @Repository
-public class HostDAOImpl implements HostDao
+public class HostDAOImpl extends BaseDAOImpl implements HostDao
 {
+
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HostDAOImpl.class );
 
-    private SessionFactory sessionFactory;
-
 
     /**
-     * 
+     * @param sessionFactory
      */
     @Autowired
     public HostDAOImpl( SessionFactory sessionFactory )
-
     {
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
 
 
@@ -80,7 +78,7 @@ public class HostDAOImpl implements HostDao
     {
         LOG.trace( "Method: cretateHost called." );
 
-        sessionFactory.getCurrentSession().save( host );
+        getCurrentSession().save( host );
         return host.getId();
     }
 
@@ -106,7 +104,7 @@ public class HostDAOImpl implements HostDao
     {
         LOG.trace( "Method: validateHost called." );
         String hql = "from Host where HOST_IP= :ip  or   HOST_NAME =:name and CLUSTER_ID=:cluster";
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         query.setParameter( "ip", hostIdentifier );
         query.setParameter( "name", hostIdentifier );
         query.setParameter( "cluster", clusterId );
@@ -138,7 +136,7 @@ public class HostDAOImpl implements HostDao
     public Host getHost( int hostId )
     {
         LOG.trace( "Method: getHost called." );
-        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
+        Host host = (Host) getCurrentSession().get( Host.class, hostId );
         return host;
 
     }
@@ -153,10 +151,10 @@ public class HostDAOImpl implements HostDao
     {
         LOG.trace( "Method: addHostToCluster called." );
 
-        Host host = (Host) sessionFactory.getCurrentSession().get( Host.class, hostId );
-        Cluster cluster = (Cluster) sessionFactory.getCurrentSession().get( Cluster.class, clusterId );
+        Host host = (Host) getCurrentSession().get( Host.class, hostId );
+        Cluster cluster = (Cluster) getCurrentSession().get( Cluster.class, clusterId );
         host.setCluster( cluster );
-        sessionFactory.getCurrentSession().saveOrUpdate( host );
+        getCurrentSession().saveOrUpdate( host );
         LOG.trace( "Method: addHostToCluster finished." );
     }
 
@@ -170,7 +168,7 @@ public class HostDAOImpl implements HostDao
         LOG.trace( "Method: getAllHosts called." );
 
         LOG.trace( "Method: listAll called." );
-        @SuppressWarnings ( "unchecked") List<Host> listhHosts = sessionFactory.getCurrentSession().createCriteria( Host.class )
+        @SuppressWarnings ( "unchecked") List<Host> listhHosts = getCurrentSession().createCriteria( Host.class )
             .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
         return listhHosts;
 
@@ -186,7 +184,7 @@ public class HostDAOImpl implements HostDao
         LOG.trace( "Method: validateHostAlreadyPresent called." );
         LOG.trace( "Method: validateHost called." );
         String hql = "from Host where HOST_IP= :ip  or   HOST_NAME =:name ";
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         query.setParameter( "ip", hostIdentifier );
         query.setParameter( "name", hostIdentifier );
         @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();

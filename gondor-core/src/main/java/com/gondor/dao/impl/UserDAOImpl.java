@@ -39,28 +39,28 @@ import com.gondor.model.orm.User;
  *
  */
 @Repository
-public class UserDAOImpl implements UserDao
+public class UserDAOImpl extends BaseDAOImpl implements UserDao
 {
 
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( UserDAOImpl.class );
-
-
-    private SessionFactory sessionFactory;
-
-
+    /**
+     * @param sessionFactory
+     */
     @Autowired
     public UserDAOImpl( SessionFactory sessionFactory )
     {
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
+
+
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( UserDAOImpl.class );
 
 
     @Override
     @Transactional
     public List<User> list()
     {
-        @SuppressWarnings ( "unchecked") List<User> listUser = sessionFactory.getCurrentSession().createCriteria( User.class )
+        @SuppressWarnings ( "unchecked") List<User> listUser = getCurrentSession().createCriteria( User.class )
             .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return listUser;
@@ -71,7 +71,7 @@ public class UserDAOImpl implements UserDao
     @Transactional
     public void saveOrUpdate( User user )
     {
-        sessionFactory.getCurrentSession().saveOrUpdate( user );
+        getCurrentSession().saveOrUpdate( user );
     }
 
 
@@ -81,7 +81,7 @@ public class UserDAOImpl implements UserDao
     {
         User userToDelete = new User();
         userToDelete.setId( id );
-        sessionFactory.getCurrentSession().delete( userToDelete );
+        getCurrentSession().delete( userToDelete );
     }
 
 
@@ -91,7 +91,7 @@ public class UserDAOImpl implements UserDao
     {
         LOG.debug( "searching user id =" + id );
         String hql = "from User where id=" + id;
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
 
         @SuppressWarnings ( "unchecked") List<User> listUser = query.list();
 

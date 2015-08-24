@@ -35,14 +35,41 @@ public interface ClusterDao
     public String getStatus( int clusterId );
 
 
+    /**
+     * List all the clusters maintained by the application
+     * @return
+     */
     public List<Cluster> listAllClusters();
 
 
+    /**
+     * List all the hosts in cluster
+     * @param clusterId
+     * @return
+     */
     public List<Host> getAllhosts( int clusterId );
 
 
-    public void createCluster( Cluster cluster );
+    /**
+     * Create new cluster
+     * @param cluster
+     * @return newly created cluster id
+     */
+    public int createCluster( Cluster cluster );
 
 
+    /**
+     * stop all cluster hosts and services
+     * @param clusterId
+     */
     public void decommissionCluster( int clusterId );
+
+
+    /**
+     * Get the cluster with this id
+     * @param clusterId
+     * @return
+     */
+    public Cluster getCluster( int clusterId );
+
 }

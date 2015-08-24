@@ -35,22 +35,20 @@ import com.gondor.model.orm.YarnSite;
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
+public class YarnSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao<YarnSite>
 {
+
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( YarnSiteDAOImpl.class );
 
-    private SessionFactory sessionFactory;
-
 
     /**
-     * 
+     * @param sessionFactory
      */
     @Autowired
     public YarnSiteDAOImpl( SessionFactory sessionFactory )
     {
-
-        this.sessionFactory = sessionFactory;
+        super( sessionFactory );
     }
 
 
@@ -61,8 +59,8 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
     public List<YarnSite> getAllConf()
     {
         LOG.trace( "Method: getConf called." );
-        @SuppressWarnings ( "unchecked") List<YarnSite> yarnSiteConfig = sessionFactory.getCurrentSession()
-            .createCriteria( YarnSite.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<YarnSite> yarnSiteConfig = getCurrentSession().createCriteria( YarnSite.class )
+            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return yarnSiteConfig;
 
@@ -79,14 +77,14 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
         LOG.trace( "Method: changeConfig called." );
 
         String hql = "from HdfsSite where id= " + baseConfigId;
-        Query query = sessionFactory.getCurrentSession().createQuery( hql );
+        Query query = getCurrentSession().createQuery( hql );
         @SuppressWarnings ( "unchecked") List<YarnSite> lyarnSites = query.list();
         if ( lyarnSites != null && !lyarnSites.isEmpty() ) {
             YarnSite obj = lyarnSites.get( 0 );
             if ( obj.getProperty().equals( property ) )
                 obj.setValue( value );
         }
-        sessionFactory.getCurrentSession().saveOrUpdate( lyarnSites.get( 0 ) );
+        getCurrentSession().saveOrUpdate( lyarnSites.get( 0 ) );
         return true;
 
     }
@@ -102,7 +100,7 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
 
         YarnSite yarnSite = new YarnSite();
         yarnSite.setId( baseConfigId );
-        sessionFactory.getCurrentSession().delete( yarnSite );
+        getCurrentSession().delete( yarnSite );
         return true;
 
     }
@@ -116,7 +114,7 @@ public class YarnSiteDAOImpl implements BaseConfigurationDao<YarnSite>
     {
         LOG.trace( "Method: saveConfigs called." );
         for ( YarnSite config : configs ) {
-            sessionFactory.getCurrentSession().saveOrUpdate( config );
+            getCurrentSession().saveOrUpdate( config );
         }
         LOG.trace( "Method: saveConfigs finished." );
     }

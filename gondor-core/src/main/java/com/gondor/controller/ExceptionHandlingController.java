@@ -19,14 +19,17 @@ package com.gondor.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.gondor.exceptions.EntityNotFoundException;
 
 
 /**
  * @author Vipin Kumar
  * @created 08-Aug-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Controller for handling all custom exceptions for rest layer
  * 
  */
 
@@ -38,9 +41,19 @@ public class ExceptionHandlingController
 
 
     @ResponseStatus ( value = HttpStatus.NOT_FOUND, reason = "entity not found")
+    @ExceptionHandler ( EntityNotFoundException.class)
     public void entityNotFound()
     {
         LOG.error( "Entity not found" );
 
     }
+
+
+    @ResponseStatus ( value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "check log is requried")
+    @ExceptionHandler ( Exception.class)
+    public String internalerror()
+    {
+        return "no specific error check logs";
+    }
+
 }

@@ -27,7 +27,6 @@ package com.gondor.exceptions;
 public class EntityNotFoundException extends RuntimeException
 {
     private static final long serialVersionUID = -8980839607048059094L;
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( EntityNotFoundException.class );
 
 
     private String errorMessage;
