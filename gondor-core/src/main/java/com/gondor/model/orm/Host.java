@@ -48,6 +48,8 @@ public class Host implements Serializable
     private String name;
     private String ip;
 
+    private boolean isActive;
+
 
     @ManyToOne
     @JoinColumn ( name = "CLUSTER_ID")
@@ -129,6 +131,25 @@ public class Host implements Serializable
     public void setIp( String ip )
     {
         this.ip = ip;
+    }
+
+
+    /**
+     * @return the isActive
+     */
+    @Column ( name = "IS_ACTIVE")
+    public boolean isActive()
+    {
+        return isActive;
+    }
+
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setActive( boolean isActive )
+    {
+        this.isActive = isActive;
     }
 
 

@@ -20,6 +20,7 @@ package com.gondor.dao;
 import java.util.List;
 
 import com.gondor.model.orm.Host;
+import com.gondor.model.orm.Service;
 
 
 /**
@@ -31,29 +32,72 @@ import com.gondor.model.orm.Host;
  */
 public interface HostDao
 {
+    /**
+     * get the Object hierarchy for this host Object 
+     * @param hostID
+     * @return
+     */
     public String getStatus( int hostID );
 
 
+    /**
+     * List all hosts maintained by this application
+     * @return
+     */
     public List<Host> getAllHosts();
 
 
+    /**
+     * List all services running in this  host
+     * @return
+     */
+    public List<Service> getAllServices( int hostId );
+
+
+    /**
+     * create new host and return its generated id
+     * @param host
+     * @return
+     */
     public int cretateHost( Host host );
 
 
+    /**
+     * deactivate this host from cluster 
+     * @param hostId
+     */
     public void decomminsionHost( int hostId );
 
 
-    public Boolean validateHostAlreadyPresent( String hostIdentifier );
-
-
-    public Boolean validateHostAlreadyPresent( String hostIdentifier, Integer clusterId );
-
-
+    /**
+     * Add this host to cluster 
+     * @param hostId
+     * @param clusterId
+     */
     public void addHostToCluster( int hostId, int clusterId );
 
 
-    public Boolean checkHost( String hostIdentifier );
+    /**
+     * Check if this host is present in any cluster
+     * @param hostIdentifier
+     * @return
+     */
+    public Boolean checkHost( String hostIdentifier, boolean cluster );
 
 
+    /**
+     * Check if this host is present in any cluster on true
+     * or if hosts exists on false
+     * @param hostIdentifier
+     * @return
+     */
+    public Boolean checkHost( int hostId, boolean cluster );
+
+
+    /**
+     * Get the host object
+     * @param hostId
+     * @return
+     */
     public Host getHost( int hostId );
 }

@@ -17,7 +17,10 @@
  */
 package com.gondor.services;
 
+import java.util.List;
+
 import com.gondor.model.orm.Host;
+import com.gondor.model.orm.Service;
 
 
 /**
@@ -32,38 +35,88 @@ public interface HostManager
 {
 
 
-    public String getStatus( int hostId );
-
-
     /**
-     * create new host with the IP or host name provided
-     * @param hostname
-     */
-    public void createHost( String hostIdentifier, Integer clusterId );
-
-
-    /**
-     * 
-     * @param hostIdentifier
+     * get the Object hierarchy for this host Object 
+     * @param hostID
      * @return
-     * hostIdentifier can be IP or Hostname
      */
-    public Boolean validateHost( String hostIdentifier, Integer clusterId );
+    public String getStatus( int hostID );
 
 
     /**
-     * remove all services from this host
+     * List all hosts maintained by this application
+     * @return
+     */
+    public List<Host> getAllHosts();
+
+
+    /**
+     * List all services running in this  host
+     * @return
+     */
+    public List<Service> getAllServices( int hostId );
+
+
+    /**
+     * create new host and return its generated id
+     * @param host
+     * @return
+     */
+    public int cretateHost( Host host );
+
+
+    /**
+     * deactivate this host from cluster 
      * @param hostId
      */
     public void decomminsionHost( int hostId );
 
 
-    public Boolean checkHost( String hostIdentifier );
+    /**
+     * validate that this host is present in hosts table
+     * @param hostIdentifier
+     * @return
+     */
+    public Boolean validateHostAlreadyPresent( String hostIdentifier );
 
 
+    /**
+     * check if this host id is present
+     * @param hostId
+     * @return
+     */
+    public Boolean validateHostAlreadyPresent( int hostId );
+
+
+    /**
+     * Add this host to cluster 
+     * @param hostId
+     * @param clusterId
+     */
+    public void addHostToCluster( int hostId, int clusterId );
+
+
+    /**
+     * Check if this host is present in any cluster
+     * @param hostIdentifier
+     * @return
+     */
+    public Boolean checkIfHostInAnyCluster( String hostIdentifier );
+
+
+    /**
+     * Check if this host is present in any cluster
+     * @param hostIdentifier
+     * @return
+     */
+    public Boolean checkIfHostInAnyCluster( int hostId );
+
+
+    /**
+     * Get the host object
+     * @param hostId
+     * @return
+     */
     public Host getHost( int hostId );
-
-
-    public Host getHost( String hostname );
 
 }

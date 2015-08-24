@@ -34,7 +34,19 @@ public interface ClusterManager
 {
 
 
+    /**
+     * List all object hierarchy for this cluster eg cluster -> hosts -> services
+     * @param clusterId
+     * @return
+     */
     public String getStatus( int clusterId );
+
+
+    /**
+     * List all the clusters maintained by the application
+     * @return
+     */
+    public List<Cluster> listAllClusters();
 
 
     /**

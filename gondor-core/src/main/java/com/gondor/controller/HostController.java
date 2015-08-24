@@ -20,10 +20,12 @@ package com.gondor.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gondor.model.orm.Host;
 import com.gondor.services.HostManager;
 
 
@@ -66,10 +68,9 @@ public class HostController
      * Create this host with host identifier in cluster (clusterId)
      */
     @RequestMapping ( value = "/create", method = RequestMethod.PUT)
-    public void createHost( @RequestParam ( value = "host", required = true) String host,
-        @RequestParam ( value = "clusterId", required = true) Integer clusterId )
+    public void createHost( @RequestParam ( value = "clusterId", required = true) Integer clusterId, @RequestBody Host host )
     {
-        hostManager.createHost( host, clusterId );
+        hostManager.cretateHost( host );
     }
 
 
@@ -84,7 +85,7 @@ public class HostController
     public Boolean validateHost( @RequestParam ( value = "host", required = true) String host,
         @RequestParam ( value = "clusterId", required = true) Integer clusterId )
     {
-        return hostManager.validateHost( host, clusterId );
+        return hostManager.validateHostAlreadyPresent( null );
 
     }
 
@@ -92,7 +93,7 @@ public class HostController
     @RequestMapping ( value = "/check", method = RequestMethod.GET)
     public Boolean checkeHost( @RequestParam ( value = "host", required = true) String host )
     {
-        return hostManager.checkHost( host );
+        return hostManager.checkIfHostInAnyCluster( null );
 
     }
 

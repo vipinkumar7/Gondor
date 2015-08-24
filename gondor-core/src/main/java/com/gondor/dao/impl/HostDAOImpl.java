@@ -22,6 +22,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,42 +91,10 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
     public void decomminsionHost( int hostId )
     {
         LOG.trace( "Method: decomminsionHost called." );
-
-
+        Host host = (Host) getCurrentSession().get( Host.class, hostId );
+        host.setActive( false );
+        getCurrentSession().saveOrUpdate( host );
         LOG.trace( "Method: decomminsionHost finished." );
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.HostDao#validateHost(java.lang.String, java.lang.Integer)
-     */
-    @Override
-    public Boolean validateHostAlreadyPresent( String hostIdentifier, Integer clusterId )
-    {
-        LOG.trace( "Method: validateHost called." );
-        String hql = "from Host where HOST_IP= :ip  or   HOST_NAME =:name and CLUSTER_ID=:cluster";
-        Query query = getCurrentSession().createQuery( hql );
-        query.setParameter( "ip", hostIdentifier );
-        query.setParameter( "name", hostIdentifier );
-        query.setParameter( "cluster", clusterId );
-        @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
-        if ( lServices != null && !lServices.isEmpty() )
-            return true;
-        return false;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.HostDao#checkHost(java.lang.String)
-     */
-    @Override
-    public Boolean checkHost( String hostIdentifier )
-    {
-        LOG.trace( "Method: checkHost called." );
-        //TODO native class for network check 
-        return null;
-
     }
 
 
@@ -176,21 +145,53 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
 
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.HostDao#validateHostAlreadyPresent(java.lang.String)
+     * @see com.gondor.dao.HostDao#getAllServices()
+     */
+    @SuppressWarnings ( "unchecked")
+    @Override
+    public List<Service> getAllServices( int hostId )
+    {
+        LOG.trace( "Method: getAllServices called." );
+
+        Criteria criteria = getCurrentSession().createCriteria( Service.class );
+        criteria.add( Restrictions.eq( "HOST_ID", hostId ) );
+        return criteria.list();
+
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.HostDao#checkHost(java.lang.String, boolean)
      */
     @Override
-    public Boolean validateHostAlreadyPresent( String hostIdentifier )
+    public Boolean checkHost( String hostIdentifier, boolean cluster )
     {
-        LOG.trace( "Method: validateHostAlreadyPresent called." );
-        LOG.trace( "Method: validateHost called." );
+        LOG.trace( "Method: checkHost called." );
+
         String hql = "from Host where HOST_IP= :ip  or   HOST_NAME =:name ";
         Query query = getCurrentSession().createQuery( hql );
         query.setParameter( "ip", hostIdentifier );
         query.setParameter( "name", hostIdentifier );
-        @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
-        if ( lServices != null && !lServices.isEmpty() )
-            return true;
-        return false;
+        @SuppressWarnings ( "unchecked") List<Host> hosts = query.list();
+
+        return cluster == false ? ( ( hosts != null && !hosts.isEmpty() ) ? true : false ) : ( ( hosts == null || hosts
+            .isEmpty() ) ? false : ( hosts.get( 0 ).getCluster() != null ? true : false ) );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.HostDao#checkHost(int, boolean)
+     */
+    @Override
+    public Boolean checkHost( int hostId, boolean cluster )
+    {
+        LOG.trace( "Method: checkHost called." );
+
+        Host host = (Host) getCurrentSession().get( Host.class, hostId );
+        return cluster == false ? ( host != null ? true : false ) : ( host == null ? false : ( host.getCluster() != null ? true
+            : false ) );
 
     }
 }

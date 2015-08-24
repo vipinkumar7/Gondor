@@ -17,6 +17,8 @@
  */
 package com.gondor.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,40 +46,131 @@ public class HostManagerImpl implements HostManager
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#decomminsionHost(int, int)
+     * @see com.gondor.services.HostManager#getStatus(int)
+     */
+    @Override
+    public String getStatus( int hostID )
+    {
+        LOG.trace( "Method: getStatus called." );
+
+        return hostDao.getStatus( hostID );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#getAllHosts()
+     */
+    @Override
+    public List<Host> getAllHosts()
+    {
+        LOG.trace( "Method: getAllHosts called." );
+
+        return hostDao.getAllHosts();
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#getAllServices()
+     */
+    @Override
+    public List<com.gondor.model.orm.Service> getAllServices( int hostId )
+    {
+        LOG.trace( "Method: getAllServices called." );
+
+        return hostDao.getAllServices( hostId );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#cretateHost(com.gondor.model.orm.Host)
+     */
+    @Override
+    public int cretateHost( Host host )
+    {
+        LOG.trace( "Method: cretateHost called." );
+
+        return hostDao.cretateHost( host );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#decomminsionHost(int)
      */
     @Override
     public void decomminsionHost( int hostId )
     {
         LOG.trace( "Method: decomminsionHost called." );
 
-
+        hostDao.decomminsionHost( hostId );
         LOG.trace( "Method: decomminsionHost finished." );
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#createHost(java.lang.String)
+     * @see com.gondor.services.HostManager#validateHostAlreadyPresent(java.lang.String)
      */
     @Override
-    public void createHost( String hostname, Integer clusterId )
+    public Boolean validateHostAlreadyPresent( String hostIdentifier )
     {
-        LOG.trace( "Method: createHost called." );
+        LOG.trace( "Method: validateHostAlreadyPresent called." );
 
+        return hostDao.checkHost( hostIdentifier, false );
 
-        LOG.trace( "Method: createHost finished." );
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#validateHost(java.lang.String)
+     * @see com.gondor.services.HostManager#validateHostAlreadyPresent(int)
      */
     @Override
-    public Boolean validateHost( String hostname, Integer clusterId )
+    public Boolean validateHostAlreadyPresent( int hostId )
     {
-        LOG.trace( "Method: validateHost called." );
+        LOG.trace( "Method: validateHostAlreadyPresent called." );
 
-        return null;
+        return hostDao.checkHost( hostId, false );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#addHostToCluster(int, int)
+     */
+    @Override
+    public void addHostToCluster( int hostId, int clusterId )
+    {
+        LOG.trace( "Method: addHostToCluster called." );
+        hostDao.addHostToCluster( hostId, clusterId );
+
+        LOG.trace( "Method: addHostToCluster finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(java.lang.String)
+     */
+    @Override
+    public Boolean checkIfHostInAnyCluster( String hostIdentifier )
+    {
+        LOG.trace( "Method: checkIfHostInAnyCluster called." );
+
+        return hostDao.checkHost( hostIdentifier, true );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(int)
+     */
+    @Override
+    public Boolean checkIfHostInAnyCluster( int hostId )
+    {
+        LOG.trace( "Method: checkIfHostInAnyCluster called." );
+
+        return hostDao.checkHost( hostId, true );
 
     }
 
@@ -90,46 +183,9 @@ public class HostManagerImpl implements HostManager
     {
         LOG.trace( "Method: getHost called." );
 
-        return null;
+        return hostDao.getHost( hostId );
 
     }
 
 
-    /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#getHost(java.lang.String)
-     */
-    @Override
-    public Host getHost( String hostname )
-    {
-        LOG.trace( "Method: getHost called." );
-
-        return null;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#getStatus(int)
-     */
-    @Override
-    public String getStatus( int hostId )
-    {
-        LOG.trace( "Method: getStatus called." );
-
-        return null;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#checkHost(java.lang.String)
-     */
-    @Override
-    public Boolean checkHost( String hostIdentifier )
-    {
-        LOG.trace( "Method: checkHost called." );
-
-        return null;
-
-    }
 }

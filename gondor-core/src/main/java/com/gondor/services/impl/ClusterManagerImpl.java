@@ -109,4 +109,17 @@ public class ClusterManagerImpl implements ClusterManager
 
     }
 
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ClusterManager#listAllClusters()
+     */
+    @Override
+    public List<Cluster> listAllClusters()
+    {
+        LOG.trace( "Method: listAllClusters called." );
+
+        return clusterDao.listAllClusters();
+
+    }
+
 }
