@@ -20,6 +20,7 @@ package com.gondor.dao;
 import java.util.List;
 
 import com.gondor.model.orm.Instance;
+import com.gondor.model.orm.Service;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
 
@@ -95,7 +96,7 @@ public interface ServiceDao
      * @param hostId
      * <p>check if particular service exists   on host</p>
      */
-    public boolean checkIfServiceExists( ServiceType serviceType, Integer hostId );
+    public Service getServiceIfExists( ServiceType serviceType, Integer hostId );
 
 
     /**
@@ -103,9 +104,22 @@ public interface ServiceDao
      * @param serviceid
      * <p>check the state of service</p>
      */
-    public boolean checkService( Integer serviceid );
+    
+    public boolean checkState( Integer serviceid );
+    
+    /**
+     * return service object is exists
+     * @param serviceid
+     * @return
+     */
+    public Service getServiceIfExists( Integer serviceid );
 
 
+    /**
+     * List all the configuration for this service 
+     * @param serviceId
+     * @return
+     */
     public List<SimpleConfiguration> getAllConfig( int serviceId );
 
 }

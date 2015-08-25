@@ -21,11 +21,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 
 /**
@@ -49,12 +53,18 @@ public class Instance implements Serializable
      * 
      */
     private static final long serialVersionUID = 7745270069870881802L;
+
     private int id;
+
+    @Enumerated ( EnumType.STRING)
     private ServiceType name;
 
     @ManyToOne
     @JoinColumn ( name = "SERVICE_ID")
     private Service service;
+
+    @Type ( type = "numeric_boolean")
+    private boolean isRunning;
 
 
     /**
@@ -113,6 +123,25 @@ public class Instance implements Serializable
     public void setService( Service service )
     {
         this.service = service;
+    }
+
+
+    /**
+     * @return the isRunning
+     */
+    @Column ( name = "STATE")
+    public boolean isRunning()
+    {
+        return isRunning;
+    }
+
+
+    /**
+     * @param isRunning the isRunning to set
+     */
+    public void setRunning( boolean isRunning )
+    {
+        this.isRunning = isRunning;
     }
 
 

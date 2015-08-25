@@ -111,11 +111,11 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
      * @see com.gondor.dao.ServiceDao#checkService(java.lang.Integer)
      */
     @Override
-    public boolean checkService( Integer serviceid )
+    public Service getServiceIfExists( Integer serviceid )
     {
         LOG.trace( "Method: checkService called." );
         Service service = (Service) getCurrentSession().get( Service.class, serviceid );
-        return service.isRunning();
+        return service;
 
     }
 
@@ -124,7 +124,7 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
      * @see com.gondor.dao.ServiceDao#checkService(com.gondor.model.orm.ServiceType, java.lang.Integer)
      */
     @Override
-    public boolean checkIfServiceExists( ServiceType serviceType, Integer hostId )
+    public Service getServiceIfExists( ServiceType serviceType, Integer hostId )
     {
         LOG.trace( "Method: checkIfServiceExists called." );
         String hql = "from Service where HOST_ID= :host  and  SERVICE_NAME =:service";
@@ -132,9 +132,7 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
         query.setParameter( "host", hostId );
         query.setParameter( "service", serviceType );
         @SuppressWarnings ( "unchecked") List<Service> lServices = query.list();
-        if ( lServices != null && !lServices.isEmpty() )
-            return true;
-        return false;
+        return ( lServices != null && !lServices.isEmpty() ) ? lServices.get( 0 ) : null;
 
     }
 
@@ -197,6 +195,19 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
         Criteria criteria = getCurrentSession().createCriteria( SimpleConfiguration.class );
         criteria.add( Restrictions.in( "SERVICE_TYPE", service.getName().allChildren() ) );//for all children of this service
         return criteria.list();
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#checkState(java.lang.Integer)
+     */
+    @Override
+    public boolean checkState( Integer serviceid )
+    {
+        LOG.trace( "Method: checkState called." );
+        Service service = (Service) getCurrentSession().get( Service.class, serviceid );
+        return service.isRunning();
 
     }
 }
