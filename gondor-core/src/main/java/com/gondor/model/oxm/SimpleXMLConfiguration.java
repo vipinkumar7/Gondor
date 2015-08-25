@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement ( name = "configuration")
-public class Configuration implements Serializable
+public class SimpleXMLConfiguration implements Serializable
 {
 
     /**

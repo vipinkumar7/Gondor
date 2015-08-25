@@ -17,7 +17,7 @@
  */
 package com.gondor.services;
 
-import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.Configuration;
 import com.gondor.model.orm.PackageType;
 
 
@@ -37,11 +37,10 @@ public interface DeploymentManager
     public boolean deploy( int hostID, PackageType packageType );
 
 
-    public void applyChangedConfig( int clusterId, BaseConfiguration baseConfiguration,
-        Class<? extends BaseConfiguration> configObject );
+    public void applyChangedConfig( int clusterId, Configuration baseConfiguration, Class<? extends Configuration> configObject );
 
 
-    public void applyChangedConfig( int clusterId, int hostId, BaseConfiguration baseConfiguration,
-        Class<? extends BaseConfiguration> configObject );
+    public void applyChangedConfig( int clusterId, int hostId, Configuration baseConfiguration,
+        Class<? extends Configuration> configObject );
 
 }

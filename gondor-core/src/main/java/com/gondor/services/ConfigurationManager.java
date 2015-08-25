@@ -17,7 +17,7 @@
  */
 package com.gondor.services;
 
-import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.Configuration;
 
 
 /**
@@ -31,12 +31,12 @@ public interface ConfigurationManager
 {
 
 
-    public void changeConfiguration( String property, String value, Class<? extends BaseConfiguration> configObject );
+    public void changeConfiguration( String property, String value, Class<? extends Configuration> configObject );
 
 
-    public void changeConfiguration( BaseConfiguration baseObj, Class<? extends BaseConfiguration> configObject );
+    public void changeConfiguration( Configuration baseObj, Class<? extends Configuration> configObject );
 
 
-    public void validateConfiguration( BaseConfiguration baseObj, Class<? extends BaseConfiguration> configObject );
+    public void validateConfiguration( Configuration baseObj, Class<? extends Configuration> configObject );
 
 }

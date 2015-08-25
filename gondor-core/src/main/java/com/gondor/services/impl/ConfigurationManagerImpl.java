@@ -17,7 +17,7 @@
  */
 package com.gondor.services.impl;
 
-import com.gondor.model.orm.BaseConfiguration;
+import com.gondor.model.orm.Configuration;
 import com.gondor.services.ConfigurationManager;
 
 
@@ -38,7 +38,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
      * @see com.gondor.services.ConfigurationManager#changeConfiguration(java.lang.String, java.lang.String, java.lang.Class)
      */
     @Override
-    public void changeConfiguration( String property, String value, Class<? extends BaseConfiguration> configObject )
+    public void changeConfiguration( String property, String value, Class<? extends Configuration> configObject )
     {
         LOG.trace( "Method: changeConfiguration called." );
 
@@ -51,7 +51,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
      * @see com.gondor.services.ConfigurationManager#changeConfiguration(com.gondor.model.orm.BaseConfiguration, java.lang.Class)
      */
     @Override
-    public void changeConfiguration( BaseConfiguration baseObj, Class<? extends BaseConfiguration> configObject )
+    public void changeConfiguration( Configuration baseObj, Class<? extends Configuration> configObject )
     {
         LOG.trace( "Method: changeConfiguration called." );
 
@@ -64,7 +64,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
      * @see com.gondor.services.ConfigurationManager#validateConfiguration(com.gondor.model.orm.BaseConfiguration, java.lang.Class)
      */
     @Override
-    public void validateConfiguration( BaseConfiguration baseObj, Class<? extends BaseConfiguration> configObject )
+    public void validateConfiguration( Configuration baseObj, Class<? extends Configuration> configObject )
     {
         LOG.trace( "Method: validateConfiguration called." );
 

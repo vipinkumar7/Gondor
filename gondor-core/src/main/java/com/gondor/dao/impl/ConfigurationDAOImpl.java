@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor.
+ *  * Copyright (c) 2015 Gondor
  * All rights reserved.
  *
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,71 +19,77 @@ package com.gondor.dao.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.gondor.dao.BaseConfigurationDao;
-import com.gondor.model.orm.CoreSite;
+import com.gondor.dao.ConfigurationDao;
+import com.gondor.model.orm.Configuration;
+import com.gondor.model.orm.ServiceType;
 
 
 /**
  * @author Vipin Kumar
- * @created 24-Jun-2015
+ * @created 22-Jun-2015
  *
  * TODO: Write a quick description of what the class is supposed to do.
  *
  */
-public class CoreSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao<CoreSite>
+@Repository
+public class ConfigurationDAOImpl extends BaseDAOImpl implements ConfigurationDao
 {
 
     /**
      * @param sessionFactory
      */
     @Autowired
-    public CoreSiteDAOImpl( SessionFactory sessionFactory )
+    public ConfigurationDAOImpl( SessionFactory sessionFactory )
     {
         super( sessionFactory );
     }
 
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( CoreSiteDAOImpl.class );
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationDAOImpl.class );
 
 
     /* (non-Javadoc)
      * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<CoreSite> getAllConf()
+    public List<Configuration> getAllConf( ServiceType serviceType )
     {
         LOG.trace( "Method: getConf called." );
-        @SuppressWarnings ( "unchecked") List<CoreSite> coreSiteConfig = getCurrentSession().createCriteria( CoreSite.class )
-            .setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<Configuration> hdfsSiteConfig = getCurrentSession()
+            .createCriteria( Configuration.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
-        return coreSiteConfig;
+        return hdfsSiteConfig;
+
 
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String, java.lang.String)
+     * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String)
      */
     @Override
     public boolean changeConfig( int baseConfigId, String property, String value )
     {
         LOG.trace( "Method: changeConfig called." );
-        String hql = "from CoreSite where id= " + baseConfigId;
+
+        String hql = "from HdfsSite where id= " + baseConfigId;
         Query query = getCurrentSession().createQuery( hql );
-        @SuppressWarnings ( "unchecked") List<CoreSite> lcoreSites = query.list();
-        if ( lcoreSites != null && !lcoreSites.isEmpty() ) {
-            CoreSite obj = lcoreSites.get( 0 );
+        @SuppressWarnings ( "unchecked") List<Configuration> lHdfsSites = query.list();
+        if ( lHdfsSites != null && !lHdfsSites.isEmpty() ) {
+            Configuration obj = lHdfsSites.get( 0 );
             if ( obj.getProperty().equals( property ) )
                 obj.setValue( value );
         }
-        getCurrentSession().saveOrUpdate( lcoreSites.get( 0 ) );
+        getCurrentSession().saveOrUpdate( lHdfsSites.get( 0 ) );
         return true;
-
 
     }
 
@@ -96,9 +102,10 @@ public class CoreSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao
     {
         LOG.trace( "Method: removeConfig called." );
 
-        CoreSite coreSite = new CoreSite();
-        coreSite.setId( baseConfigId );
-        getCurrentSession().delete( coreSite );
+        //TODO has to check for property
+        Configuration hdfsSite = new Configuration();
+        hdfsSite.setId( baseConfigId );
+        getCurrentSession().delete( hdfsSite );
         return true;
 
     }
@@ -108,10 +115,12 @@ public class CoreSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao
      * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
      */
     @Override
-    public void saveConfigs( List<CoreSite> configs )
+    @Transactional
+    public void saveConfigs( List<Configuration> configs )
     {
         LOG.trace( "Method: saveConfigs called." );
-        for ( CoreSite config : configs ) {
+
+        for ( Configuration config : configs ) {
             getCurrentSession().saveOrUpdate( config );
         }
         LOG.trace( "Method: saveConfigs finished." );
@@ -119,12 +128,14 @@ public class CoreSiteDAOImpl extends BaseDAOImpl implements BaseConfigurationDao
 
 
     @Override
+    @Transactional
     public void deleteAllConfig()
     {
-        LOG.trace( "Method: deleteAllConfig called." );
+        LOG.trace( "Method: deleteConfig called." );
 
+        getCurrentSession().createQuery( "delete from HdfsSite" ).executeUpdate();
 
-        LOG.trace( "Method: deleteAllConfig finished." );
+        LOG.trace( "Method: deleteConfig finished." );
     }
 
 

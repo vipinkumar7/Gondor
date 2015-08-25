@@ -37,15 +37,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.gondor.model.orm.Cluster;
-import com.gondor.model.orm.CoreSite;
-import com.gondor.model.orm.HdfsSite;
 import com.gondor.model.orm.Host;
-import com.gondor.model.orm.MapredSite;
 import com.gondor.model.orm.Resource;
 import com.gondor.model.orm.Role;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.User;
-import com.gondor.model.orm.YarnSite;
 import com.gondor.util.XmlConverter;
 
 
@@ -94,16 +90,12 @@ public class ApplicationContextConfig
     {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
         sessionBuilder.addAnnotatedClasses( User.class );
-        sessionBuilder.addAnnotatedClasses( HdfsSite.class );
         sessionBuilder.addAnnotatedClasses( Cluster.class );
         sessionBuilder.addAnnotatedClasses( Resource.class );
         sessionBuilder.addAnnotatedClasses( Service.class );
-        sessionBuilder.addAnnotatedClasses( CoreSite.class );
         sessionBuilder.addAnnotatedClasses( Host.class );
-        sessionBuilder.addAnnotatedClasses( MapredSite.class );
         sessionBuilder.addAnnotatedClasses( Process.class );
         sessionBuilder.addAnnotatedClasses( Role.class );
-        sessionBuilder.addAnnotatedClasses( YarnSite.class );
         sessionBuilder.scanPackages( "com.gondor.model" );
         sessionBuilder.addProperties( getHibernateProperties() );
         return sessionBuilder.buildSessionFactory();
@@ -124,7 +116,7 @@ public class ApplicationContextConfig
     {
 
         CastorMarshaller marshaller = new CastorMarshaller();
-        marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
+        marshaller.setTargetClass( com.gondor.model.oxm.SimpleXMLConfiguration.class );
         return marshaller;
     }
 

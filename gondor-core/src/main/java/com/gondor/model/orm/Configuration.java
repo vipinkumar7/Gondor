@@ -20,11 +20,10 @@ package com.gondor.model.orm;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 
 
 /**
@@ -35,9 +34,9 @@ import javax.persistence.MappedSuperclass;
  * 
  */
 
-@MappedSuperclass
-@Inheritance ( strategy = InheritanceType.JOINED)
-public abstract class BaseConfiguration implements Serializable
+@Entity
+@Table ( name = "CONFIGURATION")
+public class Configuration implements Serializable
 {
 
     /**

@@ -23,14 +23,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gondor.dao.BaseConfigurationDao;
+import com.gondor.dao.ConfigurationDao;
 import com.gondor.dao.ServiceDao;
-import com.gondor.model.orm.BaseConfiguration;
-import com.gondor.model.orm.CoreSite;
-import com.gondor.model.orm.HdfsSite;
-import com.gondor.model.orm.MapredSite;
+import com.gondor.model.orm.Configuration;
 import com.gondor.model.orm.ServiceType;
-import com.gondor.model.orm.YarnSite;
 import com.gondor.services.ServiceManager;
 
 
@@ -50,17 +46,9 @@ public class ServiceManagerImpl implements ServiceManager
     @Autowired
     private ServiceDao serviceDao;
 
-    @Autowired
-    private BaseConfigurationDao<HdfsSite> hdfsSiteDAOImpl;
 
     @Autowired
-    private BaseConfigurationDao<CoreSite> coreSiteDAOImpl;
-
-    @Autowired
-    private BaseConfigurationDao<YarnSite> yarnSiteDAOImpl;
-
-    @Autowired
-    private BaseConfigurationDao<MapredSite> mapredSiteDAOImpl;
+    private ConfigurationDao configDao;
 
 
     /* (non-Javadoc)
@@ -105,26 +93,19 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#getAllServiceconfig(com.gondor.model.ServiceType)
      */
     @Override
-    public Set<BaseConfiguration> getAllServiceconfig( Integer serviceid )
+    public Set<Configuration> getAllServiceconfig( Integer serviceid )
     {
         LOG.trace( "Method: getAllServiceconfig called." );
 
-        Set<BaseConfiguration> baseConfigurations = new HashSet<BaseConfiguration>();
+        Set<Configuration> baseConfigurations = new HashSet<Configuration>();
         ServiceType serviceType = serviceDao.getServiceType( serviceid );
 
         switch ( serviceType ) {
             case HDFS:
-                baseConfigurations.addAll( hdfsSiteDAOImpl.getAllConf() );
-                baseConfigurations.addAll( coreSiteDAOImpl.getAllConf() );
-                baseConfigurations.addAll( mapredSiteDAOImpl.getAllConf() );
                 break;
             case HBASE:
                 break;
-            case HIVE:
-            case ZOOKEEPER:
-                break;
             case YARN:
-                baseConfigurations.addAll( yarnSiteDAOImpl.getAllConf() );
                 break;
         }
 
