@@ -5,14 +5,11 @@
         <name>hive.metastore.local</name>
         <value>false</value>
     </property>
-
-
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
         <value>jdbc:mysql://hadoopdev01/metastore</value>
         <description>the URL of the MySQL database</description>
     </property>
-
     <property>
         <name>javax.jdo.option.ConnectionDriverName</name>
         <value>com.mysql.jdbc.Driver</value>
@@ -27,8 +24,6 @@
         <name>javax.jdo.option.ConnectionPassword</name>
         <value></value>
     </property>
-
-
     <property>
         <name>hive.metastore.uris</name>
         <value>thrift://hadoopdev01:9083</value>

@@ -20,7 +20,6 @@ package com.gondor.dao;
 import java.util.List;
 
 import com.gondor.model.orm.SimpleConfiguration;
-import com.gondor.model.orm.ServiceType;
 
 
 /**
@@ -33,14 +32,6 @@ import com.gondor.model.orm.ServiceType;
 public interface SimpleConfigurationDao
 {
 
-    /**
-     *
-     * @param serviceId
-     * @return
-     * get all the configuration
-     */
-    public List<SimpleConfiguration> getAllConf( ServiceType serviceType );
-
 
     /**
      *
@@ -50,7 +41,7 @@ public interface SimpleConfigurationDao
      *
      * change the  configuration  of given name in the Configuration file
      */
-    public boolean changeConfig( int baseConfigId, String property, String value );
+    public boolean changeConfig( int configId, String property, String value );
 
 
     /**
@@ -59,7 +50,7 @@ public interface SimpleConfigurationDao
      * @param configName
      * @return
      */
-    public boolean removeConfig( int baseConfigId, String property );
+    public boolean removeConfig( int configId, String property );
 
 
     /**

@@ -21,15 +21,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.SimpleConfiguration;
-import com.gondor.model.orm.ServiceType;
 
 
 /**
@@ -42,6 +39,8 @@ import com.gondor.model.orm.ServiceType;
 @Repository
 public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigurationDao
 {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationDAOImpl.class );
+
 
     /**
      * @param sessionFactory
@@ -53,89 +52,69 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigura
     }
 
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationDAOImpl.class );
-
-
     /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#getConf()
-     */
-    @Override
-    public List<SimpleConfiguration> getAllConf( ServiceType serviceType )
-    {
-        LOG.trace( "Method: getConf called." );
-        @SuppressWarnings ( "unchecked") List<SimpleConfiguration> hdfsSiteConfig = getCurrentSession()
-            .createCriteria( SimpleConfiguration.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
-
-        return hdfsSiteConfig;
-
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#changeConfig(int, java.lang.String)
-     */
-    @Override
-    public boolean changeConfig( int baseConfigId, String property, String value )
-    {
-        LOG.trace( "Method: changeConfig called." );
-
-        String hql = "from HdfsSite where id= " + baseConfigId;
-        Query query = getCurrentSession().createQuery( hql );
-        @SuppressWarnings ( "unchecked") List<SimpleConfiguration> lHdfsSites = query.list();
-        if ( lHdfsSites != null && !lHdfsSites.isEmpty() ) {
-            SimpleConfiguration obj = lHdfsSites.get( 0 );
-            if ( obj.getProperty().equals( property ) )
-                obj.setValue( value );
-        }
-        getCurrentSession().saveOrUpdate( lHdfsSites.get( 0 ) );
-        return true;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#removeConfig(int, java.lang.String)
-     */
-    @Override
-    public boolean removeConfig( int baseConfigId, String property )
-    {
-        LOG.trace( "Method: removeConfig called." );
-
-        //TODO has to check for property
-        SimpleConfiguration hdfsSite = new SimpleConfiguration();
-        hdfsSite.setId( baseConfigId );
-        getCurrentSession().delete( hdfsSite );
-        return true;
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.dao.BaseConfigurationDao#saveConfigs(com.gondor.model.orm.BaseConfiguration)
+     * @see com.gondor.dao.SimpleConfigurationDao#saveConfigs(java.util.List)
      */
     @Override
     @Transactional
     public void saveConfigs( List<SimpleConfiguration> configs )
     {
         LOG.trace( "Method: saveConfigs called." );
-
         for ( SimpleConfiguration config : configs ) {
             getCurrentSession().saveOrUpdate( config );
         }
+
         LOG.trace( "Method: saveConfigs finished." );
     }
 
 
+    /* (non-Javadoc)
+     * @see com.gondor.dao.SimpleConfigurationDao#removeConfig(int, java.lang.String)
+     */
+    @Override
+    public boolean removeConfig( int configId, String property )
+    {
+        LOG.trace( "Method: removeConfig called." );
+
+        SimpleConfiguration simpleConfiguration = (SimpleConfiguration) getCurrentSession().get( SimpleConfiguration.class,
+            configId );
+        if ( simpleConfiguration.getProperty().equals( property ) ) {
+            getCurrentSession().delete( simpleConfiguration );
+            return true;
+        }
+        return false;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.SimpleConfigurationDao#changeConfig(int, java.lang.String, java.lang.String)
+     */
+    @Override
+    public boolean changeConfig( int configId, String property, String value )
+    {
+        LOG.trace( "Method: changeConfig called." );
+
+        SimpleConfiguration simpleConfiguration = (SimpleConfiguration) getCurrentSession().get( SimpleConfiguration.class,
+            configId );
+        if ( simpleConfiguration.getProperty().equals( property ) ) {
+            simpleConfiguration.setValue( value );
+            return true;
+        }
+        return false;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.SimpleConfigurationDao#deleteAllConfig()
+     */
     @Override
     @Transactional
     public void deleteAllConfig()
     {
-        LOG.trace( "Method: deleteConfig called." );
+        LOG.trace( "Method: deleteAllConfig called." );
 
-        getCurrentSession().createQuery( "delete from HdfsSite" ).executeUpdate();
-
-        LOG.trace( "Method: deleteConfig finished." );
+        getCurrentSession().createQuery( "delete from SIMPLECONFIGURATION " ).executeUpdate();
+        LOG.trace( "Method: deleteAllConfig finished." );
     }
 
 

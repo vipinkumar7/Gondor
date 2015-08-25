@@ -17,8 +17,6 @@
 		<name>mapreduce.framework.name</name>
 		<value>yarn</value>
 	</property>
-
-
 	<property>
 		<name>mapreduce.task.timeout</name>
 		<value>600000</value>

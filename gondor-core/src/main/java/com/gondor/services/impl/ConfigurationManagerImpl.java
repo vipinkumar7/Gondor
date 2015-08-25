@@ -17,6 +17,11 @@
  */
 package com.gondor.services.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.services.ConfigurationManager;
 
@@ -33,42 +38,60 @@ public class ConfigurationManagerImpl implements ConfigurationManager
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationManagerImpl.class );
 
+    @Autowired
+    private SimpleConfigurationDao simpleCondifDao;
+
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ConfigurationManager#changeConfiguration(java.lang.String, java.lang.String, java.lang.Class)
+     * @see com.gondor.services.ConfigurationManager#changeConfig(int, java.lang.String, java.lang.String)
      */
     @Override
-    public void changeConfiguration( String property, String value, Class<? extends SimpleConfiguration> configObject )
+    public boolean changeConfig( int configId, String property, String value )
     {
-        LOG.trace( "Method: changeConfiguration called." );
+        LOG.trace( "Method: changeConfig called." );
 
+        return false;
 
-        LOG.trace( "Method: changeConfiguration finished." );
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ConfigurationManager#changeConfiguration(com.gondor.model.orm.BaseConfiguration, java.lang.Class)
+     * @see com.gondor.services.ConfigurationManager#removeConfig(int, java.lang.String)
      */
     @Override
-    public void changeConfiguration( SimpleConfiguration baseObj, Class<? extends SimpleConfiguration> configObject )
+    public boolean removeConfig( int configId, String property )
     {
-        LOG.trace( "Method: changeConfiguration called." );
+        LOG.trace( "Method: removeConfig called." );
 
+        return false;
 
-        LOG.trace( "Method: changeConfiguration finished." );
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ConfigurationManager#validateConfiguration(com.gondor.model.orm.BaseConfiguration, java.lang.Class)
+     * @see com.gondor.services.ConfigurationManager#saveConfigs(java.util.List)
      */
     @Override
-    public void validateConfiguration( SimpleConfiguration baseObj, Class<? extends SimpleConfiguration> configObject )
+    public void saveConfigs( List<SimpleConfiguration> config )
     {
-        LOG.trace( "Method: validateConfiguration called." );
+        LOG.trace( "Method: saveConfigs called." );
 
 
-        LOG.trace( "Method: validateConfiguration finished." );
+        LOG.trace( "Method: saveConfigs finished." );
     }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ConfigurationManager#deleteAllConfig()
+     */
+    @Override
+    public void deleteAllConfig()
+    {
+        LOG.trace( "Method: deleteAllConfig called." );
+
+
+        LOG.trace( "Method: deleteAllConfig finished." );
+    }
+
+
 }

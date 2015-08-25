@@ -17,6 +17,8 @@
  */
 package com.gondor.services;
 
+import java.util.List;
+
 import com.gondor.model.orm.SimpleConfiguration;
 
 
@@ -31,12 +33,34 @@ public interface ConfigurationManager
 {
 
 
-    public void changeConfiguration( String property, String value, Class<? extends SimpleConfiguration> configObject );
+    /**
+    *
+    * @param baseConfigId
+    * @param configName
+    * @return
+    *
+    * change the  configuration  of given name in the Configuration file
+    */
+    public boolean changeConfig( int configId, String property, String value );
 
 
-    public void changeConfiguration( SimpleConfiguration baseObj, Class<? extends SimpleConfiguration> configObject );
+    /**
+     *
+     * @param baseConfigId
+     * @param configName
+     * @return
+     */
+    public boolean removeConfig( int configId, String property );
 
 
-    public void validateConfiguration( SimpleConfiguration baseObj, Class<? extends SimpleConfiguration> configObject );
+    /**
+     * @param configList
+     * @return
+     * Method to save list of configurations
+     */
+    public void saveConfigs( List<SimpleConfiguration> config );
+
+
+    public void deleteAllConfig();
 
 }

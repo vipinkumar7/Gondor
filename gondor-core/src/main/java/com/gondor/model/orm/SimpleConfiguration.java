@@ -35,7 +35,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table ( name = "CONFIGURATION")
+@Table ( name = "SIMPLECONFIGURATION")
 public class SimpleConfiguration implements Serializable
 {
 
