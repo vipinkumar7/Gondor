@@ -19,16 +19,20 @@ package com.gondor.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gondor.dao.ServiceDao;
 import com.gondor.exceptions.EntityNotFoundException;
 import com.gondor.model.orm.Host;
+import com.gondor.model.orm.Instance;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.ServiceType;
+import com.gondor.model.orm.SimpleConfiguration;
 
 
 /**
@@ -75,8 +79,7 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
     @Override
     public Integer createService( ServiceType serviceType, Integer hostId )
     {
-        LOG.trace( "Method: startService called." );
-
+        LOG.trace( "Method: createService called." );
         Service service = new Service();
         Host host = (Host) getCurrentSession().get( Host.class, hostId );
         if ( host == null )
@@ -99,7 +102,7 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
         Service service = (Service) getCurrentSession().get( Service.class, serviceid );
         service.setRunning( false );
         getCurrentSession().saveOrUpdate( service );
-
+        //TODO python service
         LOG.trace( "Method: stopService finished." );
     }
 
@@ -163,6 +166,37 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
         Service service = (Service) getCurrentSession().get( Service.class, serviceid );
         return service.getName();
 
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#getAllInstances(int)
+     */
+    @SuppressWarnings ( "unchecked")
+    @Override
+    public List<Instance> getAllInstances( int serviceId )
+    {
+        LOG.trace( "Method: getAllInstances called." );
+        Criteria criteria = getCurrentSession().createCriteria( Instance.class );
+        criteria.add( Restrictions.eq( "SERVICE_ID", serviceId ) );
+        return criteria.list();
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.ServiceDao#getAllConfig(int)
+     */
+    @SuppressWarnings ( "unchecked")
+    @Override
+    public List<SimpleConfiguration> getAllConfig( int serviceId )
+    {
+        LOG.trace( "Method: getAllConfig called." );
+
+        Service service = (Service) getCurrentSession().get( Service.class, serviceId );
+        Criteria criteria = getCurrentSession().createCriteria( SimpleConfiguration.class );
+        criteria.add( Restrictions.in( "SERVICE_TYPE", service.getName().allChildren() ) );//for all children of this service
+        return criteria.list();
 
     }
 }

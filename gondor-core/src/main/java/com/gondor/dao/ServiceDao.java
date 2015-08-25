@@ -17,7 +17,11 @@
  */
 package com.gondor.dao;
 
+import java.util.List;
+
+import com.gondor.model.orm.Instance;
 import com.gondor.model.orm.ServiceType;
+import com.gondor.model.orm.SimpleConfiguration;
 
 
 /**
@@ -32,10 +36,17 @@ public interface ServiceDao
 
 
     /**
+     * List all the instances of this services running in cluster
+     * @return
+     */
+    public List<Instance> getAllInstances( int serviceId );
+
+
+    /**
      * 
      * @param serviceid
      * @return
-     * Check the status for all the Instances running under this service
+     * Check the status for all the Instances running under this service and this service
      */
     public String getStatus( Integer serviceid );
 
@@ -64,12 +75,17 @@ public interface ServiceDao
 
 
     /**
-     * 
+     * Stop the service with this ID
      * @param serviceid
      */
     public void stopService( Integer serviceid );
 
 
+    /**
+     * Get Service Type on id
+     * @param serviceid
+     * @return
+     */
     public ServiceType getServiceType( Integer serviceid );
 
 
@@ -89,5 +105,7 @@ public interface ServiceDao
      */
     public boolean checkService( Integer serviceid );
 
+
+    public List<SimpleConfiguration> getAllConfig( int serviceId );
 
 }

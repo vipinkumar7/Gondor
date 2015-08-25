@@ -17,10 +17,11 @@
  */
 package com.gondor.services;
 
-import java.util.Set;
+import java.util.List;
 
-import com.gondor.model.orm.SimpleConfiguration;
+import com.gondor.model.orm.Instance;
 import com.gondor.model.orm.ServiceType;
+import com.gondor.model.orm.SimpleConfiguration;
 
 
 /**
@@ -33,22 +34,83 @@ import com.gondor.model.orm.ServiceType;
 public interface ServiceManager
 {
 
+    /**
+     * List all the instances of this services running in cluster
+     * @return
+     */
+    public List<Instance> getAllInstances( int serviceId );
+
+
+    /**
+     * 
+     * @param serviceid
+     * @return
+     * Check the status for all the Instances running under this service and this service
+     */
     public String getStatus( Integer serviceid );
 
 
+    /**
+     * 
+     * @param serviceType
+     * <p>
+     * create the service of particular type
+     * </p>
+     */
+    public Integer createService( ServiceType serviceType, Integer hostId );
+
+
+    /**
+     * 
+     * @param serviceType
+     * @param hostId
+     * @return
+     * 
+     * <p>
+     * Start the service of particular type
+     *</p>
+     */
     public Integer startService( ServiceType serviceType, Integer hostId );
 
 
+    /**
+     * Stop the service with this ID
+     * @param serviceid
+     */
     public void stopService( Integer serviceid );
 
 
-    public void restartService( Integer serviceid );
+    /**
+     * Get Service Type on id
+     * @param serviceid
+     * @return
+     */
+    public ServiceType getServiceType( Integer serviceid );
 
 
-    public void checkService( Integer serviceid );
+    /**
+     * 
+     * @param serviceType
+     * @param hostId
+     * <p>check if particular service exists   on host</p>
+     */
+    public boolean checkIfServiceExists( ServiceType serviceType, Integer hostId );
 
 
-    public Set<SimpleConfiguration> getAllServiceconfig( Integer serviceid );
+    /**
+     * 
+     * @param serviceid
+     * <p>check the state of service</p>
+     */
+    public boolean checkService( Integer serviceid );
+
+
+    /**
+     * get all configuration for this service
+     * @param serviceId
+     * @return
+     */
+    public List<SimpleConfiguration> getAllConfig( int serviceId );
 
 
 }
