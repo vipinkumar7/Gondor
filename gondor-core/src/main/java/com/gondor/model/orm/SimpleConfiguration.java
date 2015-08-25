@@ -48,7 +48,15 @@ public class SimpleConfiguration implements Serializable
     private int id;
     private String property;
     private String value;
+    private String defaultValue;
+
     private String description;
+    private ResourceType resourceType;
+
+    //only child node should be here
+    private ServiceType serviceType;
+
+    private String fileName;
 
 
     @Id
@@ -124,6 +132,84 @@ public class SimpleConfiguration implements Serializable
     public void setProperty( String property )
     {
         this.property = property;
+    }
+
+
+    /**
+     * @return the resourceType
+     */
+    @Column ( name = "RESOURCE_TYPE")
+    public ResourceType getResourceType()
+    {
+        return resourceType;
+    }
+
+
+    /**
+     * @param resourceType the resourceType to set
+     */
+    public void setResourceType( ResourceType resourceType )
+    {
+        this.resourceType = resourceType;
+    }
+
+
+    /**
+     * @return the serviceType
+     */
+    @Column ( name = "SERVICE_TYPE")
+    public ServiceType getServiceType()
+    {
+        return serviceType;
+    }
+
+
+    /**
+     * @param serviceType the serviceType to set
+     */
+    public void setServiceType( ServiceType serviceType )
+    {
+        this.serviceType = serviceType;
+    }
+
+
+    /**
+     * @return the fileName
+     */
+    @Column ( name = "FILE_NAME")
+    public String getFileName()
+    {
+        return fileName;
+    }
+
+
+    /**
+     * @param fileName the fileName to set
+     */
+    public void setFileName( String fileName )
+    {
+        this.fileName = fileName;
+    }
+
+
+    /**
+     * @return the defaultValue
+     */
+
+
+    @Column ( name = "DEFAULT_VALUE", nullable = true)
+    public String getDefaultValue()
+    {
+        return defaultValue;
+    }
+
+
+    /**
+     * @param defaultValue the defaultValue to set
+     */
+    public void setDefaultValue( String defaultValue )
+    {
+        this.defaultValue = defaultValue;
     }
 
 }

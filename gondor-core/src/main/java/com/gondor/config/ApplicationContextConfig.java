@@ -116,7 +116,7 @@ public class ApplicationContextConfig
     {
 
         CastorMarshaller marshaller = new CastorMarshaller();
-        marshaller.setTargetClass( com.gondor.model.oxm.SimpleXMLConfiguration.class );
+        marshaller.setTargetClass( com.gondor.model.oxm.SimpleInputXMLConfiguration.class );
         return marshaller;
     }
 

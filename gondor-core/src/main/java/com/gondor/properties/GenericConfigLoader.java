@@ -30,8 +30,9 @@ import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Component;
 
 import com.gondor.dao.SimpleConfigurationDao;
+import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
-import com.gondor.model.oxm.SimpleXMLConfiguration;
+import com.gondor.model.oxm.SimpleInputXMLConfiguration;
 import com.gondor.model.oxm.Property;
 import com.gondor.util.XmlConverter;
 
@@ -44,15 +45,15 @@ import com.gondor.util.XmlConverter;
  *
  */
 @Component
-public class HadoopConfigLoader
+public class GenericConfigLoader
 {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HadoopConfigLoader.class );
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( GenericConfigLoader.class );
 
     private static final String PROPERTIES_FILE_LOCATION = "properties/";
 
-    @Value ( "${hdfs.file.name}")
-    private String hdfsFileName;
+    @Value ( "#{'${list.simple.xml.config.files}'.split(',')}")
+    private List<String> simpleXmlConfigFile;
 
     @Autowired
     private XmlConverter xmlConverter;
@@ -61,28 +62,34 @@ public class HadoopConfigLoader
     private SimpleConfigurationDao configDao;
 
 
-    public HadoopConfigLoader()
+    public GenericConfigLoader()
     {}
 
 
     @PostConstruct
-    public void loadHdfsSite() throws XmlMappingException, IOException
+    public void loadConfigurations() throws XmlMappingException, IOException
     {
-        LOG.trace( "Method: loadHdfsSite called." );
-        InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + hdfsFileName );
-        SimpleXMLConfiguration hdfsConfig = (SimpleXMLConfiguration) xmlConverter.convertFromXMLToObject( input );
+        LOG.trace( "Method: loadConfigurations called." );
 
-        List<SimpleConfiguration> hdfsSites = new ArrayList<>();
-        Property[] hdfsProperties = hdfsConfig.getProperty();
-        for ( Property property : hdfsProperties ) {
-            SimpleConfiguration hdfsSite = new SimpleConfiguration();
-            hdfsSite.setProperty( property.getName() );
-            hdfsSite.setValue( property.getValue() );
-            hdfsSites.add( hdfsSite );
+        for ( String file : simpleXmlConfigFile ) {
+            InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + file );
+            SimpleInputXMLConfiguration genericConfig = (SimpleInputXMLConfiguration) xmlConverter
+                .convertFromXMLToObject( input );
+
+            List<SimpleConfiguration> genericConfList = new ArrayList<>();
+            Property[] genericProperties = genericConfig.getProperty();
+            for ( Property property : genericProperties ) {
+                SimpleConfiguration simpleConf = new SimpleConfiguration();
+                simpleConf.setProperty( property.getName() );
+                simpleConf.setValue( property.getValue() );
+                simpleConf.setServiceType( ServiceType.SERVICE );//TODO Later this will come from xml
+                simpleConf.setFileName( file );
+                genericConfList.add( simpleConf );
+            }
+
+            configDao.saveConfigs( genericConfList );
+            LOG.trace( "Method: loadHdfsSite finished." );
         }
-
-        configDao.saveConfigs( hdfsSites );
-        LOG.trace( "Method: loadHdfsSite finished." );
     }
 
 

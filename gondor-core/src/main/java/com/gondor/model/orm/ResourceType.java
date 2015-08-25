@@ -21,10 +21,10 @@ package com.gondor.model.orm;
  * @author Vipin Kumar
  * @created 24-Jun-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Types of system resources
  * 
  */
 public enum ResourceType
 {
-    STORAGE, HEAP, PORT
+    STORAGE, MEMORY, PORT
 }
