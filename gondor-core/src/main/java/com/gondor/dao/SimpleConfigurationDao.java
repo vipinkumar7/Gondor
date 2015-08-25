@@ -19,7 +19,7 @@ package com.gondor.dao;
 
 import java.util.List;
 
-import com.gondor.model.orm.Configuration;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.orm.ServiceType;
 
 
@@ -27,10 +27,10 @@ import com.gondor.model.orm.ServiceType;
  * @author Vipin Kumar
  * @created 22-Jun-2015
  *
- * TODO: Write a quick description of what the class is supposed to do.
+ * This is configuration DAO for saving all configuration
  *
  */
-public interface ConfigurationDao
+public interface SimpleConfigurationDao
 {
 
     /**
@@ -39,7 +39,7 @@ public interface ConfigurationDao
      * @return
      * get all the configuration
      */
-    public List<Configuration> getAllConf( ServiceType serviceType );
+    public List<SimpleConfiguration> getAllConf( ServiceType serviceType );
 
 
     /**
@@ -67,7 +67,7 @@ public interface ConfigurationDao
      * @return
      * Method to save list of configurations
      */
-    public void saveConfigs( List<Configuration> config );
+    public void saveConfigs( List<SimpleConfiguration> config );
 
 
     public void deleteAllConfig();

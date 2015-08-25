@@ -23,9 +23,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gondor.dao.ConfigurationDao;
+import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.dao.ServiceDao;
-import com.gondor.model.orm.Configuration;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.services.ServiceManager;
 
@@ -48,7 +48,7 @@ public class ServiceManagerImpl implements ServiceManager
 
 
     @Autowired
-    private ConfigurationDao configDao;
+    private SimpleConfigurationDao configDao;
 
 
     /* (non-Javadoc)
@@ -93,11 +93,11 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#getAllServiceconfig(com.gondor.model.ServiceType)
      */
     @Override
-    public Set<Configuration> getAllServiceconfig( Integer serviceid )
+    public Set<SimpleConfiguration> getAllServiceconfig( Integer serviceid )
     {
         LOG.trace( "Method: getAllServiceconfig called." );
 
-        Set<Configuration> baseConfigurations = new HashSet<Configuration>();
+        Set<SimpleConfiguration> baseConfigurations = new HashSet<SimpleConfiguration>();
         ServiceType serviceType = serviceDao.getServiceType( serviceid );
 
         switch ( serviceType ) {

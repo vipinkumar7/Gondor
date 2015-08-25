@@ -19,7 +19,7 @@ package com.gondor.services;
 
 import java.util.Set;
 
-import com.gondor.model.orm.Configuration;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.orm.ServiceType;
 
 
@@ -48,7 +48,7 @@ public interface ServiceManager
     public void checkService( Integer serviceid );
 
 
-    public Set<Configuration> getAllServiceconfig( Integer serviceid );
+    public Set<SimpleConfiguration> getAllServiceconfig( Integer serviceid );
 
 
 }

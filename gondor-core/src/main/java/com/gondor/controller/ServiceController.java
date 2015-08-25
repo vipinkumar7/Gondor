@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gondor.model.orm.Configuration;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.services.ServiceManager;
 
@@ -79,10 +79,10 @@ public class ServiceController
 
     @RequestMapping ( value = "/{id}/config", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Set<Configuration>> getAllServiceConfig( @PathVariable Integer id )
+    public ResponseEntity<Set<SimpleConfiguration>> getAllServiceConfig( @PathVariable Integer id )
     {
         LOG.trace( "Method: getClusters called." );
-        return new ResponseEntity<Set<Configuration>>( serviceManager.getAllServiceconfig( id ), HttpStatus.OK );
+        return new ResponseEntity<Set<SimpleConfiguration>>( serviceManager.getAllServiceconfig( id ), HttpStatus.OK );
     }
 
 }

@@ -27,8 +27,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.gondor.dao.ConfigurationDao;
-import com.gondor.model.orm.Configuration;
+import com.gondor.dao.SimpleConfigurationDao;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.orm.ServiceType;
 
 
@@ -40,7 +40,7 @@ import com.gondor.model.orm.ServiceType;
  *
  */
 @Repository
-public class ConfigurationDAOImpl extends BaseDAOImpl implements ConfigurationDao
+public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigurationDao
 {
 
     /**
@@ -60,11 +60,11 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements ConfigurationDa
      * @see com.gondor.dao.BaseConfigurationDao#getConf()
      */
     @Override
-    public List<Configuration> getAllConf( ServiceType serviceType )
+    public List<SimpleConfiguration> getAllConf( ServiceType serviceType )
     {
         LOG.trace( "Method: getConf called." );
-        @SuppressWarnings ( "unchecked") List<Configuration> hdfsSiteConfig = getCurrentSession()
-            .createCriteria( Configuration.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
+        @SuppressWarnings ( "unchecked") List<SimpleConfiguration> hdfsSiteConfig = getCurrentSession()
+            .createCriteria( SimpleConfiguration.class ).setResultTransformer( Criteria.DISTINCT_ROOT_ENTITY ).list();
 
         return hdfsSiteConfig;
 
@@ -82,9 +82,9 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements ConfigurationDa
 
         String hql = "from HdfsSite where id= " + baseConfigId;
         Query query = getCurrentSession().createQuery( hql );
-        @SuppressWarnings ( "unchecked") List<Configuration> lHdfsSites = query.list();
+        @SuppressWarnings ( "unchecked") List<SimpleConfiguration> lHdfsSites = query.list();
         if ( lHdfsSites != null && !lHdfsSites.isEmpty() ) {
-            Configuration obj = lHdfsSites.get( 0 );
+            SimpleConfiguration obj = lHdfsSites.get( 0 );
             if ( obj.getProperty().equals( property ) )
                 obj.setValue( value );
         }
@@ -103,7 +103,7 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements ConfigurationDa
         LOG.trace( "Method: removeConfig called." );
 
         //TODO has to check for property
-        Configuration hdfsSite = new Configuration();
+        SimpleConfiguration hdfsSite = new SimpleConfiguration();
         hdfsSite.setId( baseConfigId );
         getCurrentSession().delete( hdfsSite );
         return true;
@@ -116,11 +116,11 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements ConfigurationDa
      */
     @Override
     @Transactional
-    public void saveConfigs( List<Configuration> configs )
+    public void saveConfigs( List<SimpleConfiguration> configs )
     {
         LOG.trace( "Method: saveConfigs called." );
 
-        for ( Configuration config : configs ) {
+        for ( SimpleConfiguration config : configs ) {
             getCurrentSession().saveOrUpdate( config );
         }
         LOG.trace( "Method: saveConfigs finished." );

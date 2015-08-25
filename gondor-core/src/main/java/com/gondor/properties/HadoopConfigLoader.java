@@ -29,7 +29,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Component;
 
-import com.gondor.dao.ConfigurationDao;
+import com.gondor.dao.SimpleConfigurationDao;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.oxm.SimpleXMLConfiguration;
 import com.gondor.model.oxm.Property;
 import com.gondor.util.XmlConverter;
@@ -57,7 +58,7 @@ public class HadoopConfigLoader
     private XmlConverter xmlConverter;
 
     @Autowired
-    private ConfigurationDao configDao;
+    private SimpleConfigurationDao configDao;
 
 
     public HadoopConfigLoader()
@@ -71,10 +72,10 @@ public class HadoopConfigLoader
         InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + hdfsFileName );
         SimpleXMLConfiguration hdfsConfig = (SimpleXMLConfiguration) xmlConverter.convertFromXMLToObject( input );
 
-        List<com.gondor.model.orm.Configuration> hdfsSites = new ArrayList<>();
+        List<SimpleConfiguration> hdfsSites = new ArrayList<>();
         Property[] hdfsProperties = hdfsConfig.getProperty();
         for ( Property property : hdfsProperties ) {
-            com.gondor.model.orm.Configuration hdfsSite = new com.gondor.model.orm.Configuration();
+            SimpleConfiguration hdfsSite = new SimpleConfiguration();
             hdfsSite.setProperty( property.getName() );
             hdfsSite.setValue( property.getValue() );
             hdfsSites.add( hdfsSite );

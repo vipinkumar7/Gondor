@@ -17,7 +17,7 @@
  */
 package com.gondor.services.impl;
 
-import com.gondor.model.orm.Configuration;
+import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.orm.PackageType;
 import com.gondor.services.DeploymentManager;
 
@@ -65,7 +65,8 @@ public class DeploymentManagerImpl implements DeploymentManager
      * @see com.gondor.services.DeploymentManager#applyChangedConfig(int, com.gondor.model.orm.BaseConfiguration, java.lang.Class)
      */
     @Override
-    public void applyChangedConfig( int clusterId, Configuration baseConfiguration, Class<? extends Configuration> configObject )
+    public void applyChangedConfig( int clusterId, SimpleConfiguration baseConfiguration,
+        Class<? extends SimpleConfiguration> configObject )
     {
         LOG.trace( "Method: applyChangedConfig called." );
 
@@ -78,8 +79,8 @@ public class DeploymentManagerImpl implements DeploymentManager
      * @see com.gondor.services.DeploymentManager#applyChangedConfig(int, int, com.gondor.model.orm.BaseConfiguration, java.lang.Class)
      */
     @Override
-    public void applyChangedConfig( int clusterId, int hostId, Configuration baseConfiguration,
-        Class<? extends Configuration> configObject )
+    public void applyChangedConfig( int clusterId, int hostId, SimpleConfiguration baseConfiguration,
+        Class<? extends SimpleConfiguration> configObject )
     {
         LOG.trace( "Method: applyChangedConfig called." );
 
