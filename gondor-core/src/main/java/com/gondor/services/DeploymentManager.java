@@ -17,7 +17,7 @@
  */
 package com.gondor.services;
 
-import com.gondor.model.orm.PackageType;
+import com.gondor.model.orm.Bundle;
 
 
 /**
@@ -30,10 +30,20 @@ import com.gondor.model.orm.PackageType;
 public interface DeploymentManager
 {
 
+    /**
+     * 
+     * @param hostId
+     * @return
+     */
     public boolean getHeartbeat( int hostId );
 
 
-    public boolean deploy( int hostID, PackageType packageType );
-
+    /**
+     * Deploy this bundle to this host
+     * @param host
+     * @param bundle
+     * @return
+     */
+    public boolean deploy( int hostID, Bundle bundle );
 
 }

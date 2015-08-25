@@ -17,7 +17,7 @@
  */
 package com.gondor.services.impl;
 
-import com.gondor.model.orm.PackageType;
+import com.gondor.model.orm.Bundle;
 import com.gondor.services.DeploymentManager;
 
 
@@ -51,7 +51,7 @@ public class DeploymentManagerImpl implements DeploymentManager
      * @see com.gondor.services.DeploymentManager#deploy(int, com.gondor.model.orm.PackageType)
      */
     @Override
-    public boolean deploy( int hostID, PackageType packageType )
+    public boolean deploy( int hostID, Bundle bundle )
     {
         LOG.trace( "Method: deploy called." );
 

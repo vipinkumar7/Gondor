@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -37,8 +35,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table ( name = "PACKAGE")
-public class Package implements Serializable
+@Table ( name = "BUNDLE")
+public class Bundle implements Serializable
 {
 
     /**
@@ -46,14 +44,13 @@ public class Package implements Serializable
      */
     private static final long serialVersionUID = 3960950866242237876L;
 
+    private String name;
+
     private int id;
 
     private String localPath;
 
     private String url;
-
-    @Enumerated ( EnumType.STRING)
-    private PackageType type;
 
 
     /**
@@ -61,7 +58,7 @@ public class Package implements Serializable
      */
     @Id
     @GeneratedValue
-    @Column ( name = "PACKAGE_ID")
+    @Column ( name = "BUNDLE_ID")
     public int getId()
     {
         return id;
@@ -116,21 +113,22 @@ public class Package implements Serializable
 
 
     /**
-     * @return the type
+     * @return the name
      */
-    @Column ( name = "TYPE")
-    public PackageType getType()
+    @Column ( name = "BUNDLE_NAME")
+    public String getName()
     {
-        return type;
+        return name;
     }
 
 
     /**
-     * @param type the type to set
+     * @param name the name to set
      */
-    public void setType( PackageType type )
+    public void setName( String name )
     {
-        this.type = type;
+        this.name = name;
     }
+
 
 }

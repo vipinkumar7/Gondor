@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,16 +15,18 @@
  *limitations under the License.
  *
  */
-package com.gondor.model.orm;
+package com.gondor.controller;
 
 /**
  * @author Vipin Kumar
- * @created 10-Jul-2015
+ * @created 25-Aug-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public enum PackageType
+public class ConfigurationController
 {
-    HADOOP, HIVE, HBASE, ZOOKEEPER, HUE
+
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationController.class );
+
 }

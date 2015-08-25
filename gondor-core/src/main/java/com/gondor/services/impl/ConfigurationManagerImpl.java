@@ -50,7 +50,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     {
         LOG.trace( "Method: changeConfig called." );
 
-        return false;
+        return simpleCondifDao.changeConfig( configId, property, value );
+
 
     }
 
@@ -63,7 +64,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     {
         LOG.trace( "Method: removeConfig called." );
 
-        return false;
+        return simpleCondifDao.removeConfig( configId, property );
 
     }
 
@@ -76,7 +77,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     {
         LOG.trace( "Method: saveConfigs called." );
 
-
+        simpleCondifDao.saveConfigs( config );
         LOG.trace( "Method: saveConfigs finished." );
     }
 
@@ -88,7 +89,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     public void deleteAllConfig()
     {
         LOG.trace( "Method: deleteAllConfig called." );
-
+        simpleCondifDao.deleteAllConfig();
 
         LOG.trace( "Method: deleteAllConfig finished." );
     }
