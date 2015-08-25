@@ -132,11 +132,11 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#checkIfServiceExists(com.gondor.model.orm.ServiceType, java.lang.Integer)
      */
     @Override
-    public boolean checkIfServiceExists( ServiceType serviceType, Integer hostId )
+    public com.gondor.model.orm.Service getServiceIfExists( ServiceType serviceType, Integer hostId )
     {
         LOG.trace( "Method: checkIfServiceExists called." );
 
-        return serviceDao.checkIfServiceExists( serviceType, hostId );
+        return serviceDao.getServiceIfExists( serviceType, hostId );
 
     }
 
@@ -162,7 +162,20 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: checkService called." );
 
-        return serviceDao.checkService( serviceid );
+        return serviceDao.checkState( serviceid );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ServiceManager#getServiceIfExists(java.lang.Integer)
+     */
+    @Override
+    public com.gondor.model.orm.Service getServiceIfExists( Integer serviceid )
+    {
+        LOG.trace( "Method: getServiceIfExists called." );
+
+        return serviceDao.getServiceIfExists( serviceid );
 
     }
 }

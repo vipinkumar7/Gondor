@@ -104,9 +104,10 @@ public interface ServiceDao
      * @param serviceid
      * <p>check the state of service</p>
      */
-    
+
     public boolean checkState( Integer serviceid );
-    
+
+
     /**
      * return service object is exists
      * @param serviceid
