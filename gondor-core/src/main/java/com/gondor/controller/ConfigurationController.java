@@ -17,16 +17,65 @@
  */
 package com.gondor.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.gondor.model.orm.SimpleConfiguration;
+import com.gondor.services.ConfigurationManager;
+
+
 /**
  * @author Vipin Kumar
  * @created 25-Aug-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Controller responsible for all the configuration related tasks
  * 
  */
+@Controller
+@RequestMapping ( value = "/gondor/config")
 public class ConfigurationController
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationController.class );
 
+    @Autowired
+    private ConfigurationManager configManager;
+
+
+    /**
+     * 
+     * @param simpleConfig
+     * @return
+     */
+    @RequestMapping ( value = "/change", method = RequestMethod.POST)
+    public ResponseEntity<String> changeConfig( @RequestBody SimpleConfiguration simpleConfig )
+    {
+        LOG.trace( "Method: changeConfig called." );
+        configManager.updateConfig( simpleConfig );
+        return new ResponseEntity<String>( "configuration changed Successfully", HttpStatus.OK );
+    }
+
+
+    /**
+     * 
+     * @param simpleConfig
+     * @return
+     */
+    @RequestMapping ( value = "/change/list", method = RequestMethod.POST)
+    public ResponseEntity<String> changeConfigList( @RequestBody List<SimpleConfiguration> simpleConfig )
+    {
+        LOG.trace( "Method: changeConfig called." );
+
+        return new ResponseEntity<String>( "all configuration changed Successfully", HttpStatus.OK );
+
+    }
+    
+    
 }

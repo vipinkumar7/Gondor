@@ -19,11 +19,11 @@ package com.gondor.dao.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.SimpleConfiguration;
@@ -63,7 +63,6 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigura
         for ( SimpleConfiguration config : configs ) {
             getCurrentSession().saveOrUpdate( config );
         }
-
         LOG.trace( "Method: saveConfigs finished." );
     }
 
@@ -72,17 +71,11 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigura
      * @see com.gondor.dao.SimpleConfigurationDao#removeConfig(int, java.lang.String)
      */
     @Override
-    public boolean removeConfig( int configId, String property )
+    public boolean removeConfig( SimpleConfiguration simpleConfiguration )
     {
         LOG.trace( "Method: removeConfig called." );
-
-        SimpleConfiguration simpleConfiguration = (SimpleConfiguration) getCurrentSession().get( SimpleConfiguration.class,
-            configId );
-        if ( simpleConfiguration.getProperty().equals( property ) ) {
-            getCurrentSession().delete( simpleConfiguration );
-            return true;
-        }
-        return false;
+        getCurrentSession().delete( simpleConfiguration );
+        return true;
     }
 
 
@@ -90,16 +83,14 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigura
      * @see com.gondor.dao.SimpleConfigurationDao#changeConfig(int, java.lang.String, java.lang.String)
      */
     @Override
-    public boolean changeConfig( int configId, String property, String value )
+    public boolean updateConfig( List<SimpleConfiguration> simpleConfigurations )
     {
         LOG.trace( "Method: changeConfig called." );
 
-        SimpleConfiguration simpleConfiguration = (SimpleConfiguration) getCurrentSession().get( SimpleConfiguration.class,
-            configId );
-        if ( simpleConfiguration.getProperty().equals( property ) ) {
-            simpleConfiguration.setValue( value );
-            return true;
-        }
+        Transaction tx = getCurrentSession().beginTransaction();
+        for ( SimpleConfiguration configuration : simpleConfigurations )
+            getCurrentSession().update( configuration );
+        tx.commit();
         return false;
     }
 
@@ -115,6 +106,19 @@ public class ConfigurationDAOImpl extends BaseDAOImpl implements SimpleConfigura
 
         getCurrentSession().createQuery( "delete from SIMPLECONFIGURATION " ).executeUpdate();
         LOG.trace( "Method: deleteAllConfig finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.dao.SimpleConfigurationDao#updateConfig(com.gondor.model.orm.SimpleConfiguration)
+     */
+    @Override
+    public boolean updateConfig( SimpleConfiguration simpleConfiguration )
+    {
+        LOG.trace( "Method: updateConfig called." );
+        getCurrentSession().update( simpleConfiguration );
+        return false;
+
     }
 
 

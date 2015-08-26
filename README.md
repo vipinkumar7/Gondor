@@ -1,36 +1,21 @@
 This project is for automating  deployment and monitoring  of  distributed application 
 
 
-Five major points for Gondor
+Gondor is a devops tool 
 
-+---------------------------------------+
-|                                       |
-| Creating application bundle           |
-|                                       |
-|                                       |
-+---------------------------------------+
+Main features:
+		                                
+Deploying application bundle to respictive hosts
+creating dependency relation among applications 
+                
 
-		+-----------------------------------------------------|
-                |                                                     |
-                | Deploying application bundle to respictive hosts    |
-                |     creating dependency relation among applications |
-                +-----------------------------------------------------+
-
-		       +-----------------------------------------------------------|
-		       |                                                           |
-                       | configuring application as per requriement and roles      |
-                       |                                                           |
-                       +-----------------------------------------------------------+
-				
-			+--------------------------------------------------------------------|
-                        |Live monitoring distributed applications			     |
-                        |                                                                    |
-                        |                                                                    |
-                        +--------------------------------------------------------------------+
-                                                             
-					             ---------------------+----------------------------------|
-                                                     |                                                       |
-                                                     |  Reporting and Analytics of logs and process failures |
-                                                     |as well as service errors grenerate custom  metrics    |
-                                                     |                                                       |
-                                                     +-------------------------------------------------------+
+configuring application as per requriement and roles
+                       	
+			
+Live monitoring distributed applications
+  
+Reporting and Analytics of logs and process failures 
+as well as service errors.
+grenerate custom  metrics
+                                                                                                            
+                                                     

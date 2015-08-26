@@ -109,4 +109,16 @@ public class UserManagerImpl implements UserManager
 
     }
 
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.UserManager#saveOrUpdate(com.gondor.model.orm.User)
+     */
+    @Override
+    public void saveOrUpdate( User user )
+    {
+        LOG.trace("Method: saveOrUpdate called.");
+        userDao.saveOrUpdate( user );
+        LOG.trace("Method: saveOrUpdate finished.");
+    }
+
 }

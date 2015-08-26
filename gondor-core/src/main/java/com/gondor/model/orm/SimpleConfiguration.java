@@ -45,7 +45,7 @@ public class SimpleConfiguration implements Serializable
     private static final long serialVersionUID = 5487484778854686415L;
 
 
-    private int id;
+    private Integer id;
     private String property;
     private String value;
     private String defaultValue;
@@ -62,7 +62,7 @@ public class SimpleConfiguration implements Serializable
     @Id
     @GeneratedValue
     @Column ( name = "CONF_ID")
-    public int getId()
+    public Integer getId()
     {
         return id;
     }
@@ -82,7 +82,7 @@ public class SimpleConfiguration implements Serializable
      * 
      * @param id
      */
-    public void setId( int id )
+    public void setId( Integer id )
     {
         this.id = id;
     }

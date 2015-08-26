@@ -39,6 +39,8 @@ public interface UserManager
     public User get( int userId );
 
 
+    public void saveOrUpdate( User user );
+    
     public void delete( int userId );
 
 

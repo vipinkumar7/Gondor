@@ -43,28 +43,14 @@ public class ConfigurationManagerImpl implements ConfigurationManager
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ConfigurationManager#changeConfig(int, java.lang.String, java.lang.String)
-     */
-    @Override
-    public boolean changeConfig( int configId, String property, String value )
-    {
-        LOG.trace( "Method: changeConfig called." );
-
-        return simpleCondifDao.changeConfig( configId, property, value );
-
-
-    }
-
-
-    /* (non-Javadoc)
      * @see com.gondor.services.ConfigurationManager#removeConfig(int, java.lang.String)
      */
     @Override
-    public boolean removeConfig( int configId, String property )
+    public boolean removeConfig( SimpleConfiguration simpleConfiguration )
     {
         LOG.trace( "Method: removeConfig called." );
 
-        return simpleCondifDao.removeConfig( configId, property );
+        return simpleCondifDao.removeConfig( simpleConfiguration );
 
     }
 
@@ -76,7 +62,6 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     public void saveConfigs( List<SimpleConfiguration> config )
     {
         LOG.trace( "Method: saveConfigs called." );
-
         simpleCondifDao.saveConfigs( config );
         LOG.trace( "Method: saveConfigs finished." );
     }
@@ -90,8 +75,32 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     {
         LOG.trace( "Method: deleteAllConfig called." );
         simpleCondifDao.deleteAllConfig();
-
         LOG.trace( "Method: deleteAllConfig finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ConfigurationManager#updateConfig(com.gondor.model.orm.SimpleConfiguration)
+     */
+    @Override
+    public boolean updateConfig( SimpleConfiguration simpleConfiguration )
+    {
+        LOG.trace( "Method: updateConfig called." );
+        return simpleCondifDao.updateConfig( simpleConfiguration );
+
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ConfigurationManager#updateConfig(java.util.List)
+     */
+    @Override
+    public boolean updateConfig( List<SimpleConfiguration> simpleConfigurations )
+    {
+        LOG.trace( "Method: updateConfig called." );
+
+        return simpleCondifDao.updateConfig( simpleConfigurations );
     }
 
 

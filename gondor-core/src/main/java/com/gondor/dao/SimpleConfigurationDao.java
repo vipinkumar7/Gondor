@@ -34,14 +34,19 @@ public interface SimpleConfigurationDao
 
 
     /**
-     *
-     * @param baseConfigId
-     * @param configName
+     * update this configuration
+     * @param simpleConfiguration
      * @return
-     *
-     * change the  configuration  of given name in the Configuration file
      */
-    public boolean changeConfig( int configId, String property, String value );
+    public boolean updateConfig( SimpleConfiguration simpleConfiguration );
+
+
+    /**
+     * update these configuration  
+     * @param simpleConfigurations
+     * @return
+     */
+    public boolean updateConfig( List<SimpleConfiguration> simpleConfigurations );
 
 
     /**
@@ -50,7 +55,7 @@ public interface SimpleConfigurationDao
      * @param configName
      * @return
      */
-    public boolean removeConfig( int configId, String property );
+    public boolean removeConfig( SimpleConfiguration simpleConfiguration );
 
 
     /**

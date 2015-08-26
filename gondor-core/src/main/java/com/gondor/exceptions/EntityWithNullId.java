@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,36 +15,50 @@
  *limitations under the License.
  *
  */
-package com.gondor.services;
-
-import com.gondor.model.orm.Bundle;
-
+package com.gondor.exceptions;
 
 /**
  * @author Vipin Kumar
- * @created 10-Jul-2015
+ * @created 26-Aug-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface DeploymentManager
+public class EntityWithNullId extends RuntimeException
 {
 
     /**
      * 
-     * @param hostId
-     * @return
      */
-    public boolean getHeartbeat( int hostId );
+    private static final long serialVersionUID = -4344182538688809630L;
 
 
     /**
-     * Deploy this bundle to this host
-     * @param host
-     * @param bundle
-     * @return
+     * 
      */
-    public boolean deploy( int hostID, Bundle bundle );
+    public EntityWithNullId( String errorMessage )
+    {
+        this.errorMessage = errorMessage;
+    }
 
+    private String errorMessage;
+
+
+    /**
+     * @return the errorMessage
+     */
+    public String getErrorMessage()
+    {
+        return errorMessage;
+    }
+
+
+    /**
+     * @param errorMessage the errorMessage to set
+     */
+    public void setErrorMessage( String errorMessage )
+    {
+        this.errorMessage = errorMessage;
+    }
 
 }

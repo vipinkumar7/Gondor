@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gondor.dao.UserDao;
 import com.gondor.model.orm.User;
+import com.gondor.services.UserManager;
 
 
 /**
@@ -45,17 +46,17 @@ public class AdminController
 {
 
     @Autowired
-    private UserDao userDao;
+    private UserManager usermanager;
 
 
     /**
      * 
      * @return
      */
-    @RequestMapping ( value = "/rest/users", method = RequestMethod.GET)
+    @RequestMapping ( value = "/rest/users", method = { RequestMethod.GET })
     public @ResponseBody List<User> getAllUsers()
     {
-        List<User> listUsers = userDao.list();
+        List<User> listUsers = usermanager.list();
         return listUsers;
     }
 
@@ -63,14 +64,14 @@ public class AdminController
     @RequestMapping ( value = "/delete/{userId}", method = RequestMethod.GET)
     public void deleteUser( @PathVariable int userId )
     {
-        userDao.delete( userId );
+        usermanager.delete( userId );
     }
 
 
     @RequestMapping ( value = "/saveone", method = RequestMethod.POST)
     public HttpStatus saveUsers( @RequestBody User user )
     {
-        userDao.saveOrUpdate( user );
+        usermanager.saveOrUpdate( user );
         return HttpStatus.OK;
     }
 
@@ -78,7 +79,7 @@ public class AdminController
     @RequestMapping ( value = "/get/{userId}", method = RequestMethod.GET)
     public @ResponseBody User getUser( @PathVariable int userId )
     {
-        return userDao.get( userId );
+        return usermanager.get( userId );
     }
 
 
