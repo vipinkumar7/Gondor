@@ -19,24 +19,24 @@ package com.gondor.exceptions;
 
 /**
  * @author Vipin Kumar
- * @created 26-Aug-2015
+ * @created 27-Aug-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public class EntityWithNullId extends RuntimeException
+public class WrongEntityException extends RuntimeException
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = -4344182538688809630L;
+    private static final long serialVersionUID = 3757337606398422754L;
 
 
     /**
      * 
      */
-    public EntityWithNullId( String errorMessage )
+    public WrongEntityException( String errorMessage )
     {
         this.errorMessage = errorMessage;
     }
@@ -60,5 +60,4 @@ public class EntityWithNullId extends RuntimeException
     {
         this.errorMessage = errorMessage;
     }
-
 }

@@ -24,10 +24,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.services.ClusterManager;
 
@@ -52,16 +54,37 @@ public class ClusterController
     private ClusterManager clusterManager;
 
 
+    @RequestMapping ( value = "", method = RequestMethod.POST)
+    public void createCluster( @RequestBody Cluster cluster )
+    {
+        LOG.trace( "Method: createCluster called." );
+        clusterManager.createCluster( cluster );
+    }
+
+
     /**
      * 
      * @param id
      * @return
      */
     @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
-    public String getClusterStatus( @PathVariable Integer id )
+    public String getClusterStatus( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: getCluster called." );
-        return clusterManager.getStatus( id );
+        return clusterManager.getStatus( clusterId );
+    }
+
+
+    /**
+     * 
+     * @return
+     */
+    @RequestMapping ( value = "/clusters", method = { RequestMethod.GET })
+    @ResponseBody
+    public ResponseEntity<List<Cluster>> getAllClusters()
+    {
+        LOG.trace( "Method: getAllClusters called." );
+        return new ResponseEntity<List<Cluster>>( clusterManager.listAllClusters(), HttpStatus.OK );
     }
 
 
@@ -72,27 +95,35 @@ public class ClusterController
      * 
      * All hosts belongs to this Cluster
      */
-    @RequestMapping ( value = "/{id}/hosts", method = RequestMethod.GET)
+    @RequestMapping ( value = "/{id}/hosts", method = { RequestMethod.GET })
     @ResponseBody
-    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer id )
+    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: getAllHosts called." );
-        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( id ), HttpStatus.OK );
+        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( clusterId ), HttpStatus.OK );
     }
 
 
+    /**
+     * 
+     * @param id
+     */
     @RequestMapping ( value = "/{id}/decommission", method = RequestMethod.GET)
-    public void decommissionCluster( @PathVariable Integer id )
+    public void decommissionCluster( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
-        clusterManager.decommissionCluster( id );
+        clusterManager.decommissionCluster( clusterId );
     }
 
 
+    /**
+     * 
+     * @param clusterId
+     */
     @RequestMapping ( value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteCluster( @PathVariable Integer id )
+    public void deleteCluster( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
-        clusterManager.deleteCluster( id );
+        clusterManager.deleteCluster( clusterId );
     }
 }

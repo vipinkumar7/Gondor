@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gondor.model.orm.Instance;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.services.ServiceManager;
@@ -43,7 +44,7 @@ import com.gondor.services.ServiceManager;
  */
 
 @Controller
-@RequestMapping ( value = "/gondor/services")
+@RequestMapping ( value = "/gondor/service")
 public class ServiceController
 {
 
@@ -53,14 +54,52 @@ public class ServiceController
     private ServiceManager serviceManager;
 
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @RequestMapping ( value = "/{id}/instances", method = { RequestMethod.GET })
+    @ResponseBody
+    public ResponseEntity<List<Instance>> getAllInstances( @PathVariable Integer id )
+    {
+        LOG.trace( "Method: getAllInstances called." );
+        return new ResponseEntity<List<Instance>>( serviceManager.getAllInstances( id ), HttpStatus.OK );
+    }
+
+
+    /**
+     * 
+     * @param serviceType
+     * @param hostId
+     * @return
+     */
+    @RequestMapping ( value = "/create/{serviceType}/{hostId}", method = { RequestMethod.GET })
+    public Integer createService( @PathVariable ServiceType serviceType, @PathVariable Integer hostId )
+    {
+        return serviceManager.createService( serviceType, hostId );
+    }
+
+
+    /**
+     * 
+     * @param id
+     * @param host
+     * @return
+     */
     @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
     public String getClustersStatus( @PathVariable Integer id, @RequestParam ( value = "host", required = true) Integer host )
     {
-        LOG.trace( "Method: getClusters called." );
+        LOG.trace( "Method: getClustersStatus called." );
         return serviceManager.getStatus( id );
     }
 
 
+    /**
+     * 
+     * @param serviceType
+     * @param hostId
+     */
     @RequestMapping ( value = "/{serviceType}/start/{hostId}", method = RequestMethod.GET)
     public void startService( @PathVariable ServiceType serviceType, @PathVariable Integer hostId )
     {
@@ -69,6 +108,10 @@ public class ServiceController
     }
 
 
+    /**
+     * 
+     * @param id
+     */
     @RequestMapping ( value = "/{id}/stop", method = RequestMethod.GET)
     public void stopService( @PathVariable Integer id )
     {
@@ -77,6 +120,11 @@ public class ServiceController
     }
 
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
     @RequestMapping ( value = "/{id}/config", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<SimpleConfiguration>> getAllServiceConfig( @PathVariable Integer id )

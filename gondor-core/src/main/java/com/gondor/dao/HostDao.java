@@ -37,7 +37,7 @@ public interface HostDao
      * @param hostID
      * @return
      */
-    public String getStatus( int hostID );
+    public String getStatus( Integer hostID );
 
 
     /**
@@ -51,7 +51,7 @@ public interface HostDao
      * List all services running in this  host
      * @return
      */
-    public List<Service> getAllServices( int hostId );
+    public List<Service> getAllServices( Integer hostId );
 
 
     /**
@@ -59,14 +59,14 @@ public interface HostDao
      * @param host
      * @return
      */
-    public int cretateHost( Host host );
+    public Host cretateHost( Host host );
 
 
     /**
      * deactivate this host from cluster 
      * @param hostId
      */
-    public void decomminsionHost( int hostId );
+    public void decomminsionHost( Integer hostId );
 
 
     /**
@@ -74,7 +74,7 @@ public interface HostDao
      * @param hostId
      * @param clusterId
      */
-    public void addHostToCluster( int hostId, int clusterId );
+    public void addHostToCluster( Integer hostId, Integer clusterId );
 
 
     /**
@@ -82,7 +82,7 @@ public interface HostDao
      * @param hostIdentifier
      * @return
      */
-    public Boolean checkHost( String hostIdentifier, boolean cluster );
+    public Boolean checkHostName( String hostIdentifier, boolean cluster );
 
 
     /**
@@ -91,7 +91,7 @@ public interface HostDao
      * @param hostIdentifier
      * @return
      */
-    public Boolean checkHost( int hostId, boolean cluster );
+    public Boolean checkHost( Integer hostId, boolean cluster );
 
 
     /**
@@ -99,5 +99,5 @@ public interface HostDao
      * @param hostId
      * @return
      */
-    public Host getHost( int hostId );
+    public Host getHost( Integer hostId );
 }

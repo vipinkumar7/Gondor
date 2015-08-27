@@ -96,7 +96,7 @@ public class ApplicationContextConfig
         sessionBuilder.addAnnotatedClasses( Host.class );
         sessionBuilder.addAnnotatedClasses( Process.class );
         sessionBuilder.addAnnotatedClasses( Role.class );
-        sessionBuilder.scanPackages( "com.gondor.model" );
+        sessionBuilder.scanPackages( "com.gondor.model.orm" );
         sessionBuilder.addProperties( getHibernateProperties() );
         return sessionBuilder.buildSessionFactory();
     }

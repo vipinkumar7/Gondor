@@ -173,7 +173,7 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
      */
     @SuppressWarnings ( "unchecked")
     @Override
-    public List<Instance> getAllInstances( int serviceId )
+    public List<Instance> getAllInstances( Integer serviceId )
     {
         LOG.trace( "Method: getAllInstances called." );
         Criteria criteria = getCurrentSession().createCriteria( Instance.class );
@@ -187,7 +187,7 @@ public class ServiceDAOImpl extends BaseDAOImpl implements ServiceDao
      */
     @SuppressWarnings ( "unchecked")
     @Override
-    public List<SimpleConfiguration> getAllConfig( int serviceId )
+    public List<SimpleConfiguration> getAllConfig( Integer serviceId )
     {
         LOG.trace( "Method: getAllConfig called." );
 

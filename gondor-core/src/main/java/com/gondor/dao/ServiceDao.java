@@ -40,7 +40,7 @@ public interface ServiceDao
      * List all the instances of this services running in cluster
      * @return
      */
-    public List<Instance> getAllInstances( int serviceId );
+    public List<Instance> getAllInstances( Integer serviceId );
 
 
     /**
@@ -121,6 +121,6 @@ public interface ServiceDao
      * @param serviceId
      * @return
      */
-    public List<SimpleConfiguration> getAllConfig( int serviceId );
+    public List<SimpleConfiguration> getAllConfig( Integer serviceId );
 
 }

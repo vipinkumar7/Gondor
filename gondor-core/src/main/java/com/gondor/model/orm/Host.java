@@ -32,7 +32,7 @@ import javax.persistence.Table;
  * @author Vipin Kumar
  * @created 23-Jun-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Host (single machine)
  * 
  */
 
@@ -80,7 +80,7 @@ public class Host implements Serializable
     /**
      * @return the name
      */
-    @Column ( name = "HOST_NAME")
+    @Column ( name = "HOST_NAME", unique = true, nullable = false)
     public String getName()
     {
         return name;

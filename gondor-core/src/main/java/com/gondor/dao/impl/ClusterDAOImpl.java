@@ -92,9 +92,9 @@ public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
     @Override
     public List<Host> getAllhosts( int clusterId )
     {
-        LOG.trace( "Method: getAllhosts called." );
 
         Criteria criteria = getCurrentSession().createCriteria( Host.class );
+        LOG.trace( "Method: getAllhosts called." );
         criteria.add( Restrictions.eq( "CLUSTER_ID", clusterId ) );
         return criteria.list();
 
@@ -105,12 +105,12 @@ public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
      * @see com.gondor.dao.ClusterDao#createCluster(java.lang.String)
      */
     @Override
-    public int createCluster( Cluster cluster )
+    @Transactional ( rollbackFor = RuntimeException.class)
+    public Integer createCluster( Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
 
-        getCurrentSession().saveOrUpdate( cluster );
-
+        getCurrentSession().save( cluster );
         return cluster.getId();
     }
 

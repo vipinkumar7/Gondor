@@ -40,7 +40,8 @@ public interface UserManager
 
 
     public void saveOrUpdate( User user );
-    
+
+
     public void delete( int userId );
 
 

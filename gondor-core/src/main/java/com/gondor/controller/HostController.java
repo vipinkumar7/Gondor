@@ -17,15 +17,21 @@
  */
 package com.gondor.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gondor.model.orm.Host;
+import com.gondor.model.orm.Service;
 import com.gondor.services.HostManager;
 
 
@@ -37,7 +43,7 @@ import com.gondor.services.HostManager;
  * 
  */
 @Controller
-@RequestMapping ( value = "/gondor/hosts")
+@RequestMapping ( value = "/gondor/host")
 public class HostController
 {
 
@@ -49,10 +55,52 @@ public class HostController
 
     /**
      * 
+     * @return
+     */
+    @RequestMapping ( value = "/all", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Host>> getAllHosts()
+    {
+        LOG.trace( "Method: getAllHosts called." );
+        return new ResponseEntity<List<Host>>( hostManager.getAllHosts(), HttpStatus.OK );
+    }
+
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @RequestMapping ( value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Host> getHost( @PathVariable Integer id )
+    {
+        LOG.trace( "Method: getAllHosts called." );
+        return new ResponseEntity<Host>( hostManager.getHost( id ), HttpStatus.OK );
+    }
+
+
+    /**
+     * All services running in this host
+     * @param hostId
+     * @return
+     */
+    @RequestMapping ( value = "/{id}/services", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Service>> getAllServices( @PathVariable Integer hostId )
+    {
+        LOG.trace( "Method: getAllServices called." );
+        return new ResponseEntity<List<Service>>( hostManager.getAllServices( hostId ), HttpStatus.OK );
+    }
+
+
+    /**
+     * 
      * @param id
      * @return
      */
     @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
+    @ResponseBody
     public String getHostStatus( @PathVariable Integer id )
     {
         LOG.trace( "Method: getHostStatus called." );
@@ -68,9 +116,11 @@ public class HostController
      * Create this host with host identifier in cluster (clusterId)
      */
     @RequestMapping ( value = "/create", method = RequestMethod.PUT)
-    public void createHost( @RequestParam ( value = "clusterId", required = true) Integer clusterId, @RequestBody Host host )
+    @ResponseBody
+    public ResponseEntity<Host> createHost( @RequestParam ( value = "clusterId", required = true) Integer clusterId,
+        @RequestBody Host host )
     {
-        hostManager.cretateHost( host );
+        return new ResponseEntity<Host>( hostManager.cretateHost( host ), HttpStatus.OK );
     }
 
 
@@ -79,21 +129,23 @@ public class HostController
      * @param host
      * @param clusterId
      * 
-     * Validate if the host is not already present in cluster 
+     * Validate if the hostname/ip is present any cluster
      */
-    @RequestMapping ( value = "/validate", method = RequestMethod.GET)
-    public Boolean validateHost( @RequestParam ( value = "host", required = true) String host,
-        @RequestParam ( value = "clusterId", required = true) Integer clusterId )
+    @RequestMapping ( value = "/{hostname}/validate", method = RequestMethod.GET)
+    public Boolean validateHost( @PathVariable String hostname,
+        @RequestParam ( value = "cluster", required = true) Boolean inCluster )
     {
-        return hostManager.validateHostAlreadyPresent( null );
+
+        return inCluster == true ? hostManager.checkIfHostNameInAnyCluster( hostname ) : hostManager
+            .validateHostNameAlreadyPresent( hostname );
 
     }
 
 
-    @RequestMapping ( value = "/check", method = RequestMethod.GET)
-    public Boolean checkeHost( @RequestParam ( value = "host", required = true) String host )
+    @RequestMapping ( value = "/{id}/check", method = RequestMethod.GET)
+    public Boolean checkeHost( @PathVariable Integer id, @RequestParam ( value = "cluster", required = true) Boolean inCluster )
     {
-        return hostManager.checkIfHostInAnyCluster( null );
+        return inCluster == true ? hostManager.checkIfHostInAnyCluster( id ) : hostManager.validateHostAlreadyPresent( id );
 
     }
 
@@ -104,5 +156,11 @@ public class HostController
         hostManager.decomminsionHost( id );
     }
 
+
+    @RequestMapping ( value = "/{hostId}/{clusterId}", method = RequestMethod.GET)
+    public void addHostsToCluster( @PathVariable Integer hostId, @PathVariable Integer clusterId )
+    {
+        hostManager.addHostToCluster( hostId, clusterId );
+    }
 
 }

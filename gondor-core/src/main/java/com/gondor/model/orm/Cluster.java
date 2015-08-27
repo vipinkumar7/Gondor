@@ -73,7 +73,7 @@ public class Cluster implements Serializable
     /**
      * @return the name
      */
-    @Column ( name = "CLUSTER_NAME")
+    @Column ( name = "CLUSTER_NAME", unique = true, nullable = false)
     public String getName()
     {
         return name;

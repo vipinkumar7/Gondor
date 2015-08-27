@@ -55,7 +55,7 @@ public interface ClusterDao
      * @param cluster
      * @return newly created cluster id
      */
-    public int createCluster( Cluster cluster );
+    public Integer createCluster( Cluster cluster );
 
 
     /**

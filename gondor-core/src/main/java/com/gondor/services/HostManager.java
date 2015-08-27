@@ -40,7 +40,7 @@ public interface HostManager
      * @param hostID
      * @return
      */
-    public String getStatus( int hostID );
+    public String getStatus( Integer hostID );
 
 
     /**
@@ -54,7 +54,7 @@ public interface HostManager
      * List all services running in this  host
      * @return
      */
-    public List<Service> getAllServices( int hostId );
+    public List<Service> getAllServices( Integer hostId );
 
 
     /**
@@ -62,14 +62,14 @@ public interface HostManager
      * @param host
      * @return
      */
-    public int cretateHost( Host host );
+    public Host cretateHost( Host host );
 
 
     /**
      * deactivate this host from cluster 
      * @param hostId
      */
-    public void decomminsionHost( int hostId );
+    public void decomminsionHost( Integer hostId );
 
 
     /**
@@ -77,7 +77,7 @@ public interface HostManager
      * @param hostIdentifier
      * @return
      */
-    public Boolean validateHostAlreadyPresent( String hostIdentifier );
+    public Boolean validateHostNameAlreadyPresent( String hostIdentifier );
 
 
     /**
@@ -85,7 +85,7 @@ public interface HostManager
      * @param hostId
      * @return
      */
-    public Boolean validateHostAlreadyPresent( int hostId );
+    public Boolean validateHostAlreadyPresent( Integer hostId );
 
 
     /**
@@ -93,7 +93,7 @@ public interface HostManager
      * @param hostId
      * @param clusterId
      */
-    public void addHostToCluster( int hostId, int clusterId );
+    public void addHostToCluster( Integer hostId, Integer clusterId );
 
 
     /**
@@ -101,7 +101,7 @@ public interface HostManager
      * @param hostIdentifier
      * @return
      */
-    public Boolean checkIfHostInAnyCluster( String hostIdentifier );
+    public Boolean checkIfHostNameInAnyCluster( String hostIdentifier );
 
 
     /**
@@ -109,7 +109,7 @@ public interface HostManager
      * @param hostIdentifier
      * @return
      */
-    public Boolean checkIfHostInAnyCluster( int hostId );
+    public Boolean checkIfHostInAnyCluster( Integer hostId );
 
 
     /**
@@ -117,6 +117,6 @@ public interface HostManager
      * @param hostId
      * @return
      */
-    public Host getHost( int hostId );
+    public Host getHost( Integer hostId );
 
 }

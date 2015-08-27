@@ -39,7 +39,7 @@ public interface ClusterManager
      * @param clusterId
      * @return
      */
-    public String getStatus( int clusterId );
+    public String getStatus( Integer clusterId );
 
 
     /**
@@ -54,7 +54,7 @@ public interface ClusterManager
      * @param clusterId
      * @return
      */
-    public List<Host> getAllhosts( int clusterId );
+    public List<Host> getAllhosts( Integer clusterId );
 
 
     /**
@@ -67,14 +67,14 @@ public interface ClusterManager
      * remove all installed services from system
      * @param clusterId
      */
-    public void decommissionCluster( int clusterId );
+    public void decommissionCluster( Integer clusterId );
 
 
     /**
      * delete this cluster
      * @param clusterId
      */
-    public void deleteCluster( int clusterId );
+    public void deleteCluster( Integer clusterId );
 
 
 }

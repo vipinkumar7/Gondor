@@ -62,7 +62,7 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#getStatus(int)
      */
     @Override
-    public String getStatus( int hostID )
+    public String getStatus( Integer hostID )
     {
         LOG.trace( "Method: getStatus called." );
 
@@ -75,12 +75,13 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#cretateHost(java.lang.String)
      */
     @Override
-    public int cretateHost( Host host )
+    @Transactional ( rollbackFor = RuntimeException.class)
+    public Host cretateHost( Host host )
     {
         LOG.trace( "Method: cretateHost called." );
 
         getCurrentSession().save( host );
-        return host.getId();
+        return host;
     }
 
 
@@ -88,7 +89,7 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#decomminsionHost(int)
      */
     @Override
-    public void decomminsionHost( int hostId )
+    public void decomminsionHost( Integer hostId )
     {
         LOG.trace( "Method: decomminsionHost called." );
         Host host = (Host) getCurrentSession().get( Host.class, hostId );
@@ -102,7 +103,7 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#getHost(int)
      */
     @Override
-    public Host getHost( int hostId )
+    public Host getHost( Integer hostId )
     {
         LOG.trace( "Method: getHost called." );
         Host host = (Host) getCurrentSession().get( Host.class, hostId );
@@ -115,8 +116,8 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#addHostToCluster(int, int)
      */
     @Override
-    @Transactional
-    public void addHostToCluster( int hostId, int clusterId )
+    @Transactional ( rollbackFor = RuntimeException.class)
+    public void addHostToCluster( Integer hostId, Integer clusterId )
     {
         LOG.trace( "Method: addHostToCluster called." );
 
@@ -149,7 +150,7 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      */
     @SuppressWarnings ( "unchecked")
     @Override
-    public List<Service> getAllServices( int hostId )
+    public List<Service> getAllServices( Integer hostId )
     {
         LOG.trace( "Method: getAllServices called." );
 
@@ -165,7 +166,7 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#checkHost(java.lang.String, boolean)
      */
     @Override
-    public Boolean checkHost( String hostIdentifier, boolean cluster )
+    public Boolean checkHostName( String hostIdentifier, boolean cluster )
     {
         LOG.trace( "Method: checkHost called." );
 
@@ -185,7 +186,7 @@ public class HostDAOImpl extends BaseDAOImpl implements HostDao
      * @see com.gondor.dao.HostDao#checkHost(int, boolean)
      */
     @Override
-    public Boolean checkHost( int hostId, boolean cluster )
+    public Boolean checkHost( Integer hostId, boolean cluster )
     {
         LOG.trace( "Method: checkHost called." );
 

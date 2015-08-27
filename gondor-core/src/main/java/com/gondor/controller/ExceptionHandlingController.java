@@ -49,6 +49,15 @@ public class ExceptionHandlingController
     }
 
 
+    @ResponseStatus ( value = HttpStatus.CONFLICT, reason = "wrong entity")
+    @ExceptionHandler ( EntityNotFoundException.class)
+    public void wrongEntity()
+    {
+        LOG.error( "entity values conflit with database" );
+
+    }
+
+
     @ResponseStatus ( value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "check log is requried")
     @ExceptionHandler ( Exception.class)
     public String internalerror()

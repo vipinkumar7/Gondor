@@ -49,7 +49,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#getStatus(int)
      */
     @Override
-    public String getStatus( int hostID )
+    public String getStatus( Integer hostID )
     {
         LOG.trace( "Method: getStatus called." );
 
@@ -75,7 +75,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#getAllServices()
      */
     @Override
-    public List<com.gondor.model.orm.Service> getAllServices( int hostId )
+    public List<com.gondor.model.orm.Service> getAllServices( Integer hostId )
     {
         LOG.trace( "Method: getAllServices called." );
 
@@ -88,7 +88,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#cretateHost(com.gondor.model.orm.Host)
      */
     @Override
-    public int cretateHost( Host host )
+    public Host cretateHost( Host host )
     {
         LOG.trace( "Method: cretateHost called." );
 
@@ -101,7 +101,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#decomminsionHost(int)
      */
     @Override
-    public void decomminsionHost( int hostId )
+    public void decomminsionHost( Integer hostId )
     {
         LOG.trace( "Method: decomminsionHost called." );
 
@@ -114,11 +114,11 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#validateHostAlreadyPresent(java.lang.String)
      */
     @Override
-    public Boolean validateHostAlreadyPresent( String hostIdentifier )
+    public Boolean validateHostNameAlreadyPresent( String hostIdentifier )
     {
         LOG.trace( "Method: validateHostAlreadyPresent called." );
 
-        return hostDao.checkHost( hostIdentifier, false );
+        return hostDao.checkHostName( hostIdentifier, false );
 
     }
 
@@ -127,7 +127,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#validateHostAlreadyPresent(int)
      */
     @Override
-    public Boolean validateHostAlreadyPresent( int hostId )
+    public Boolean validateHostAlreadyPresent( Integer hostId )
     {
         LOG.trace( "Method: validateHostAlreadyPresent called." );
 
@@ -140,7 +140,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#addHostToCluster(int, int)
      */
     @Override
-    public void addHostToCluster( int hostId, int clusterId )
+    public void addHostToCluster( Integer hostId, Integer clusterId )
     {
         LOG.trace( "Method: addHostToCluster called." );
         hostDao.addHostToCluster( hostId, clusterId );
@@ -153,11 +153,11 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(java.lang.String)
      */
     @Override
-    public Boolean checkIfHostInAnyCluster( String hostIdentifier )
+    public Boolean checkIfHostNameInAnyCluster( String hostIdentifier )
     {
         LOG.trace( "Method: checkIfHostInAnyCluster called." );
 
-        return hostDao.checkHost( hostIdentifier, true );
+        return hostDao.checkHostName( hostIdentifier, true );
 
     }
 
@@ -166,7 +166,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(int)
      */
     @Override
-    public Boolean checkIfHostInAnyCluster( int hostId )
+    public Boolean checkIfHostInAnyCluster( Integer hostId )
     {
         LOG.trace( "Method: checkIfHostInAnyCluster called." );
 
@@ -179,7 +179,7 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#getHost(int)
      */
     @Override
-    public Host getHost( int hostId )
+    public Host getHost( Integer hostId )
     {
         LOG.trace( "Method: getHost called." );
 

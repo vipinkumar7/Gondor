@@ -93,7 +93,7 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#getAllInstances(int)
      */
     @Override
-    public List<Instance> getAllInstances( int serviceId )
+    public List<Instance> getAllInstances( Integer serviceId )
     {
         LOG.trace( "Method: getAllInstances called." );
 
@@ -145,7 +145,7 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#getAllConfig(int)
      */
     @Override
-    public List<SimpleConfiguration> getAllConfig( int serviceId )
+    public List<SimpleConfiguration> getAllConfig( Integer serviceId )
     {
         LOG.trace( "Method: getAllConfig called." );
 

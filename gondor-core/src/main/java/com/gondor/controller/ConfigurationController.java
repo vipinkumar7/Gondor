@@ -76,6 +76,6 @@ public class ConfigurationController
         return new ResponseEntity<String>( "all configuration changed Successfully", HttpStatus.OK );
 
     }
-    
-    
+
+
 }

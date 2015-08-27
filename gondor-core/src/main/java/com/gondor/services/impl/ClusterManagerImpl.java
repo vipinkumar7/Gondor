@@ -20,9 +20,11 @@ package com.gondor.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.gondor.dao.ClusterDao;
+import com.gondor.exceptions.WrongEntityException;
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.services.ClusterManager;
@@ -32,7 +34,7 @@ import com.gondor.services.ClusterManager;
  * @author Vipin Kumar
  * @created 07-Jul-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Service layer for managing clusters
  * 
  */
 @Service ( "clusterManager")
@@ -49,10 +51,9 @@ public class ClusterManagerImpl implements ClusterManager
      * @see com.gondor.services.ClusterManager#getAllhosts(int)
      */
     @Override
-    public List<Host> getAllhosts( int clusterId )
+    public List<Host> getAllhosts( Integer clusterId )
     {
         LOG.trace( "Method: getAllhosts called." );
-
         return clusterDao.getAllhosts( clusterId );
 
     }
@@ -66,8 +67,11 @@ public class ClusterManagerImpl implements ClusterManager
     {
         LOG.trace( "Method: createCluster called." );
 
-        clusterDao.createCluster( cluster );
-
+        try {
+            clusterDao.createCluster( cluster );
+        } catch ( DataIntegrityViolationException e ) {
+            throw new WrongEntityException( "Cluster name should be unique" );
+        }
         LOG.trace( "Method: createCluster finished." );
     }
 
@@ -76,7 +80,7 @@ public class ClusterManagerImpl implements ClusterManager
      * @see com.gondor.services.ClusterManager#decommissionCluster(int)
      */
     @Override
-    public void decommissionCluster( int clusterId )
+    public void decommissionCluster( Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
 
@@ -89,7 +93,7 @@ public class ClusterManagerImpl implements ClusterManager
      * @see com.gondor.services.ClusterManager#deleteCluster(int)
      */
     @Override
-    public void deleteCluster( int clusterId )
+    public void deleteCluster( Integer clusterId )
     {
         LOG.trace( "Method: deleteCluster called." );
 
@@ -101,7 +105,7 @@ public class ClusterManagerImpl implements ClusterManager
      * @see com.gondor.services.ClusterManager#getStatus(int)
      */
     @Override
-    public String getStatus( int clusterId )
+    public String getStatus( Integer clusterId )
     {
         LOG.trace( "Method: getStatus called." );
 
