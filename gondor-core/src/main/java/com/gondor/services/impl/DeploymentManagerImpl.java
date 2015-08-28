@@ -17,6 +17,8 @@
  */
 package com.gondor.services.impl;
 
+import java.util.List;
+
 import com.gondor.model.orm.Bundle;
 import com.gondor.services.DeploymentManager;
 
@@ -56,6 +58,19 @@ public class DeploymentManagerImpl implements DeploymentManager
         LOG.trace( "Method: deploy called." );
 
         return false;
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.DeploymentManager#getAllBundles()
+     */
+    @Override
+    public List<Bundle> getAllBundles()
+    {
+        LOG.trace( "Method: getAllBundles called." );
+
+        return null;
 
     }
 

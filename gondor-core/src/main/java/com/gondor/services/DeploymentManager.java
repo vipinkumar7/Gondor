@@ -17,6 +17,8 @@
  */
 package com.gondor.services;
 
+import java.util.List;
+
 import com.gondor.model.orm.Bundle;
 
 
@@ -46,5 +48,11 @@ public interface DeploymentManager
      */
     public boolean deploy( int hostID, Bundle bundle );
 
+
+    /**
+     * List all the application bundles 
+     * @return
+     */
+    public List<Bundle> getAllBundles();
 
 }

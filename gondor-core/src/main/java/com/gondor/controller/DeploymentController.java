@@ -17,6 +17,16 @@
  */
 package com.gondor.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.gondor.model.orm.Bundle;
+import com.gondor.services.DeploymentManager;
+
+
 /**
  * @author Vipin Kumar
  * @created 25-Aug-2015
@@ -24,8 +34,23 @@ package com.gondor.controller;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
+
+@Controller
+@RequestMapping ( value = "/gondor/deploy")
 public class DeploymentController
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( DeploymentController.class );
+
+
+    private DeploymentManager deploymentManager;
+
+
+    @RequestMapping ( value = "/{hostId}", method = RequestMethod.POST)
+    public boolean deploy( @PathVariable Integer hostID, @RequestBody Bundle bundle )
+    {
+        LOG.trace( "Method: deploy called." );
+        return deploymentManager.deploy( hostID, bundle );
+    }
+
 }

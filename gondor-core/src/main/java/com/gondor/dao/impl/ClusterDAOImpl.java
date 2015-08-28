@@ -76,7 +76,7 @@ public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
      * @see com.gondor.dao.ClusterDao#getStatus(int)
      */
     @Override
-    public String getStatus( int clusterId )
+    public String getStatus( Integer clusterId )
     {
         LOG.trace( "Method: getStatus called." );
 
@@ -90,7 +90,7 @@ public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
      */
     @SuppressWarnings ( "unchecked")
     @Override
-    public List<Host> getAllhosts( int clusterId )
+    public List<Host> getAllhosts( Integer clusterId )
     {
 
         Criteria criteria = getCurrentSession().createCriteria( Host.class );
@@ -119,7 +119,7 @@ public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
      * @see com.gondor.dao.ClusterDao#decommissionCluster(int)
      */
     @Override
-    public void decommissionCluster( int clusterId )
+    public void decommissionCluster( Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
         Cluster cluster = (Cluster) getCurrentSession().get( Cluster.class, clusterId );
@@ -133,7 +133,7 @@ public class ClusterDAOImpl extends BaseDAOImpl implements ClusterDao
      * @see com.gondor.dao.ClusterDao#getCluster(int)
      */
     @Override
-    public Cluster getCluster( int clusterId )
+    public Cluster getCluster( Integer clusterId )
     {
         LOG.trace( "Method: getCluster called." );
 

@@ -43,7 +43,7 @@ import com.gondor.services.ClusterManager;
  */
 
 @Controller
-@RequestMapping ( value = "/gondor/clusters")
+@RequestMapping ( value = "/gondor/cluster")
 public class ClusterController
 {
 
@@ -70,7 +70,7 @@ public class ClusterController
     @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
     public String getClusterStatus( @PathVariable Integer clusterId )
     {
-        LOG.trace( "Method: getCluster called." );
+        LOG.trace( "Method: getClusterStatus called." );
         return clusterManager.getStatus( clusterId );
     }
 
@@ -97,10 +97,10 @@ public class ClusterController
      */
     @RequestMapping ( value = "/{id}/hosts", method = { RequestMethod.GET })
     @ResponseBody
-    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer clusterId )
+    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer id )
     {
         LOG.trace( "Method: getAllHosts called." );
-        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( clusterId ), HttpStatus.OK );
+        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( id ), HttpStatus.OK );
     }
 
 
@@ -109,10 +109,10 @@ public class ClusterController
      * @param id
      */
     @RequestMapping ( value = "/{id}/decommission", method = RequestMethod.GET)
-    public void decommissionCluster( @PathVariable Integer clusterId )
+    public void decommissionCluster( @PathVariable Integer id )
     {
         LOG.trace( "Method: decommissionCluster called." );
-        clusterManager.decommissionCluster( clusterId );
+        clusterManager.decommissionCluster( id );
     }
 
 
@@ -121,9 +121,9 @@ public class ClusterController
      * @param clusterId
      */
     @RequestMapping ( value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteCluster( @PathVariable Integer clusterId )
+    public void deleteCluster( @PathVariable Integer id )
     {
         LOG.trace( "Method: decommissionCluster called." );
-        clusterManager.deleteCluster( clusterId );
+        clusterManager.deleteCluster( id );
     }
 }

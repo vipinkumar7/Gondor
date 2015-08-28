@@ -32,7 +32,7 @@ import com.gondor.model.orm.Host;
  */
 public interface ClusterDao
 {
-    public String getStatus( int clusterId );
+    public String getStatus( Integer clusterId );
 
 
     /**
@@ -47,7 +47,7 @@ public interface ClusterDao
      * @param clusterId
      * @return
      */
-    public List<Host> getAllhosts( int clusterId );
+    public List<Host> getAllhosts( Integer clusterId );
 
 
     /**
@@ -62,7 +62,7 @@ public interface ClusterDao
      * stop all cluster hosts and services
      * @param clusterId
      */
-    public void decommissionCluster( int clusterId );
+    public void decommissionCluster( Integer clusterId );
 
 
     /**
@@ -70,6 +70,6 @@ public interface ClusterDao
      * @param clusterId
      * @return
      */
-    public Cluster getCluster( int clusterId );
+    public Cluster getCluster( Integer clusterId );
 
 }

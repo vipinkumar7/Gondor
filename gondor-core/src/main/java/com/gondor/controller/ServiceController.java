@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gondor.model.orm.Instance;
+import com.gondor.model.orm.Service;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.services.ServiceManager;
@@ -77,6 +78,7 @@ public class ServiceController
     @RequestMapping ( value = "/create/{serviceType}/{hostId}", method = { RequestMethod.GET })
     public Integer createService( @PathVariable ServiceType serviceType, @PathVariable Integer hostId )
     {
+        LOG.trace( "Method: createService called." );
         return serviceManager.createService( serviceType, hostId );
     }
 
@@ -88,10 +90,19 @@ public class ServiceController
      * @return
      */
     @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
-    public String getClustersStatus( @PathVariable Integer id, @RequestParam ( value = "host", required = true) Integer host )
+    public String getServiceStatus( @PathVariable Integer id )
     {
-        LOG.trace( "Method: getClustersStatus called." );
+        LOG.trace( "Method: getServiceStatus called." );
         return serviceManager.getStatus( id );
+    }
+
+
+    @RequestMapping ( value = "/{id}/type", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<ServiceType> getServiceType( @PathVariable Integer id )
+    {
+        LOG.trace( "Method: getServiceType called." );
+        return new ResponseEntity<ServiceType>( serviceManager.getServiceType( id ), HttpStatus.OK );
     }
 
 
@@ -103,7 +114,7 @@ public class ServiceController
     @RequestMapping ( value = "/{serviceType}/start/{hostId}", method = RequestMethod.GET)
     public void startService( @PathVariable ServiceType serviceType, @PathVariable Integer hostId )
     {
-        LOG.trace( "Method: getClusters called." );
+        LOG.trace( "Method: startService called." );
         serviceManager.startService( serviceType, hostId );
     }
 
@@ -115,7 +126,7 @@ public class ServiceController
     @RequestMapping ( value = "/{id}/stop", method = RequestMethod.GET)
     public void stopService( @PathVariable Integer id )
     {
-        LOG.trace( "Method: getClusters called." );
+        LOG.trace( "Method: stopService called." );
         serviceManager.stopService( id );
     }
 
@@ -129,8 +140,49 @@ public class ServiceController
     @ResponseBody
     public ResponseEntity<List<SimpleConfiguration>> getAllServiceConfig( @PathVariable Integer id )
     {
-        LOG.trace( "Method: getClusters called." );
+        LOG.trace( "Method: getAllServiceConfig called." );
         return new ResponseEntity<List<SimpleConfiguration>>( serviceManager.getAllConfig( id ), HttpStatus.OK );
     }
 
+
+    /**
+     * 
+     * @param type
+     * @param hostId
+     * @return
+     */
+    @RequestMapping ( value = "/{type}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Service> getServiceIfExists( @PathVariable ServiceType type,
+        @RequestParam ( value = "hostId", required = true) Integer hostId )
+    {
+
+        return new ResponseEntity<Service>( serviceManager.getServiceIfExists( type, hostId ), HttpStatus.OK );
+
+    }
+
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @RequestMapping ( value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Service> getServiceIfExists( @PathVariable Integer id )
+    {
+        return new ResponseEntity<Service>( serviceManager.getServiceIfExists( id ), HttpStatus.OK );
+    }
+
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @RequestMapping ( value = "/{id}/check", method = RequestMethod.GET)
+    public Boolean checkService( @PathVariable Integer id )
+    {
+        return serviceManager.checkService( id );
+    }
 }
