@@ -78,7 +78,7 @@ public class Node<T>
     {
         LOG.trace( "Method: hasEdge called." );
 
-        return findEdge( that ).isEmpty();
+        return ( !findEdge( that ).isEmpty() );
 
     }
 

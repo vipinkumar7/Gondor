@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.Stack;
 
 
 /**
@@ -134,8 +135,10 @@ public class UnweightedDirectedGraph<T>
 
     public List<T> getAllParent( T vertex )
     {
+
         if ( !mGraph.containsKey( vertex ) )
             return null;
+
         Node<T> start = getNode( vertex );
         List<T> parents = new ArrayList<T>();
         Queue<Node<T>> queue = new LinkedList<Node<T>>();
@@ -143,8 +146,8 @@ public class UnweightedDirectedGraph<T>
         while ( !queue.isEmpty() ) {
             Node<T> first = queue.remove();
             if ( first.getParent() != null ) {
-                queue.add( first );
-                parents.add( first.getVertex() );
+                queue.add( first.getParent() );
+                parents.add( first.getParent().getVertex() );
             }
         }
         return parents;
@@ -160,7 +163,7 @@ public class UnweightedDirectedGraph<T>
         Node<T> start = getNode( startVertex );
         queue.add( start );
 
-        while ( queue.isEmpty() ) {
+        while ( !queue.isEmpty() ) {
             Node<T> first = queue.remove();
             first.setVisited( true );
             List<Edge<T>> edges = first.getEdges();
@@ -176,7 +179,64 @@ public class UnweightedDirectedGraph<T>
     }
 
 
+    public void fullBfs()
+    {
+        clearTrace();
+
+        for ( Node<T> node : mGraph.values() ) {
+
+            if ( !node.isVisited() ) {
+                Queue<Node<T>> queue = new LinkedList<Node<T>>();
+                Node<T> start = node;
+                queue.add( start );
+                while ( !queue.isEmpty() ) {
+                    Node<T> first = queue.remove();
+                    first.setVisited( true );
+                    List<Edge<T>> edges = first.getEdges();
+                    for ( Edge<T> edge : edges ) {
+                        Node<T> adjacent = edge.getDest();
+                        if ( !adjacent.isVisited() ) {
+                            adjacent.setParent( first );
+                            queue.add( adjacent );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public boolean detectCycle()
+    {
+        Stack<Node<T>> recurStack = new Stack<Node<T>>();
+        clearTrace();
+        for ( Node<T> node : mGraph.values() )
+            if ( dfs( node, recurStack ) )
+                return true;
+        return false;
+    }
+
+
+    public boolean dfs( Node<T> node, Stack<Node<T>> recurStack )
+    {
+        if ( !node.isVisited() ) {
+            node.setVisited( true );
+            recurStack.add( node );
+            for ( Edge<T> edge : node.getEdges() ) {
+                if ( !edge.getDest().isVisited() && dfs( edge.getDest(), recurStack ) )
+                    return true;
+                else if ( recurStack.contains( edge.getDest() ) )
+                    return true;
+
+            }
+        }
+        recurStack.remove( node );
+        return false;
+    }
+
+
     public void clearTrace()
+
     {
         Iterator<T> itr = mGraph.keySet().iterator();
         while ( itr.hasNext() ) {
