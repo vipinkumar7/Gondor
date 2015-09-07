@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gondor.dao.UserDao;
 import com.gondor.model.orm.User;
 import com.gondor.services.UserManager;
 

@@ -2,3 +2,4 @@ gondor-core/target/
 gondor-core/.project
 gondor-core/.settings/*
 gondor-core/.classpath
+gondor-agents/agent-app/db.sqlite3
