@@ -16,4 +16,19 @@ GONDOR_ENV = {
     "HBASE_FETCH_URL": "https://archive.apache.org/dist/hbase/" +
     "hbase-0.98.9/hbase-0.98.9-src.tar.gz",
     "ZOOKEEPER_FETCH_URL": "http://archive.apache.org/dist/zookeeper/" +
-    "zookeeper-3.4.5/zookeeper-3.4.5.tar.gz"}
+    "zookeeper-3.4.5/zookeeper-3.4.5.tar.gz",
+    "HADOOP_ENV_FILE": "hadoop_env.sh",
+    "HADOOP_CONF": "/opt/_GONDOR/hadoop-2.6.0/etc/hadoop",
+    "HIVE_CONF": "/opt/_GONDOR/hive/apache-hive-0.14.0-bin/conf",
+    "ZOOKEEPER_CONF": "/opt/_GONDOR/zookeeper-3.4.5/conf",
+    "HBASE_CONF": "/opt/_GONDOR/hbase-0.98.9/conf"}
+
+
+SERVICE_SCRIPT = {
+    "NAMENODE_START": "/opt/_GONDOR/hadoop/sbin/hadoop-daemon.sh start namenode",
+    "SECONDARY_NAMENODE_START": "/opt/_GONDOR/hadoop/sbin/hadoop-daemon.sh start secondarynamenode",
+    "DATANODE_START": "hadoop-daemon.sh start datanode",
+    "NODEMANAGER_START": "yarn-daemons.sh start nodemanager",
+    "RESOURCEMANAGER_START": "yarn-daemon.sh  start resourcemanager"
+    }
+

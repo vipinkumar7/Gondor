@@ -9,7 +9,7 @@ import subprocess
 import bundles
 import properties
 import instances
-
+import configs
 
 urls = (
     '/', 'start',
@@ -18,6 +18,7 @@ urls = (
     '/bundle/?', 'loadBundle',
     '/startService/?', 'startService',
     '/stopService/?', 'stopService',
+        '/loadConfig/?', 'loadConfig',
 )
 
 
@@ -68,7 +69,9 @@ class host:
 
 class loadAgent:
     def GET(self):
-        return setEnvforgnodor("localhost")
+        param = web.input(_method='get')
+        hostname = param.host
+        return setEnvforgnodor(hostname)
 
 
 class loadBundle:
@@ -93,7 +96,20 @@ class startService:
 
 class stopService:
     def GET(self):
-        return 'stopped'
+        param = web.input(_method='get')
+        instancename = param.instance
+        i = instances.SERVICE().factory(instancename)
+        i.stopService()
+        return 'stopped service'
+
+
+class loadConfig:
+    def GET(self):
+        param = web.input(_method='get')
+        bundleconfig = param.config
+        c = configs.CONFIG().factory(bundleconfig)
+        c.loadConfigs()
+        return 'configuration loaded'
 
 
 if __name__ == "__main__":
