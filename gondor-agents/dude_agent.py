@@ -109,9 +109,11 @@ class loadConfig:
         param = web.input(_method='get')
         whichbundle = param.bundle
         whichFile = param.file
-        text = param.text
-        c = configs.CONFIG().factory(whichbundle)
-        c.loadConfigs(whichFile, text)
+        text = web.data()
+        print(text)
+        print ((whichFile + "  " + whichbundle))
+        #c = configs.CONFIG().factory(whichbundle)
+        #c.loadConfigs(whichFile, text)
         return 'configuration loaded'
 
 

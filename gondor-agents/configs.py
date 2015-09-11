@@ -42,15 +42,16 @@ class HADOOP_CONFIG(CONFIG):
             HADOOP_CONFIG.instance
 
     def loadConfigs(self, filename, text):
-        super.writeConfig(os.path.join
+        super(HADOOP_CONFIG, self).writeConfig(os.path.join
         (properties.GONDOR_ENV["HADOOP_CONF"], filename), text)
 
     def loadEnv(self):
-        text = "----------hadoop ENV variables---------\n"
+        text = "#----------hadoop ENV variables---------\n"
         for key in properties.HADOOP_VARIABLES:
             text = text + ("export %s=%s\n" %
             (key, properties.HADOOP_VARIABLES[key]))
-        super(HADOOP_CONFIG, self).appendEnv("%s" % properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
+        super(HADOOP_CONFIG, self).appendEnv("%s" %
+        properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
         return True
 
 
@@ -64,16 +65,17 @@ class HBASE_CONFIG(CONFIG):
         else:
             HBASE_CONFIG.instance
 
-    def loadConfigs(filename, text):
-        super.writeConfig(os.path.join
+    def loadConfigs(self, filename, text):
+        super(HADOOP_CONFIG, self).writeConfig(os.path.join
         (properties.GONDOR_ENV["HBASE_CONF"], filename), text)
 
-    def loadEnv():
-        text = "----------hbase ENV variables---------\n"
+    def loadEnv(self):
+        text = "#----------hbase ENV variables---------\n"
         for key in properties.HBASE_VARIABLES:
-            text.join("export %s=%s\n" %
+            text = text + ("export %s=%s\n" %
             (key, properties.HBASE_VARIABLES[key]))
-        super.appendEnv("%s" % properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
+        super(HADOOP_CONFIG, self).appendEnv("%s" %
+        properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
         return True
 
 
@@ -87,16 +89,17 @@ class ZOOKEEPER_CONFIG(CONFIG):
         else:
             ZOOKEEPER_CONFIG.instance
 
-    def loadConfigs(filename, text):
-        super.writeConfig(os.path.join
+    def loadConfigs(self, filename, text):
+        super(HADOOP_CONFIG, self).writeConfig(os.path.join
         (properties.GONDOR_ENV["ZOOKEEPER_CONF"], filename), text)
 
-    def loadEnv():
-        text = "----------zookeeper ENV variables---------\n"
+    def loadEnv(self):
+        text = "#----------zookeeper ENV variables---------\n"
         for key in properties.ZOOKEEPER_VARIABLES:
-            text.join("export %s=%s\n" %
+            text = text + ("export %s=%s\n" %
             (key, properties.ZOOKEEPER_VARIABLES[key]))
-        super.appendEnv("%s" % properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
+        super(HADOOP_CONFIG, self).appendEnv("%s" %
+        properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
         return True
 
 
@@ -110,14 +113,15 @@ class HIVE_CONFIG(CONFIG):
         else:
             HIVE_CONFIG.instance
 
-    def loadConfigs(filename, text):
-        super.writeConfig(os.path.join
+    def loadConfigs(self, filename, text):
+        super(HADOOP_CONFIG, self).writeConfig(os.path.join
         (properties.GONDOR_ENV["HIVE_CONF"], filename), text)
 
-    def loadEnv():
-        text = "----------hbase ENV variables---------\n"
+    def loadEnv(self):
+        text = "#----------hbase ENV variables---------\n"
         for key in properties.HIVE_VARIABLES:
-            text.join("export %s=%s\n" %
+            text = text + ("export %s=%s\n" %
             (key, properties.HIVE_VARIABLES[key]))
-        super.appendEnv("%s" % properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
+        super(HADOOP_CONFIG, self).appendEnv("%s" %
+        properties.GONDOR_ENV["GONDOR_ENV_FILE"], text)
         return True
