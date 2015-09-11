@@ -33,7 +33,7 @@ class SERVICE(object):
     factory = staticmethod(factory)
 
 
-class NAMENODE_INSTANCE():
+class NAMENODE_INSTANCE(SERVICE):
 
     def __init__(self):
         super(NAMENODE_INSTANCE, self).__init__()
@@ -45,7 +45,7 @@ class NAMENODE_INSTANCE():
         return 'service stopped'
 
 
-class DATANODE_INSTANCE():
+class DATANODE_INSTANCE(SERVICE):
 
     def __init__(self):
         super(DATANODE_INSTANCE, self).__init__()
@@ -57,7 +57,7 @@ class DATANODE_INSTANCE():
         return 'service stopped'
 
 
-class NODEMANAGER_INSTANCE():
+class NODEMANAGER_INSTANCE(SERVICE):
 
     def __init__(self):
         super(NODEMANAGER_INSTANCE, self).__init__()
@@ -69,7 +69,7 @@ class NODEMANAGER_INSTANCE():
         return 'service stopped'
 
 
-class RESOURCEMANAGER_INSTANCE():
+class RESOURCEMANAGER_INSTANCE(SERVICE):
 
     def __init__(self):
         super(RESOURCEMANAGER_INSTANCE, self).__init__()
@@ -81,7 +81,7 @@ class RESOURCEMANAGER_INSTANCE():
         return 'service stopped'
 
 
-class SECNAMENODE_INSTANCE():
+class SECNAMENODE_INSTANCE(SERVICE):
 
     def __init__(self):
         super(SECNAMENODE_INSTANCE, self).__init__()
@@ -93,7 +93,7 @@ class SECNAMENODE_INSTANCE():
         return 'service stopped'
 
 
-class JOBHISTORY_SERVER_INSTANCE():
+class JOBHISTORY_SERVER_INSTANCE(SERVICE):
 
     def __init__(self):
         super(JOBHISTORY_SERVER_INSTANCE, self).__init__()
@@ -105,7 +105,7 @@ class JOBHISTORY_SERVER_INSTANCE():
         return 'service stopped'
 
 
-class HIVE_METASTROE_INSTANCE():
+class HIVE_METASTROE_INSTANCE(SERVICE):
 
     def __init__(self):
         super(HIVE_METASTROE_INSTANCE, self).__init__()
@@ -117,7 +117,7 @@ class HIVE_METASTROE_INSTANCE():
         return 'service stopped'
 
 
-class HIVE_SERVER_INSTANCE():
+class HIVE_SERVER_INSTANCE(SERVICE):
 
     def __init__(self):
         super(HIVE_SERVER_INSTANCE, self).__init__()
@@ -129,7 +129,7 @@ class HIVE_SERVER_INSTANCE():
         return 'service stopped'
 
 
-class HBASE_REGION_INSTANCE():
+class HBASE_REGION_INSTANCE(SERVICE):
 
     def __init__(self):
         super(HBASE_REGION_INSTANCE, self).__init__()
@@ -141,7 +141,7 @@ class HBASE_REGION_INSTANCE():
         return 'service stopped'
 
 
-class HBASE_MASTER_INSTANCE():
+class HBASE_MASTER_INSTANCE(SERVICE):
 
     def __init__(self):
         super(HBASE_MASTER_INSTANCE, self).__init__()
@@ -153,7 +153,7 @@ class HBASE_MASTER_INSTANCE():
         return 'service stopped'
 
 
-class ZOOKEEPER_INSTANCE():
+class ZOOKEEPER_INSTANCE(SERVICE):
 
     def __init__(self):
         super(ZOOKEEPER_INSTANCE, self).__init__()

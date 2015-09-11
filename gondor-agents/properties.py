@@ -17,12 +17,39 @@ GONDOR_ENV = {
     "hbase-0.98.9/hbase-0.98.9-src.tar.gz",
     "ZOOKEEPER_FETCH_URL": "http://archive.apache.org/dist/zookeeper/" +
     "zookeeper-3.4.5/zookeeper-3.4.5.tar.gz",
-    "HADOOP_ENV_FILE": "hadoop_env.sh",
+    "GONDOR_ENV_FILE": "/opt/_GONDOR/gondor_env.sh",
     "HADOOP_CONF": "/opt/_GONDOR/hadoop-2.6.0/etc/hadoop",
     "HIVE_CONF": "/opt/_GONDOR/hive/apache-hive-0.14.0-bin/conf",
     "ZOOKEEPER_CONF": "/opt/_GONDOR/zookeeper-3.4.5/conf",
     "HBASE_CONF": "/opt/_GONDOR/hbase-0.98.9/conf"}
 
+HADOOP_VARIABLES = {
+     "HADOOP_HOME": "/opt/_GONDOR/hadoop-2.6.0",
+     "HADOOP_INSTALL": "/opt/_GONDOR/hadoop-2.6.0",
+     "HADOOP_COMMON_LIB_NATIVE_DIR": "/opt/_GONDOR/hadoop-2.6.0/lib/native",
+     "HADOOP_CMD": "/opt/_GONDOR/bin/hadoop-2.6.0",
+     "HADOOP_STREAMING": "/opt/_GONDOR/hadoop-2.6.0/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar",
+     "HADOOP_OPTS": "-Djava.library.path=/opt/_GONDOR/hadoop-2.6.0/lib",
+     "HADOOP_COMMON_HOME": "/opt/_GONDOR/hadoop-2.6.0",
+     "HADOOP_MAPRED_HOME": "/opt/_GONDOR/hadoop-2.6.0",
+     "HADOOP_PREFIX": "/opt/_GONDOR/hadoop-2.6.0",
+     "HADOOP_YARN_HOME": "/opt/_GONDOR/hadoop-2.6.0",
+     "HADOOP_CONF_DIR": "/opt/_GONDOR/hadoop/etc/hadoop",
+     "HADOOP_CONF_DIR": "/opt/_GONDOR/hadoop/etc/hadoop"
+
+    }
+
+HBASE_VARIABLES = {
+    "HBASE_HOME": "/opt/_GONDOR/hbase"
+    }
+
+HIVE_VARIABLES = {
+    "HIVE_HOME": "/opt_GONDOR/hive"
+    }
+
+JAVA_VARIABLES = {
+    "JAVA_HOME": "/opt/_GONDOR/java"
+    }
 
 SERVICE_SCRIPT = {
     "NAMENODE_START": "/opt/_GONDOR/hadoop/sbin/hadoop-daemon.sh start namenode",

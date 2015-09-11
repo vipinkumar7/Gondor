@@ -18,7 +18,8 @@ urls = (
     '/bundle/?', 'loadBundle',
     '/startService/?', 'startService',
     '/stopService/?', 'stopService',
-        '/loadConfig/?', 'loadConfig',
+    '/loadConfig/?', 'loadConfig',
+    '/loadEnv/?', 'loadEnv',
 )
 
 
@@ -104,12 +105,21 @@ class stopService:
 
 
 class loadConfig:
-    def GET(self):
+    def POST(self):
         param = web.input(_method='get')
-        bundleconfig = param.config
-        c = configs.CONFIG().factory(bundleconfig)
-        c.loadConfigs()
+        whichbundle = param.bundle
+        whichFile = param.file
+        text = param.text
+        c = configs.CONFIG().factory(whichbundle)
+        c.loadConfigs(whichFile, text)
         return 'configuration loaded'
+
+
+class loadEnv:
+    def GET(self):
+        c = configs.CONFIG().factory("HADOOP")
+        c.loadEnv()
+        return 'enviroment loaded'
 
 
 if __name__ == "__main__":
