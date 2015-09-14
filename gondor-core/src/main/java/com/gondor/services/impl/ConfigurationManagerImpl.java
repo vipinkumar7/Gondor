@@ -20,6 +20,7 @@ package com.gondor.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.SimpleConfiguration;
@@ -33,6 +34,7 @@ import com.gondor.services.ConfigurationManager;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
+@Service ( "configManager")
 public class ConfigurationManagerImpl implements ConfigurationManager
 {
 

@@ -21,6 +21,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+
 /**
  * @author Vipin Kumar
  * @created 08-Sep-2015
@@ -36,8 +37,7 @@ public class ScriptExecuteUtil
 
     public static void main( String[] args )
     {
-        executeProcedure( "function(){"
-            + " print ('data ') }" );
+        executeProcedure( "function(){" + " print ('data ') }" );
     }
 
 
@@ -47,13 +47,13 @@ public class ScriptExecuteUtil
     private static void executeProcedure( String string )
     {
         LOG.trace( "Method: executeProcedure called." );
-        ScriptEngineManager engineManager=new ScriptEngineManager();
-        ScriptEngine scriptEngine=engineManager.getEngineByName( "js" );
+        ScriptEngineManager engineManager = new ScriptEngineManager();
+        ScriptEngine scriptEngine = engineManager.getEngineByName( "js" );
         try {
             scriptEngine.eval( string );
         } catch ( ScriptException e ) {
-            
-            LOG.error("ScriptException while performing operation in executeProcedure",e);
+
+            LOG.error( "ScriptException while performing operation in executeProcedure", e );
         }
         LOG.trace( "Method: executeProcedure finished." );
     }

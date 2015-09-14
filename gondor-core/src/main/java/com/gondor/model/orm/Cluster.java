@@ -50,6 +50,15 @@ public class Cluster implements Serializable
 
 
     /**
+     * 
+     */
+    public Cluster()
+    {
+        super();
+    }
+
+
+    /**
      * @return the id
      */
     @Id

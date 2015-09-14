@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
-import com.gondor.model.oxm.SimpleInputXMLConfiguration;
+import com.gondor.model.oxm.Configuration;
 import com.gondor.model.oxm.Property;
 import com.gondor.util.XmlConverter;
 
@@ -73,8 +73,7 @@ public class GenericConfigLoader
 
         for ( String file : simpleXmlConfigFile ) {
             InputStream input = getClass().getClassLoader().getResourceAsStream( PROPERTIES_FILE_LOCATION + file );
-            SimpleInputXMLConfiguration genericConfig = (SimpleInputXMLConfiguration) xmlConverter
-                .convertFromXMLToObject( input );
+            Configuration genericConfig = (Configuration) xmlConverter.convertFromXMLToObject( input );
 
             List<SimpleConfiguration> genericConfList = new ArrayList<>();
             Property[] genericProperties = genericConfig.getProperty();

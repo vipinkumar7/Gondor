@@ -49,11 +49,12 @@ public class GondorCorsFilter implements Filter
     {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader( "Access-Control-Allow-Origin", "*" );
-        response.addHeader( "Access-Control-Allow-Headers", "Content-Type" );
-        response.setHeader( "Content-Type", "application/json" );
-        response.setHeader( "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE" );
-        response.setHeader( "Access-Control-Max-Age", "3600" );
-        response.setHeader( "Access-Control-Allow-Headers", "x-requested-with" );
+        response.addHeader( "Access-Control-Allow-Headers", "Authorization,Origin, "
+            + "No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, "
+            + "Cache-Control, Expires, Content-Type, X-E4M-With, Accept" );
+        //response.setHeader( "Content-Type", "application/json" );
+        response.addHeader( "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE" );
+        response.addHeader( "Access-Control-Max-Age", "3600" );
         chain.doFilter( req, res );
 
     }

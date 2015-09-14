@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.services.ClusterManager;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 
 /**
@@ -43,7 +49,8 @@ import com.gondor.services.ClusterManager;
  */
 
 @Controller
-@RequestMapping ( value = "/gondor/cluster")
+@Api ( value = "cluster", description = "cluster operation exposed to rest")
+@RequestMapping ( value = "/cluster")
 public class ClusterController
 {
 
@@ -54,7 +61,9 @@ public class ClusterController
     private ClusterManager clusterManager;
 
 
-    @RequestMapping ( value = "", method = RequestMethod.POST)
+    @ApiOperation ( value = "save newly created cluster")
+    @RequestMapping ( value = "", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
     public void createCluster( @RequestBody Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
@@ -67,8 +76,13 @@ public class ClusterController
      * @param id
      * @return
      */
-    @RequestMapping ( value = "/{id}/status", method = RequestMethod.GET)
-    public String getClusterStatus( @PathVariable Integer clusterId )
+
+    @RequestMapping ( value = "/{clusterId}/status", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiOperation ( value = "get the status of cluster")
+    @ApiResponses ( value = { @ApiResponse ( code = 200, message = "") })
+    public String getClusterStatus(
+        @ApiParam ( name = "clusterId", value = "id of cluster", required = true) @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: getClusterStatus called." );
         return clusterManager.getStatus( clusterId );
@@ -79,7 +93,7 @@ public class ClusterController
      * 
      * @return
      */
-    @RequestMapping ( value = "/clusters", method = { RequestMethod.GET })
+    @RequestMapping ( value = "/all", method = { RequestMethod.GET })
     @ResponseBody
     public ResponseEntity<List<Cluster>> getAllClusters()
     {
@@ -95,12 +109,12 @@ public class ClusterController
      * 
      * All hosts belongs to this Cluster
      */
-    @RequestMapping ( value = "/{id}/hosts", method = { RequestMethod.GET })
+    @RequestMapping ( value = "/{clusterId}/hosts", method = { RequestMethod.GET })
     @ResponseBody
-    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer id )
+    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: getAllHosts called." );
-        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( id ), HttpStatus.OK );
+        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( clusterId ), HttpStatus.OK );
     }
 
 
@@ -108,11 +122,12 @@ public class ClusterController
      * 
      * @param id
      */
-    @RequestMapping ( value = "/{id}/decommission", method = RequestMethod.GET)
-    public void decommissionCluster( @PathVariable Integer id )
+    @RequestMapping ( value = "/{clusterId}/decommission", method = RequestMethod.GET)
+    @ResponseBody
+    public void decommissionCluster( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
-        clusterManager.decommissionCluster( id );
+        clusterManager.decommissionCluster( clusterId );
     }
 
 
@@ -120,10 +135,11 @@ public class ClusterController
      * 
      * @param clusterId
      */
-    @RequestMapping ( value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteCluster( @PathVariable Integer id )
+    @RequestMapping ( value = "/{clusterId}/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteCluster( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
-        clusterManager.deleteCluster( id );
+        clusterManager.deleteCluster( clusterId );
     }
 }

@@ -25,6 +25,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,10 @@ import com.gondor.model.orm.Role;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.User;
 import com.gondor.util.XmlConverter;
+import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
+import com.wordnik.swagger.model.ApiInfo;
 
 
 /**
@@ -54,12 +59,16 @@ import com.gondor.util.XmlConverter;
  *
  */
 @Configuration
+@EnableSwagger
 @EnableWebMvc
 @ComponentScan ( "com.gondor")
-@PropertySource ( "classpath:config.properties")
+@PropertySource ( { "classpath:config.properties", "classpath:swagger.properties" })
 @EnableTransactionManagement
 public class ApplicationContextConfig
 {
+
+    private SpringSwaggerConfig springSwaggerConfig;
+
 
     @Bean ( name = "dataSource")
     public DataSource getDataSource()
@@ -82,6 +91,29 @@ public class ApplicationContextConfig
         properties.put( "hibernate.hbm2ddl.auto", "create" );
         properties.put( "hibernate.jdbc.batch_size ", 25 );
         return properties;
+    }
+
+
+    @Autowired
+    public void setSpringSwaggerConfig( SpringSwaggerConfig springSwaggerConfig )
+    {
+        this.springSwaggerConfig = springSwaggerConfig;
+    }
+
+
+    @Bean
+    public SwaggerSpringMvcPlugin customImplementation()
+    {
+
+        return new SwaggerSpringMvcPlugin( this.springSwaggerConfig ).apiInfo( apiInfo() ).includePatterns( "gondor/.*" );
+    }
+
+
+    private ApiInfo apiInfo()
+    {
+        ApiInfo apiInfo = new ApiInfo( "Gondor API", "API for Gondor", null, null, null, null );
+        return apiInfo;
+
     }
 
 
@@ -116,7 +148,7 @@ public class ApplicationContextConfig
     {
 
         CastorMarshaller marshaller = new CastorMarshaller();
-        marshaller.setTargetClass( com.gondor.model.oxm.SimpleInputXMLConfiguration.class );
+        marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
         return marshaller;
     }
 
