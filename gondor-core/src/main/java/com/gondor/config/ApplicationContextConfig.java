@@ -25,7 +25,6 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -44,127 +43,102 @@ import com.gondor.model.orm.Role;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.User;
 import com.gondor.util.XmlConverter;
-import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
-import com.mangofactory.swagger.plugin.EnableSwagger;
-import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
-import com.wordnik.swagger.model.ApiInfo;
 
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  *
  * @author Vipin Kumar
  * @created 22-Jun-2015
  *
- * TODO: Write a quick description of what the class is supposed to do.
+ *          TODO: Write a quick description of what the class is supposed to do.
  *
  */
 @Configuration
-@EnableSwagger
+@EnableSwagger2
 @EnableWebMvc
-@ComponentScan ( "com.gondor")
-@PropertySource ( { "classpath:config.properties", "classpath:swagger.properties" })
+@ComponentScan("com.gondor")
+@PropertySource({ "classpath:config.properties" })
 @EnableTransactionManagement
-public class ApplicationContextConfig
-{
+public class ApplicationContextConfig {
 
-    private SpringSwaggerConfig springSwaggerConfig;
+	@Bean(name = "dataSource")
+	public DataSource getDataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/usersdb");
+		dataSource.setUsername("root");
+		dataSource.setPassword("root");
 
+		return dataSource;
+	}
 
-    @Bean ( name = "dataSource")
-    public DataSource getDataSource()
-    {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName( "com.mysql.jdbc.Driver" );
-        dataSource.setUrl( "jdbc:mysql://localhost:3306/usersdb" );
-        dataSource.setUsername( "root" );
-        dataSource.setPassword( "root" );
+	private Properties getHibernateProperties() {
+		Properties properties = new Properties();
+		properties.put("hibernate.show_sql", "true");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		properties.put("hibernate.hbm2ddl.auto", "create");
+		properties.put("hibernate.jdbc.batch_size ", 25);
+		return properties;
+	}
 
-        return dataSource;
-    }
+	@Bean(name = "sessionFactory")
+	public SessionFactory getSessionFactory(DataSource dataSource) {
+		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
+		sessionBuilder.addAnnotatedClasses(User.class);
+		sessionBuilder.addAnnotatedClasses(Cluster.class);
+		sessionBuilder.addAnnotatedClasses(Resource.class);
+		sessionBuilder.addAnnotatedClasses(Service.class);
+		sessionBuilder.addAnnotatedClasses(Host.class);
+		sessionBuilder.addAnnotatedClasses(Process.class);
+		sessionBuilder.addAnnotatedClasses(Role.class);
+		sessionBuilder.scanPackages("com.gondor.model.orm");
+		sessionBuilder.addProperties(getHibernateProperties());
+		return sessionBuilder.buildSessionFactory();
+	}
 
+	@Bean(name = "transactionManager")
+	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
 
-    private Properties getHibernateProperties()
-    {
-        Properties properties = new Properties();
-        properties.put( "hibernate.show_sql", "true" );
-        properties.put( "hibernate.dialect", "org.hibernate.dialect.MySQLDialect" );
-        properties.put( "hibernate.hbm2ddl.auto", "create" );
-        properties.put( "hibernate.jdbc.batch_size ", 25 );
-        return properties;
-    }
+		return transactionManager;
+	}
 
+	@Bean(autowire = Autowire.BY_TYPE)
+	public CastorMarshaller getMarshaller() {
 
-    @Autowired
-    public void setSpringSwaggerConfig( SpringSwaggerConfig springSwaggerConfig )
-    {
-        this.springSwaggerConfig = springSwaggerConfig;
-    }
+		CastorMarshaller marshaller = new CastorMarshaller();
+		marshaller.setTargetClass(com.gondor.model.oxm.Configuration.class);
+		return marshaller;
+	}
 
+	@Bean(autowire = Autowire.BY_TYPE)
+	public XmlConverter getXmlConverter() {
+		return new XmlConverter(getMarshaller(), getMarshaller());
+	}
 
-    @Bean
-    public SwaggerSpringMvcPlugin customImplementation()
-    {
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build().pathMapping("/").apiInfo(apiInfo());
+	}
 
-        return new SwaggerSpringMvcPlugin( this.springSwaggerConfig ).apiInfo( apiInfo() ).includePatterns( "gondor/.*" );
-    }
+	private ApiInfo apiInfo() {
 
+		return new ApiInfo("Gondor API", "API for Gondor Application", "1.0", null, null, "Copyright @ Gondor",
+				"www.gondor.com");
 
-    private ApiInfo apiInfo()
-    {
-        ApiInfo apiInfo = new ApiInfo( "Gondor API", "API for Gondor", null, null, null, null );
-        return apiInfo;
+	}
 
-    }
-
-
-    @Bean ( name = "sessionFactory")
-    public SessionFactory getSessionFactory( DataSource dataSource )
-    {
-        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
-        sessionBuilder.addAnnotatedClasses( User.class );
-        sessionBuilder.addAnnotatedClasses( Cluster.class );
-        sessionBuilder.addAnnotatedClasses( Resource.class );
-        sessionBuilder.addAnnotatedClasses( Service.class );
-        sessionBuilder.addAnnotatedClasses( Host.class );
-        sessionBuilder.addAnnotatedClasses( Process.class );
-        sessionBuilder.addAnnotatedClasses( Role.class );
-        sessionBuilder.scanPackages( "com.gondor.model.orm" );
-        sessionBuilder.addProperties( getHibernateProperties() );
-        return sessionBuilder.buildSessionFactory();
-    }
-
-
-    @Bean ( name = "transactionManager")
-    public HibernateTransactionManager getTransactionManager( SessionFactory sessionFactory )
-    {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager( sessionFactory );
-
-        return transactionManager;
-    }
-
-
-    @Bean ( autowire = Autowire.BY_TYPE)
-    public CastorMarshaller getMarshaller()
-    {
-
-        CastorMarshaller marshaller = new CastorMarshaller();
-        marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
-        return marshaller;
-    }
-
-
-    @Bean ( autowire = Autowire.BY_TYPE)
-    public XmlConverter getXmlConverter()
-    {
-        return new XmlConverter( getMarshaller(), getMarshaller() );
-    }
-
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
-    {
-        PropertySourcesPlaceholderConfigurer propertySource = new PropertySourcesPlaceholderConfigurer();
-        propertySource.setIgnoreUnresolvablePlaceholders( true );
-        return propertySource;
-    }
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		PropertySourcesPlaceholderConfigurer propertySource = new PropertySourcesPlaceholderConfigurer();
+		propertySource.setIgnoreUnresolvablePlaceholders(true);
+		return propertySource;
+	}
 }

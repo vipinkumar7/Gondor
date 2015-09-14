@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.services.ClusterManager;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 /**
@@ -49,7 +49,6 @@ import com.wordnik.swagger.annotations.ApiResponses;
  */
 
 @Controller
-@Api ( value = "cluster", description = "cluster operation exposed to rest")
 @RequestMapping ( value = "/cluster")
 public class ClusterController
 {
@@ -61,7 +60,6 @@ public class ClusterController
     private ClusterManager clusterManager;
 
 
-    @ApiOperation ( value = "save newly created cluster")
     @RequestMapping ( value = "", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
     public void createCluster( @RequestBody Cluster cluster )
