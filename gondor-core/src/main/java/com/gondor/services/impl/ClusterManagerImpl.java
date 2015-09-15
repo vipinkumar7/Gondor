@@ -23,10 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.gondor.dao.ClusterDao;
 import com.gondor.exceptions.WrongEntityException;
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
+import com.gondor.repository.ClusterRepository;
 import com.gondor.services.ClusterManager;
 
 
@@ -44,7 +44,7 @@ public class ClusterManagerImpl implements ClusterManager
 
 
     @Autowired
-    private ClusterDao clusterDao;
+    private ClusterRepository clusterRepository;
 
 
     /* (non-Javadoc)
@@ -54,8 +54,9 @@ public class ClusterManagerImpl implements ClusterManager
     public List<Host> getAllhosts( Integer clusterId )
     {
         LOG.trace( "Method: getAllhosts called." );
-        return clusterDao.getAllhosts( clusterId );
 
+        // return clusterDao.getAllhosts( clusterId );
+        return null;
     }
 
 
@@ -68,7 +69,8 @@ public class ClusterManagerImpl implements ClusterManager
         LOG.trace( "Method: createCluster called." );
 
         try {
-            clusterDao.createCluster( cluster );
+            clusterRepository.save( cluster );
+
         } catch ( DataIntegrityViolationException e ) {
             throw new WrongEntityException( "Cluster name should be unique" );
         }
@@ -84,7 +86,7 @@ public class ClusterManagerImpl implements ClusterManager
     {
         LOG.trace( "Method: decommissionCluster called." );
 
-        clusterDao.decommissionCluster( clusterId );
+        // clusterDao.decommissionCluster( clusterId );
         LOG.trace( "Method: decommissionCluster finished." );
     }
 
@@ -109,8 +111,8 @@ public class ClusterManagerImpl implements ClusterManager
     {
         LOG.trace( "Method: getStatus called." );
 
-        return clusterDao.getStatus( clusterId );
-
+        // return clusterDao.getStatus( clusterId );
+        return null;
     }
 
 
@@ -122,8 +124,8 @@ public class ClusterManagerImpl implements ClusterManager
     {
         LOG.trace( "Method: listAllClusters called." );
 
-        return clusterDao.listAllClusters();
-
+        // return clusterRepository.
+        return null;
     }
 
 }

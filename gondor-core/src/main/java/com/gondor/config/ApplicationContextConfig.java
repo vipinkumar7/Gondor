@@ -18,6 +18,8 @@
 
 package com.gondor.config;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -28,13 +30,28 @@ import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.oxm.castor.CastorMarshaller;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
@@ -44,101 +61,160 @@ import com.gondor.model.orm.Service;
 import com.gondor.model.orm.User;
 import com.gondor.util.XmlConverter;
 
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  *
  * @author Vipin Kumar
  * @created 22-Jun-2015
  *
- *          TODO: Write a quick description of what the class is supposed to do.
+ *    Application Context Configuration for Gondor
  *
  */
 @Configuration
+@EnableJpaRepositories ( basePackages = { "com.gondor.repository" })
 @EnableSwagger2
-@EnableWebMvc
-@ComponentScan("com.gondor")
-@PropertySource({ "classpath:config.properties" })
+@PropertySource ( { "classpath:config.properties" })
 @EnableTransactionManagement
-public class ApplicationContextConfig {
+@ComponentScan ( basePackages = "com.gondor", excludeFilters = {
+    @ComponentScan.Filter ( value = Controller.class, type = FilterType.ANNOTATION),
+    @ComponentScan.Filter ( value = Configuration.class, type = FilterType.ANNOTATION) })
+public class ApplicationContextConfig extends RepositoryRestMvcConfiguration
+{
 
-	@Bean(name = "dataSource")
-	public DataSource getDataSource() {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/usersdb");
-		dataSource.setUsername("root");
-		dataSource.setPassword("root");
 
-		return dataSource;
-	}
+    @Override
+    protected void configureRepositoryRestConfiguration( RepositoryRestConfiguration config )
+    {
+        super.configureRepositoryRestConfiguration( config );
+        try {
+            config.setBaseUri( new URI( "/api" ) );
+        } catch ( URISyntaxException e ) {
+            e.printStackTrace();
+        }
+    }
 
-	private Properties getHibernateProperties() {
-		Properties properties = new Properties();
-		properties.put("hibernate.show_sql", "true");
-		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-		properties.put("hibernate.hbm2ddl.auto", "create");
-		properties.put("hibernate.jdbc.batch_size ", 25);
-		return properties;
-	}
 
-	@Bean(name = "sessionFactory")
-	public SessionFactory getSessionFactory(DataSource dataSource) {
-		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
-		sessionBuilder.addAnnotatedClasses(User.class);
-		sessionBuilder.addAnnotatedClasses(Cluster.class);
-		sessionBuilder.addAnnotatedClasses(Resource.class);
-		sessionBuilder.addAnnotatedClasses(Service.class);
-		sessionBuilder.addAnnotatedClasses(Host.class);
-		sessionBuilder.addAnnotatedClasses(Process.class);
-		sessionBuilder.addAnnotatedClasses(Role.class);
-		sessionBuilder.scanPackages("com.gondor.model.orm");
-		sessionBuilder.addProperties(getHibernateProperties());
-		return sessionBuilder.buildSessionFactory();
-	}
+    @Bean ( name = "dataSource")
+    public DataSource getDataSource()
+    {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName( "com.mysql.jdbc.Driver" );
+        dataSource.setUrl( "jdbc:mysql://localhost:3306/usersdb" );
+        dataSource.setUsername( "root" );
+        dataSource.setPassword( "root" );
 
-	@Bean(name = "transactionManager")
-	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+        return dataSource;
+    }
 
-		return transactionManager;
-	}
 
-	@Bean(autowire = Autowire.BY_TYPE)
-	public CastorMarshaller getMarshaller() {
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter()
+    {
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setShowSql( true );
+        adapter.setGenerateDdl( true );
+        adapter.setDatabase( Database.MYSQL );
+        return adapter;
+    }
 
-		CastorMarshaller marshaller = new CastorMarshaller();
-		marshaller.setTargetClass(com.gondor.model.oxm.Configuration.class);
-		return marshaller;
-	}
 
-	@Bean(autowire = Autowire.BY_TYPE)
-	public XmlConverter getXmlConverter() {
-		return new XmlConverter(getMarshaller(), getMarshaller());
-	}
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws ClassNotFoundException
+    {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource( getDataSource() );
+        factoryBean.setPackagesToScan( "com.gondor.model.orm" );
+        factoryBean.setJpaVendorAdapter( jpaVendorAdapter() );
+        factoryBean.setJpaProperties( getHibernateProperties() );
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any()).build().pathMapping("/").apiInfo(apiInfo());
-	}
+        return factoryBean;
+    }
 
-	private ApiInfo apiInfo() {
 
-		return new ApiInfo("Gondor API", "API for Gondor Application", "1.0", null, null, "Copyright @ Gondor",
-				"www.gondor.com");
+    @Bean
+    public JpaTransactionManager transactionManager() throws ClassNotFoundException
+    {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory( entityManagerFactory().getObject() );
+        return transactionManager;
+    }
 
-	}
 
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		PropertySourcesPlaceholderConfigurer propertySource = new PropertySourcesPlaceholderConfigurer();
-		propertySource.setIgnoreUnresolvablePlaceholders(true);
-		return propertySource;
-	}
+    private Properties getHibernateProperties()
+    {
+        Properties properties = new Properties();
+        properties.put( "hibernate.show_sql", "true" );
+        properties.put( "hibernate.dialect", "org.hibernate.dialect.MySQLDialect" );
+        properties.put( "hibernate.hbm2ddl.auto", "create" );
+        properties.put( "hibernate.jdbc.batch_size ", 25 );
+        return properties;
+    }
+
+
+    @Bean ( name = "sessionFactory")
+    public SessionFactory getSessionFactory( DataSource dataSource )
+    {
+        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
+        sessionBuilder.addAnnotatedClasses( User.class );
+        sessionBuilder.addAnnotatedClasses( Cluster.class );
+        sessionBuilder.addAnnotatedClasses( Resource.class );
+        sessionBuilder.addAnnotatedClasses( Service.class );
+        sessionBuilder.addAnnotatedClasses( Host.class );
+        sessionBuilder.addAnnotatedClasses( Process.class );
+        sessionBuilder.addAnnotatedClasses( Role.class );
+        sessionBuilder.scanPackages( "com.gondor.model.orm" );
+        sessionBuilder.addProperties( getHibernateProperties() );
+        return sessionBuilder.buildSessionFactory();
+    }
+
+
+    /*@Bean ( name = "transactionManager")
+    public HibernateTransactionManager getTransactionManager( SessionFactory sessionFactory )
+    {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager( sessionFactory );
+
+        return transactionManager;
+    }*/
+
+
+    @Bean ( autowire = Autowire.BY_TYPE)
+    public CastorMarshaller getMarshaller()
+    {
+
+        CastorMarshaller marshaller = new CastorMarshaller();
+        marshaller.setTargetClass( com.gondor.model.oxm.Configuration.class );
+        return marshaller;
+    }
+
+
+    @Bean ( autowire = Autowire.BY_TYPE)
+    public XmlConverter getXmlConverter()
+    {
+        return new XmlConverter( getMarshaller(), getMarshaller() );
+    }
+
+
+    @Bean
+    public Docket api()
+    {
+        return new Docket( DocumentationType.SWAGGER_2 ).select().apis( RequestHandlerSelectors.any() )
+            .paths( PathSelectors.any() ).build().pathMapping( "/" ).apiInfo( apiInfo() );
+    }
+
+
+    private ApiInfo apiInfo()
+    {
+        return new ApiInfo( "Gondor API", "API for Gondor Application", "1.0", null, null, "Copyright @ Gondor",
+            "www.gondor.com" );
+
+    }
+
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
+    {
+        PropertySourcesPlaceholderConfigurer propertySource = new PropertySourcesPlaceholderConfigurer();
+        propertySource.setIgnoreUnresolvablePlaceholders( true );
+        return propertySource;
+    }
 }
