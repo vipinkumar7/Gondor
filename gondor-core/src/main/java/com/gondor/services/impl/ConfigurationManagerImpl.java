@@ -19,10 +19,8 @@ package com.gondor.services.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.services.ConfigurationManager;
 
@@ -40,9 +38,6 @@ public class ConfigurationManagerImpl implements ConfigurationManager
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationManagerImpl.class );
 
-    @Autowired
-    private SimpleConfigurationDao simpleCondifDao;
-
 
     /* (non-Javadoc)
      * @see com.gondor.services.ConfigurationManager#removeConfig(int, java.lang.String)
@@ -52,7 +47,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     {
         LOG.trace( "Method: removeConfig called." );
 
-        return simpleCondifDao.removeConfig( simpleConfiguration );
+        return true;//return simpleCondifDao.removeConfig( simpleConfiguration );
 
     }
 
@@ -64,7 +59,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     public void saveConfigs( List<SimpleConfiguration> config )
     {
         LOG.trace( "Method: saveConfigs called." );
-        simpleCondifDao.saveConfigs( config );
+        //simpleCondifDao.saveConfigs( config );
         LOG.trace( "Method: saveConfigs finished." );
     }
 
@@ -76,7 +71,6 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     public void deleteAllConfig()
     {
         LOG.trace( "Method: deleteAllConfig called." );
-        simpleCondifDao.deleteAllConfig();
         LOG.trace( "Method: deleteAllConfig finished." );
     }
 
@@ -88,8 +82,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     public boolean updateConfig( SimpleConfiguration simpleConfiguration )
     {
         LOG.trace( "Method: updateConfig called." );
-        return simpleCondifDao.updateConfig( simpleConfiguration );
-
+        return true;//
 
     }
 
@@ -102,7 +95,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     {
         LOG.trace( "Method: updateConfig called." );
 
-        return simpleCondifDao.updateConfig( simpleConfigurations );
+        return true;// return simpleCondifDao.updateConfig( simpleConfigurations );
     }
 
 

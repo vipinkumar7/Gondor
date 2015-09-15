@@ -25,7 +25,6 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -36,7 +35,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -53,12 +51,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import com.gondor.model.orm.Cluster;
-import com.gondor.model.orm.Host;
-import com.gondor.model.orm.Resource;
-import com.gondor.model.orm.Role;
-import com.gondor.model.orm.Service;
-import com.gondor.model.orm.User;
 import com.gondor.util.XmlConverter;
 
 
@@ -149,32 +141,6 @@ public class ApplicationContextConfig extends RepositoryRestMvcConfiguration
         properties.put( "hibernate.jdbc.batch_size ", 25 );
         return properties;
     }
-
-
-    @Bean ( name = "sessionFactory")
-    public SessionFactory getSessionFactory( DataSource dataSource )
-    {
-        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder( dataSource );
-        sessionBuilder.addAnnotatedClasses( User.class );
-        sessionBuilder.addAnnotatedClasses( Cluster.class );
-        sessionBuilder.addAnnotatedClasses( Resource.class );
-        sessionBuilder.addAnnotatedClasses( Service.class );
-        sessionBuilder.addAnnotatedClasses( Host.class );
-        sessionBuilder.addAnnotatedClasses( Process.class );
-        sessionBuilder.addAnnotatedClasses( Role.class );
-        sessionBuilder.scanPackages( "com.gondor.model.orm" );
-        sessionBuilder.addProperties( getHibernateProperties() );
-        return sessionBuilder.buildSessionFactory();
-    }
-
-
-    /*@Bean ( name = "transactionManager")
-    public HibernateTransactionManager getTransactionManager( SessionFactory sessionFactory )
-    {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager( sessionFactory );
-
-        return transactionManager;
-    }*/
 
 
     @Bean ( autowire = Autowire.BY_TYPE)

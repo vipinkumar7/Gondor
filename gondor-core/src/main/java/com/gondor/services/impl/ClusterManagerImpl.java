@@ -18,6 +18,7 @@
 package com.gondor.services.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,12 +52,11 @@ public class ClusterManagerImpl implements ClusterManager
      * @see com.gondor.services.ClusterManager#getAllhosts(int)
      */
     @Override
-    public List<Host> getAllhosts( Integer clusterId )
+    public Set<Host> getAllhosts( Integer clusterId )
     {
         LOG.trace( "Method: getAllhosts called." );
 
-        // return clusterDao.getAllhosts( clusterId );
-        return null;
+        return clusterRepository.getHosts( clusterId );
     }
 
 
@@ -79,25 +79,27 @@ public class ClusterManagerImpl implements ClusterManager
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ClusterManager#decommissionCluster(int)
+     * @see com.gondor.services.ClusterManager#decommissionCluster(Integer)
      */
     @Override
     public void decommissionCluster( Integer clusterId )
     {
         LOG.trace( "Method: decommissionCluster called." );
 
-        // clusterDao.decommissionCluster( clusterId );
+        clusterRepository.decommissionCluster( clusterId );
+
         LOG.trace( "Method: decommissionCluster finished." );
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ClusterManager#deleteCluster(int)
+     * @see com.gondor.services.ClusterManager#deleteCluster(Integer)
      */
     @Override
     public void deleteCluster( Integer clusterId )
     {
         LOG.trace( "Method: deleteCluster called." );
+        clusterRepository.delete( clusterId );
 
         LOG.trace( "Method: deleteCluster finished." );
     }
@@ -110,8 +112,6 @@ public class ClusterManagerImpl implements ClusterManager
     public String getStatus( Integer clusterId )
     {
         LOG.trace( "Method: getStatus called." );
-
-        // return clusterDao.getStatus( clusterId );
         return null;
     }
 
@@ -123,9 +123,7 @@ public class ClusterManagerImpl implements ClusterManager
     public List<Cluster> listAllClusters()
     {
         LOG.trace( "Method: listAllClusters called." );
-
-        // return clusterRepository.
-        return null;
+        return clusterRepository.findAll();
     }
 
 }

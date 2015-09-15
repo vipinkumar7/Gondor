@@ -29,11 +29,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Component;
 
-import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.oxm.Configuration;
 import com.gondor.model.oxm.Property;
+import com.gondor.repository.SimpleConfRepository;
 import com.gondor.util.XmlConverter;
 
 
@@ -59,7 +59,7 @@ public class GenericConfigLoader
     private XmlConverter xmlConverter;
 
     @Autowired
-    private SimpleConfigurationDao configDao;
+    private SimpleConfRepository simpleConfRepository;
 
 
     public GenericConfigLoader()
@@ -85,8 +85,7 @@ public class GenericConfigLoader
                 simpleConf.setFileName( file );
                 genericConfList.add( simpleConf );
             }
-
-            configDao.saveConfigs( genericConfList );
+            simpleConfRepository.save( genericConfList );
             LOG.trace( "Method: loadHdfsSite finished." );
         }
     }

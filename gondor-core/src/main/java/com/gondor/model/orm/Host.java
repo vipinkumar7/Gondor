@@ -17,14 +17,16 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -38,12 +40,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table ( name = "HOSTS")
-public class Host implements Serializable
+public class Host
 {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 2885427806050671647L;
+
     private int id;
     private String name;
     private String ip;
@@ -51,8 +50,8 @@ public class Host implements Serializable
     private boolean isActive;
 
 
-    @ManyToOne
-    @JoinColumn ( name = "CLUSTER_ID")
+    private Set<Service> services;
+
     private Cluster cluster;
 
 
@@ -99,7 +98,8 @@ public class Host implements Serializable
     /**
      * @return the cluster
      */
-    @Column ( name = "CLUSTER_ID")
+    @ManyToOne
+    @JoinColumn ( name = "CLUSTER_ID")
     public Cluster getCluster()
     {
         return cluster;
@@ -150,6 +150,26 @@ public class Host implements Serializable
     public void setActive( boolean isActive )
     {
         this.isActive = isActive;
+    }
+
+
+    /**
+     * @return the services
+     */
+    @OneToMany ( fetch = FetchType.LAZY)
+    @JoinColumn ( name = "SERVICE_ID")
+    public Set<Service> getServices()
+    {
+        return services;
+    }
+
+
+    /**
+     * @param services the services to set
+     */
+    public void setServices( Set<Service> services )
+    {
+        this.services = services;
     }
 
 

@@ -17,8 +17,6 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,13 +36,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table ( name = "USERS")
-public class User implements Serializable
+public class User
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
 
     private int id;
     private String username;
@@ -52,8 +49,6 @@ public class User implements Serializable
     private String email;
 
 
-    @OneToOne
-    @JoinColumn ( name = "ROLE_ID")
     private Role role;
 
 
@@ -114,7 +109,8 @@ public class User implements Serializable
     /**
      * @return the role
      */
-    @Column ( name = "ROLE_ID")
+    @OneToOne
+    @JoinColumn ( name = "ROLE_ID")
     public Role getRole()
     {
         return role;

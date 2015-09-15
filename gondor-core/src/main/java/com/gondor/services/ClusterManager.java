@@ -18,6 +18,7 @@
 package com.gondor.services;
 
 import java.util.List;
+import java.util.Set;
 
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
@@ -54,7 +55,7 @@ public interface ClusterManager
      * @param clusterId
      * @return
      */
-    public List<Host> getAllhosts( Integer clusterId );
+    public Set<Host> getAllhosts( Integer clusterId );
 
 
     /**

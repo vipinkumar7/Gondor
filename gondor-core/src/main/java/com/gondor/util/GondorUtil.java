@@ -15,44 +15,37 @@
  *limitations under the License.
  *
  */
-package com.gondor.dao.impl;
+package com.gondor.util;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
  * @author Vipin Kumar
- * @created 24-Aug-2015
+ * @created 15-Sep-2015
  * 
- * Base class for DAO implementation
+ * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public abstract class BaseDAOImpl
+public class GondorUtil
 {
-
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( BaseDAOImpl.class );
-
-    private SessionFactory sessionFactory;
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( GondorUtil.class );
 
 
     /**
      * 
      */
-
-    public BaseDAOImpl( SessionFactory sessionFactory )
+    public static <E> Collection<E> makeCollection( Iterable<E> iter )
     {
-        this.sessionFactory = sessionFactory;
+        LOG.trace( "Method: makeCollection called." );
+        Collection<E> list = new ArrayList<E>();
+        for ( E e : iter ) {
+            list.add( e );
+        }
+        LOG.trace( "Method: makeCollection finished." );
+        return list;
     }
 
-
-    /**
-     * 
-     */
-    protected Session getCurrentSession()
-    {
-        LOG.trace( "Method: getCurrentSession called." );
-        return sessionFactory.getCurrentSession();
-    }
 
 }

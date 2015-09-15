@@ -17,9 +17,16 @@
  */
 package com.gondor.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Set;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gondor.model.orm.Cluster;
+import com.gondor.model.orm.Host;
 
 
 /**
@@ -29,7 +36,24 @@ import com.gondor.model.orm.Cluster;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface ClusterRepository extends CrudRepository<Cluster, Long>
+@Transactional ( readOnly = true)
+public interface ClusterRepository extends JpaRepository<Cluster, Integer>
 {
+    /**
+     * 
+     * @param clusterId
+     * @return
+     */
+    @Query ( "SELECT a.hosts FROM Cluster a INNER JOIN  a.hosts  where a.id=:clusterId ")
+    public Set<Host> getHosts( @Param ( "clusterId") Integer clusterId );
 
+
+    /**
+     * 
+     * @param clusterId
+     */
+    @Modifying
+    @Transactional ( readOnly = false)
+    @Query ( "UPDATE Cluster c set c.active=false where c.id=:clusterId")
+    public void decommissionCluster( @Param ( "clusterId") Integer clusterId );
 }

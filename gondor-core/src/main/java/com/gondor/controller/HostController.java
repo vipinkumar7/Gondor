@@ -18,6 +18,7 @@
 package com.gondor.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,10 +88,10 @@ public class HostController
      */
     @RequestMapping ( value = "/{id}/services", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Service>> getAllServices( @PathVariable Integer hostId )
+    public ResponseEntity<Set<Service>> getAllServices( @PathVariable Integer hostId )
     {
         LOG.trace( "Method: getAllServices called." );
-        return new ResponseEntity<List<Service>>( hostManager.getAllServices( hostId ), HttpStatus.OK );
+        return new ResponseEntity<Set<Service>>( hostManager.getAllServices( hostId ), HttpStatus.OK );
     }
 
 
@@ -145,7 +146,7 @@ public class HostController
     @RequestMapping ( value = "/{id}/check", method = RequestMethod.GET)
     public Boolean checkeHost( @PathVariable Integer id, @RequestParam ( value = "cluster", required = true) Boolean inCluster )
     {
-        return inCluster == true ? hostManager.checkIfHostInAnyCluster( id ) : hostManager.validateHostAlreadyPresent( id );
+        return inCluster == true ? hostManager.checkIfHostInAnyCluster( id ) : false;// hostManager.validateHostAlreadyPresent( id );
 
     }
 

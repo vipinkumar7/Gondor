@@ -17,13 +17,16 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -37,17 +40,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table ( name = "CLUSTERS")
-public class Cluster implements Serializable
+public class Cluster
 {
-
-
     /**
      * 
      */
-    private static final long serialVersionUID = -2649086224796637679L;
     private Integer id;
     private String name;
-    private Boolean isActive;
+    private boolean isActive;
+
+
+    private Set<Host> hosts;
 
 
     /**
@@ -100,10 +103,30 @@ public class Cluster implements Serializable
 
 
     /**
+     * @return the hosts
+     */
+    @OneToMany ( fetch = FetchType.LAZY)
+    @JoinColumn ( name = "HOST_ID")
+    public Set<Host> getHosts()
+    {
+        return hosts;
+    }
+
+
+    /**
+     * @param hosts the hosts to set
+     */
+    public void setHosts( Set<Host> hosts )
+    {
+        this.hosts = hosts;
+    }
+
+
+    /**
      * @return the isActive
      */
     @Column ( name = "IS_ACTIVE")
-    public Boolean isActive()
+    public boolean isActive()
     {
         return isActive;
     }
@@ -112,14 +135,10 @@ public class Cluster implements Serializable
     /**
      * @param isActive the isActive to set
      */
-    public void setActive( Boolean isActive )
+    public void setActive( boolean isActive )
     {
         this.isActive = isActive;
     }
-
-    /**
-     * @return the host
-     */
 
 
 }

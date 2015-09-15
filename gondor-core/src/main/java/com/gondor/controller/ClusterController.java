@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
@@ -61,7 +63,7 @@ public class ClusterController
 
 
     @RequestMapping ( value = "", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
-    @ResponseBody
+    @ResponseStatus ( value = HttpStatus.OK)
     public void createCluster( @RequestBody Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
@@ -109,10 +111,10 @@ public class ClusterController
      */
     @RequestMapping ( value = "/{clusterId}/hosts", method = { RequestMethod.GET })
     @ResponseBody
-    public ResponseEntity<List<Host>> getAllHosts( @PathVariable Integer clusterId )
+    public ResponseEntity<Set<Host>> getAllHosts( @PathVariable Integer clusterId )
     {
         LOG.trace( "Method: getAllHosts called." );
-        return new ResponseEntity<List<Host>>( clusterManager.getAllhosts( clusterId ), HttpStatus.OK );
+        return new ResponseEntity<Set<Host>>( clusterManager.getAllhosts( clusterId ), HttpStatus.OK );
     }
 
 

@@ -1,5 +1,5 @@
 /**
- *  * Copyright (c) 2015 Gondor
+ *  * Copyright (c) 2015 Gondor. 
  * All rights reserved. 
  * 
  *Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,36 +15,21 @@
  *limitations under the License.
  *
  */
-package com.gondor.dao;
+package com.gondor.repository;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
 
-import com.gondor.model.orm.RoleType;
-import com.gondor.model.orm.User;
+import com.gondor.model.orm.Service;
 
 
 /**
  * @author Vipin Kumar
- * @created 22-Jun-2015
+ * @created 15-Sep-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface UserDao
+public interface ServiceRepository extends CrudRepository<Service, Long>
 {
-
-    public List<User> list();
-
-
-    public User get( int id );
-
-
-    public void saveOrUpdate( User user );
-
-
-    public void delete( int userId );
-
-
-    public void changeRole( int userId, RoleType roleType );
 
 }

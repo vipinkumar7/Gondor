@@ -22,8 +22,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gondor.dao.ServiceDao;
-import com.gondor.dao.SimpleConfigurationDao;
 import com.gondor.model.orm.Instance;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
@@ -43,13 +41,6 @@ public class ServiceManagerImpl implements ServiceManager
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceManagerImpl.class );
 
-    @Autowired
-    private ServiceDao serviceDao;
-
-
-    @Autowired
-    private SimpleConfigurationDao configDao;
-
 
     /* (non-Javadoc)
      * @see com.gondor.services.ServiceManager#startService(com.gondor.model.ServiceType)
@@ -58,7 +49,7 @@ public class ServiceManagerImpl implements ServiceManager
     public Integer startService( ServiceType serviceType, Integer hostId )
     {
         LOG.trace( "Method: startService called." );
-        return serviceDao.startService( serviceType, hostId );
+        return null;//serviceDao.startService( serviceType, hostId );
 
     }
 
@@ -70,7 +61,7 @@ public class ServiceManagerImpl implements ServiceManager
     public void stopService( Integer serviceid )
     {
         LOG.trace( "Method: stopService called." );
-        serviceDao.stopService( serviceid );
+        //serviceDao.stopService( serviceid );
 
         LOG.trace( "Method: stopService finished." );
     }
@@ -84,7 +75,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getStatus called." );
 
-        return serviceDao.getStatus( serviceid );
+        return null;// serviceDao.getStatus( serviceid );
 
     }
 
@@ -97,7 +88,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getAllInstances called." );
 
-        return serviceDao.getAllInstances( serviceId );
+        return null;//serviceDao.getAllInstances( serviceId );
 
     }
 
@@ -110,7 +101,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: createService called." );
 
-        return serviceDao.createService( serviceType, hostId );
+        return null;// serviceDao.createService( serviceType, hostId );
 
     }
 
@@ -123,7 +114,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getServiceType called." );
 
-        return serviceDao.getServiceType( serviceid );
+        return null;// serviceDao.getServiceType( serviceid );
 
     }
 
@@ -136,7 +127,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: checkIfServiceExists called." );
 
-        return serviceDao.getServiceIfExists( serviceType, hostId );
+        return null;// serviceDao.getServiceIfExists( serviceType, hostId );
 
     }
 
@@ -149,7 +140,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getAllConfig called." );
 
-        return serviceDao.getAllConfig( serviceId );
+        return null;// serviceDao.getAllConfig( serviceId );
 
     }
 
@@ -162,7 +153,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: checkService called." );
 
-        return serviceDao.checkState( serviceid );
+        return true;// serviceDao.checkState( serviceid );
 
     }
 
@@ -175,7 +166,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: getServiceIfExists called." );
 
-        return serviceDao.getServiceIfExists( serviceid );
+        return null;// serviceDao.getServiceIfExists( serviceid );
 
     }
 }

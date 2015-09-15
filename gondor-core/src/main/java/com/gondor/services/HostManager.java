@@ -18,6 +18,7 @@
 package com.gondor.services;
 
 import java.util.List;
+import java.util.Set;
 
 import com.gondor.model.orm.Host;
 import com.gondor.model.orm.Service;
@@ -54,7 +55,7 @@ public interface HostManager
      * List all services running in this  host
      * @return
      */
-    public List<Service> getAllServices( Integer hostId );
+    public Set<Service> getAllServices( Integer hostId );
 
 
     /**
@@ -78,14 +79,6 @@ public interface HostManager
      * @return
      */
     public Boolean validateHostNameAlreadyPresent( String hostIdentifier );
-
-
-    /**
-     * check if this host id is present
-     * @param hostId
-     * @return
-     */
-    public Boolean validateHostAlreadyPresent( Integer hostId );
 
 
     /**

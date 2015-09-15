@@ -17,8 +17,6 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,21 +35,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table ( name = "PROCESSES")
-public class Process implements Serializable
+public class Process
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 2408863593485958546L;
 
 
     private int id;
     private int systemPid;
 
 
-    @ManyToOne
-    @JoinColumn ( name = "SERVICE_ID")
     private Service service;
 
 
@@ -98,7 +93,8 @@ public class Process implements Serializable
     /**
      * @return the service
      */
-    @Column ( name = "SERVICE_ID")
+    @ManyToOne
+    @JoinColumn ( name = "SERVICE_ID")
     public Service getService()
     {
         return service;

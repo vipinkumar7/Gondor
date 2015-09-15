@@ -17,8 +17,6 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -41,14 +39,13 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table ( name = "SERVICES")
-public class Service implements Serializable
+public class Service
 {
 
 
     /**
      * 
      */
-    private static final long serialVersionUID = -3065584052959688964L;
     private int id;
 
     @Type ( type = "numeric_boolean")
@@ -58,8 +55,6 @@ public class Service implements Serializable
     private ServiceType name;
 
 
-    @ManyToOne
-    @JoinColumn ( name = "HOST_ID")
     private Host host;
 
 
@@ -87,7 +82,8 @@ public class Service implements Serializable
     /**
      * @return the host
      */
-    @Column ( name = "HOST_ID")
+    @ManyToOne
+    @JoinColumn ( name = "HOST_ID")
     public Host getHost()
     {
         return host;

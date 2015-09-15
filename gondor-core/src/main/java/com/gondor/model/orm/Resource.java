@@ -17,8 +17,6 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,18 +38,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table ( name = "RESOURCES")
-public class Resource implements Serializable
+public class Resource
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = -8644773993023277569L;
 
     private int id;
 
-    @ManyToOne
-    @JoinColumn ( name = "SERVICE_ID")
     private Service service;
 
     @Enumerated ( EnumType.STRING)
@@ -102,7 +97,9 @@ public class Resource implements Serializable
     /**
      * @return the service
      */
-    @Column ( name = "SERVICE_ID")
+
+    @ManyToOne
+    @JoinColumn ( name = "SERVICE_ID")
     public Service getService()
     {
         return service;

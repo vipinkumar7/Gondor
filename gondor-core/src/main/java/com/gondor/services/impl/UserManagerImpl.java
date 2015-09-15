@@ -19,10 +19,8 @@ package com.gondor.services.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gondor.dao.UserDao;
 import com.gondor.model.orm.RoleType;
 import com.gondor.model.orm.User;
 import com.gondor.services.UserManager;
@@ -42,9 +40,6 @@ public class UserManagerImpl implements UserManager
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( UserManagerImpl.class );
 
-    @Autowired
-    private UserDao userDao;
-
 
     /* (non-Javadoc)
      * @see com.gondor.services.UserManager#list()
@@ -54,8 +49,7 @@ public class UserManagerImpl implements UserManager
     {
         LOG.trace( "Method: list called." );
 
-        return userDao.list();
-
+        return null;//
     }
 
 
@@ -67,8 +61,7 @@ public class UserManagerImpl implements UserManager
     {
         LOG.trace( "Method: get called." );
 
-        return userDao.get( userId );
-
+        return null;//
     }
 
 
@@ -79,7 +72,6 @@ public class UserManagerImpl implements UserManager
     public void delete( int userId )
     {
         LOG.trace( "Method: delete called." );
-        userDao.delete( userId );
         LOG.trace( "Method: delete finished." );
     }
 
@@ -91,7 +83,6 @@ public class UserManagerImpl implements UserManager
     public void changeRole( int userId, RoleType roleType )
     {
         LOG.trace( "Method: changeRole called." );
-        userDao.changeRole( userId, roleType );
 
         LOG.trace( "Method: changeRole finished." );
     }
@@ -117,7 +108,6 @@ public class UserManagerImpl implements UserManager
     public void saveOrUpdate( User user )
     {
         LOG.trace( "Method: saveOrUpdate called." );
-        userDao.saveOrUpdate( user );
         LOG.trace( "Method: saveOrUpdate finished." );
     }
 

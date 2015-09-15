@@ -17,8 +17,6 @@
  */
 package com.gondor.model.orm;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,13 +35,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table ( name = "ROLES")
-public class Role implements Serializable
+public class Role
 {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 8167808941083555113L;
 
     private int id;
     @Enumerated ( EnumType.STRING)
