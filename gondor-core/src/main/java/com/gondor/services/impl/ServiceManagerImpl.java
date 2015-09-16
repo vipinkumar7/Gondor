@@ -17,14 +17,15 @@
  */
 package com.gondor.services.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gondor.model.orm.Instance;
+import com.gondor.model.orm.Host;
+import com.gondor.model.orm.InstanceConfiguration;
 import com.gondor.model.orm.ServiceType;
-import com.gondor.model.orm.SimpleConfiguration;
+import com.gondor.repository.ServiceRepository;
 import com.gondor.services.ServiceManager;
 
 
@@ -42,53 +43,43 @@ public class ServiceManagerImpl implements ServiceManager
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ServiceManagerImpl.class );
 
 
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+
     /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#startService(com.gondor.model.ServiceType)
+     * @see com.gondor.services.ServiceManager#startService(com.gondor.model.ServiceType,java.lang.Integer)
      */
     @Override
-    public Integer startService( ServiceType serviceType, Integer hostId )
+    public void startService( ServiceType serviceType, Integer hostId )
     {
         LOG.trace( "Method: startService called." );
-        return null;//serviceDao.startService( serviceType, hostId );
+        serviceRepository.startService( serviceType, hostId );
 
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#stopService(com.gondor.model.ServiceType)
+     * @see com.gondor.services.ServiceManager#stopService(java.lang.Integer)
      */
     @Override
-    public void stopService( Integer serviceid )
+    public void stopService( Integer serviceId )
     {
         LOG.trace( "Method: stopService called." );
-        //serviceDao.stopService( serviceid );
-
+        serviceRepository.stopService( serviceId );
         LOG.trace( "Method: stopService finished." );
     }
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#getStatus(int)
+     * @see com.gondor.services.ServiceManager#getStatus(java.lang.Integer)
      */
     @Override
-    public String getStatus( Integer serviceid )
+    public String getStatus( Integer serviceId )
     {
         LOG.trace( "Method: getStatus called." );
 
-        return null;// serviceDao.getStatus( serviceid );
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#getAllInstances(int)
-     */
-    @Override
-    public List<Instance> getAllInstances( Integer serviceId )
-    {
-        LOG.trace( "Method: getAllInstances called." );
-
-        return null;//serviceDao.getAllInstances( serviceId );
+        return null;
 
     }
 
@@ -97,12 +88,12 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#createService(com.gondor.model.orm.ServiceType, java.lang.Integer)
      */
     @Override
-    public Integer createService( ServiceType serviceType, Integer hostId )
+    public Integer createService( com.gondor.model.orm.Service service )
     {
         LOG.trace( "Method: createService called." );
 
-        return null;// serviceDao.createService( serviceType, hostId );
-
+        serviceRepository.save( service );
+        return service.getId();
     }
 
 
@@ -110,11 +101,11 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#getServiceType(java.lang.Integer)
      */
     @Override
-    public ServiceType getServiceType( Integer serviceid )
+    public ServiceType getServiceType( Integer serviceId )
     {
         LOG.trace( "Method: getServiceType called." );
 
-        return null;// serviceDao.getServiceType( serviceid );
+        return serviceRepository.getServiceType( serviceId );
 
     }
 
@@ -127,20 +118,7 @@ public class ServiceManagerImpl implements ServiceManager
     {
         LOG.trace( "Method: checkIfServiceExists called." );
 
-        return null;// serviceDao.getServiceIfExists( serviceType, hostId );
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ServiceManager#getAllConfig(int)
-     */
-    @Override
-    public List<SimpleConfiguration> getAllConfig( Integer serviceId )
-    {
-        LOG.trace( "Method: getAllConfig called." );
-
-        return null;// serviceDao.getAllConfig( serviceId );
+        return serviceRepository.getServiceIfExists( serviceType, hostId );
 
     }
 
@@ -149,11 +127,11 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#checkService(java.lang.Integer)
      */
     @Override
-    public boolean checkService( Integer serviceid )
+    public boolean checkService( Integer serviceId )
     {
         LOG.trace( "Method: checkService called." );
 
-        return true;// serviceDao.checkState( serviceid );
+        return serviceRepository.checkState( serviceId );
 
     }
 
@@ -162,11 +140,37 @@ public class ServiceManagerImpl implements ServiceManager
      * @see com.gondor.services.ServiceManager#getServiceIfExists(java.lang.Integer)
      */
     @Override
-    public com.gondor.model.orm.Service getServiceIfExists( Integer serviceid )
+    public com.gondor.model.orm.Service getServiceIfExists( Integer serviceId )
     {
         LOG.trace( "Method: getServiceIfExists called." );
-
-        return null;// serviceDao.getServiceIfExists( serviceid );
+        return serviceRepository.findOne( serviceId );
 
     }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ServiceManager#addServiceToHost(com.gondor.model.orm.Service, com.gondor.model.orm.Host)
+     */
+    @Override
+    public void addServiceToHost( com.gondor.model.orm.Service service, Host host )
+    {
+        LOG.trace( "Method: addServiceToHost called." );
+        service.setHost( host );
+        serviceRepository.save( service );
+        LOG.trace( "Method: addServiceToHost finished." );
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.ServiceManager#getAllConfig(java.lang.Integer)
+     */
+    @Override
+    public Set<InstanceConfiguration> getAllConfig( Integer serviceId )
+    {
+        LOG.trace( "Method: getAllConfig called." );
+
+        return serviceRepository.getAllConfig( serviceId );
+
+    }
+
 }

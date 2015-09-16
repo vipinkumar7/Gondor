@@ -20,6 +20,7 @@ package com.gondor.services;
 import java.util.List;
 import java.util.Set;
 
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.model.orm.Service;
 
@@ -74,11 +75,11 @@ public interface HostManager
 
 
     /**
-     * validate that this host is present in hosts table
+     * validate that this host NAME or IP is already  present in hosts table
      * @param hostIdentifier
      * @return
      */
-    public Boolean validateHostNameAlreadyPresent( String hostIdentifier );
+    public Boolean validateHostAlreadyPresent( String hostIdentifier );
 
 
     /**
@@ -86,15 +87,15 @@ public interface HostManager
      * @param hostId
      * @param clusterId
      */
-    public void addHostToCluster( Integer hostId, Integer clusterId );
+    public void addHostToCluster( Host host, Cluster cluster );
 
 
     /**
-     * Check if this host is present in any cluster
+     * Check if this host NAME or IP is present in any cluster
      * @param hostIdentifier
      * @return
      */
-    public Boolean checkIfHostNameInAnyCluster( String hostIdentifier );
+    public Boolean checkIfHostInAnyCluster( String hostIdentifier );
 
 
     /**

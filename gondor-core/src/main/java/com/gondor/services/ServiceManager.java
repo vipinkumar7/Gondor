@@ -17,12 +17,12 @@
  */
 package com.gondor.services;
 
-import java.util.List;
+import java.util.Set;
 
-import com.gondor.model.orm.Instance;
+import com.gondor.model.orm.Host;
+import com.gondor.model.orm.InstanceConfiguration;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.ServiceType;
-import com.gondor.model.orm.SimpleConfiguration;
 
 
 /**
@@ -34,13 +34,6 @@ import com.gondor.model.orm.SimpleConfiguration;
  */
 public interface ServiceManager
 {
-
-    /**
-     * List all the instances of this services running in cluster
-     * @return
-     */
-    public List<Instance> getAllInstances( Integer serviceId );
-
 
     /**
      * 
@@ -58,7 +51,7 @@ public interface ServiceManager
      * create the service of particular type
      * </p>
      */
-    public Integer createService( ServiceType serviceType, Integer hostId );
+    public Integer createService( Service service );
 
 
     /**
@@ -71,7 +64,7 @@ public interface ServiceManager
      * Start the service of particular type
      *</p>
      */
-    public Integer startService( ServiceType serviceType, Integer hostId );
+    public void startService( ServiceType serviceType, Integer hostId );
 
 
     /**
@@ -115,11 +108,28 @@ public interface ServiceManager
 
 
     /**
-     * get all configuration for this service
+     * Add service to a perticular node
+     * @param service
+     * @param host
+     */
+    public void addServiceToHost( Service service, Host host );
+
+
+    /**
+     * 
+     * <p>
+     * Get all the configuration for the service 
+     * Initially root service will have all the configuration but gradually it can be pushed down to 
+     * child services for more clarification
+     * </p>
+     * 
+     * eg. HDFS will have all configuration of datanode ,namenode and yarn at first service startup
+     * 
+     * but later as user will know system he can push service related to child services to their 
+     * specific 
      * @param serviceId
      * @return
      */
-    public List<SimpleConfiguration> getAllConfig( Integer serviceId );
-
+    public Set<InstanceConfiguration> getAllConfig( Integer serviceId );
 
 }

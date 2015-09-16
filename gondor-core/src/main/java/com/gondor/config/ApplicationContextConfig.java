@@ -94,7 +94,6 @@ public class ApplicationContextConfig extends RepositoryRestMvcConfiguration
         dataSource.setUrl( "jdbc:mysql://localhost:3306/usersdb" );
         dataSource.setUsername( "root" );
         dataSource.setPassword( "root" );
-
         return dataSource;
     }
 
@@ -172,7 +171,6 @@ public class ApplicationContextConfig extends RepositoryRestMvcConfiguration
     {
         return new ApiInfo( "Gondor API", "API for Gondor Application", "1.0", null, null, "Copyright @ Gondor",
             "www.gondor.com" );
-
     }
 
 

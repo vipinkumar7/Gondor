@@ -41,7 +41,7 @@ public interface ConfigurationManager
     *
     * change the  configuration  of given name in the Configuration file
     */
-    public boolean updateConfig( SimpleConfiguration simpleConfiguration );
+    public Integer updateConfig( SimpleConfiguration simpleConfiguration );
 
 
     /**
@@ -49,7 +49,7 @@ public interface ConfigurationManager
      * @param simpleConfigurations
      * @return
      */
-    public boolean updateConfig( List<SimpleConfiguration> simpleConfigurations );
+    public void updateConfig( List<SimpleConfiguration> simpleConfigurations );
 
 
     /**
@@ -58,7 +58,7 @@ public interface ConfigurationManager
      * @param configName
      * @return
      */
-    public boolean removeConfig( SimpleConfiguration simpleConfiguration );
+    public void removeConfig( SimpleConfiguration simpleConfiguration );
 
 
     /**
@@ -68,7 +68,5 @@ public interface ConfigurationManager
      */
     public void saveConfigs( List<SimpleConfiguration> config );
 
-
-    public void deleteAllConfig();
 
 }

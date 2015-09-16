@@ -44,7 +44,7 @@ import com.gondor.services.HostManager;
  * 
  */
 @Controller
-@RequestMapping ( value = "/gondor/host")
+@RequestMapping ( value = "/host")
 public class HostController
 {
 
@@ -137,8 +137,8 @@ public class HostController
         @RequestParam ( value = "cluster", required = true) Boolean inCluster )
     {
 
-        return inCluster == true ? hostManager.checkIfHostNameInAnyCluster( hostname ) : hostManager
-            .validateHostNameAlreadyPresent( hostname );
+        return inCluster == true ? hostManager.checkIfHostInAnyCluster( hostname ) : hostManager
+            .validateHostAlreadyPresent( hostname );
 
     }
 
@@ -146,7 +146,7 @@ public class HostController
     @RequestMapping ( value = "/{id}/check", method = RequestMethod.GET)
     public Boolean checkeHost( @PathVariable Integer id, @RequestParam ( value = "cluster", required = true) Boolean inCluster )
     {
-        return inCluster == true ? hostManager.checkIfHostInAnyCluster( id ) : false;// hostManager.validateHostAlreadyPresent( id );
+        return inCluster == true ? hostManager.checkIfHostInAnyCluster( id ) : false;
 
     }
 
@@ -158,10 +158,10 @@ public class HostController
     }
 
 
-    @RequestMapping ( value = "/{hostId}/{clusterId}", method = RequestMethod.GET)
-    public void addHostsToCluster( @PathVariable Integer hostId, @PathVariable Integer clusterId )
+    @RequestMapping ( value = "/{clusterId}/add", method = RequestMethod.GET)
+    public void addHostsToCluster( @RequestBody Host host, @PathVariable Integer clusterId )
     {
-        hostManager.addHostToCluster( hostId, clusterId );
+        //   hostManager.addHostToCluster( host, clusterId );
     }
 
 }

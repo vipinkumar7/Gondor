@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gondor.model.orm.Instance;
 import com.gondor.model.orm.Service;
 import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
@@ -57,20 +56,6 @@ public class ServiceController
 
     /**
      * 
-     * @param id
-     * @return
-     */
-    @RequestMapping ( value = "/{id}/instances", method = { RequestMethod.GET })
-    @ResponseBody
-    public ResponseEntity<List<Instance>> getAllInstances( @PathVariable Integer id )
-    {
-        LOG.trace( "Method: getAllInstances called." );
-        return new ResponseEntity<List<Instance>>( serviceManager.getAllInstances( id ), HttpStatus.OK );
-    }
-
-
-    /**
-     * 
      * @param serviceType
      * @param hostId
      * @return
@@ -79,7 +64,7 @@ public class ServiceController
     public Integer createService( @PathVariable ServiceType serviceType, @PathVariable Integer hostId )
     {
         LOG.trace( "Method: createService called." );
-        return serviceManager.createService( serviceType, hostId );
+        return 1;//serviceManager.createService( serviceType, hostId );
     }
 
 
@@ -141,7 +126,7 @@ public class ServiceController
     public ResponseEntity<List<SimpleConfiguration>> getAllServiceConfig( @PathVariable Integer id )
     {
         LOG.trace( "Method: getAllServiceConfig called." );
-        return new ResponseEntity<List<SimpleConfiguration>>( serviceManager.getAllConfig( id ), HttpStatus.OK );
+        return null;//new ResponseEntity<List<SimpleConfiguration>>( serviceManager.getAllConfig( id ), HttpStatus.OK );
     }
 
 

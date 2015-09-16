@@ -17,9 +17,16 @@
  */
 package com.gondor.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Set;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gondor.model.orm.InstanceConfiguration;
 import com.gondor.model.orm.Service;
+import com.gondor.model.orm.ServiceType;
 
 
 /**
@@ -29,7 +36,36 @@ import com.gondor.model.orm.Service;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface ServiceRepository extends CrudRepository<Service, Long>
+@Transactional ( readOnly = true)
+public interface ServiceRepository extends JpaRepository<Service, Integer>
 {
+
+
+    @Query ( "SELECT s.name FROM Service s where s.id=:serviceId")
+    public ServiceType getServiceType( Integer serviceId );
+
+
+    @Query ( "SELECT s FROM Service s where s.name=:serviceType and s.host.id=:hostId")
+    public Service getServiceIfExists( ServiceType serviceType, Integer hostId );
+
+
+    @Query ( "SELECT s.running FROM Service s")
+    public boolean checkState( Integer serviceId );
+
+
+    @Modifying
+    @Transactional ( readOnly = false)
+    @Query ( "UPDATE Service s set s.running=true where s.id=:serviceId")
+    public void startService( ServiceType serviceType, Integer hostId );
+
+
+    @Modifying
+    @Transactional ( readOnly = false)
+    @Query ( "UPDATE Service s set s.running=false where s.id=:serviceId")
+    public void stopService( Integer serviceId );
+
+
+    @Query ( "SELECT s.instanceConfigs FROM Service s INNER JOIN s.instanceConfigs where s.id =:serviceId")
+    public Set<InstanceConfiguration> getAllConfig( Integer serviceId );
 
 }

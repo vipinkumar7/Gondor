@@ -17,19 +17,19 @@
  */
 package com.gondor.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gondor.model.orm.Instance;
+import com.gondor.model.orm.InstanceConfiguration;
 
 
 /**
  * @author Vipin Kumar
- * @created 15-Sep-2015
+ * @created 16-Sep-2015
  * 
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface InstanceRepository extends CrudRepository<Instance, Long>
+public interface InstanceConfigRepository extends JpaRepository<InstanceConfiguration, Long>
 {
 
 }

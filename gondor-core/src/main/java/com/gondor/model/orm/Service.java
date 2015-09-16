@@ -17,14 +17,18 @@
  */
 package com.gondor.model.orm;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -56,6 +60,8 @@ public class Service
 
 
     private Host host;
+
+    private Set<InstanceConfiguration> instanceConfigs;
 
 
     /**
@@ -137,6 +143,26 @@ public class Service
     public void setRunning( boolean isRunning )
     {
         this.isRunning = isRunning;
+    }
+
+
+    /**
+     * @return the instanceConfigs
+     */
+    @OneToMany ( fetch = FetchType.LAZY)
+    @JoinColumn ( name = "INSTANCE_CONF_ID")
+    public Set<InstanceConfiguration> getInstanceConfigs()
+    {
+        return instanceConfigs;
+    }
+
+
+    /**
+     * @param instanceConfigs the instanceConfigs to set
+     */
+    public void setInstanceConfigs( Set<InstanceConfiguration> instanceConfigs )
+    {
+        this.instanceConfigs = instanceConfigs;
     }
 
 

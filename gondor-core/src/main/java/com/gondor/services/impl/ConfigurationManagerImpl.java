@@ -19,9 +19,11 @@ package com.gondor.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gondor.model.orm.SimpleConfiguration;
+import com.gondor.repository.SimpleConfRepository;
 import com.gondor.services.ConfigurationManager;
 
 
@@ -38,17 +40,19 @@ public class ConfigurationManagerImpl implements ConfigurationManager
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( ConfigurationManagerImpl.class );
 
+    @Autowired
+    private SimpleConfRepository simpleConfRepository;
+
 
     /* (non-Javadoc)
      * @see com.gondor.services.ConfigurationManager#removeConfig(int, java.lang.String)
      */
     @Override
-    public boolean removeConfig( SimpleConfiguration simpleConfiguration )
+    public void removeConfig( SimpleConfiguration simpleConfiguration )
     {
         LOG.trace( "Method: removeConfig called." );
 
-        return true;//return simpleCondifDao.removeConfig( simpleConfiguration );
-
+        simpleConfRepository.delete( simpleConfiguration );
     }
 
 
@@ -59,19 +63,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager
     public void saveConfigs( List<SimpleConfiguration> config )
     {
         LOG.trace( "Method: saveConfigs called." );
-        //simpleCondifDao.saveConfigs( config );
+        simpleConfRepository.save( config );
         LOG.trace( "Method: saveConfigs finished." );
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.ConfigurationManager#deleteAllConfig()
-     */
-    @Override
-    public void deleteAllConfig()
-    {
-        LOG.trace( "Method: deleteAllConfig called." );
-        LOG.trace( "Method: deleteAllConfig finished." );
     }
 
 
@@ -79,11 +72,11 @@ public class ConfigurationManagerImpl implements ConfigurationManager
      * @see com.gondor.services.ConfigurationManager#updateConfig(com.gondor.model.orm.SimpleConfiguration)
      */
     @Override
-    public boolean updateConfig( SimpleConfiguration simpleConfiguration )
+    public Integer updateConfig( SimpleConfiguration simpleConfiguration )
     {
         LOG.trace( "Method: updateConfig called." );
-        return true;//
-
+        simpleConfRepository.save( simpleConfiguration );
+        return simpleConfiguration.getId();
     }
 
 
@@ -91,11 +84,11 @@ public class ConfigurationManagerImpl implements ConfigurationManager
      * @see com.gondor.services.ConfigurationManager#updateConfig(java.util.List)
      */
     @Override
-    public boolean updateConfig( List<SimpleConfiguration> simpleConfigurations )
+    public void updateConfig( List<SimpleConfiguration> simpleConfigurations )
     {
         LOG.trace( "Method: updateConfig called." );
 
-        return true;// return simpleCondifDao.updateConfig( simpleConfigurations );
+        simpleConfRepository.save( simpleConfigurations );
     }
 
 

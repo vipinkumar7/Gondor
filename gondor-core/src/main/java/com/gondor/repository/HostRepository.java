@@ -50,6 +50,8 @@ public interface HostRepository extends JpaRepository<Host, Integer>
     public void decommissionCluster( @Param ( "hostId") Integer hostId );
 
 
-    @Query ( " FROM Host h where h.name=:hostName ")
-    public Host getHost( @Param ( "hostName") String hostName );
+    @Query ( " FROM Host h where h.name=:hostIdentifier OR h.ip=:hostIdentifier ")
+    public Host getHostWithIdentifier( @Param ( "hostIdentifier") String hostIdentifier );
+
+
 }

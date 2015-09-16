@@ -23,6 +23,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gondor.model.orm.Cluster;
 import com.gondor.model.orm.Host;
 import com.gondor.repository.HostRepository;
 import com.gondor.services.HostManager;
@@ -80,9 +81,7 @@ public class HostManagerImpl implements HostManager
     public Set<com.gondor.model.orm.Service> getAllServices( Integer hostId )
     {
         LOG.trace( "Method: getAllServices called." );
-
         return hostRepository.getServices( hostId );
-
     }
 
 
@@ -116,11 +115,11 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#validateHostNameAlreadyPresent(java.lang.String)
      */
     @Override
-    public Boolean validateHostNameAlreadyPresent( String hostName )
+    public Boolean validateHostAlreadyPresent( String hostIdentifier )
     {
         LOG.trace( "Method: validateHostAlreadyPresent called." );
 
-        return hostRepository.getHost( hostName ) == null ? false : true;
+        return hostRepository.getHostWithIdentifier( hostIdentifier ) == null ? false : true;
 
     }
 
@@ -129,11 +128,11 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#addHostToCluster(int, int)
      */
     @Override
-    public void addHostToCluster( Integer hostId, Integer clusterId )
+    public void addHostToCluster( Host host, Cluster cluster )
     {
         LOG.trace( "Method: addHostToCluster called." );
-        // hostDao.addHostToCluster( hostId, clusterId );
-
+        host.setCluster( cluster );
+        hostRepository.save( host );
         LOG.trace( "Method: addHostToCluster finished." );
     }
 
@@ -142,24 +141,10 @@ public class HostManagerImpl implements HostManager
      * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(java.lang.String)
      */
     @Override
-    public Boolean checkIfHostNameInAnyCluster( String hostIdentifier )
+    public Boolean checkIfHostInAnyCluster( String hostIdentifier )
     {
         LOG.trace( "Method: checkIfHostInAnyCluster called." );
-
-        return null;//hostDao.checkHostName( hostIdentifier, true );
-
-    }
-
-
-    /* (non-Javadoc)
-     * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(int)
-     */
-    @Override
-    public Boolean checkIfHostInAnyCluster( Integer hostId )
-    {
-        LOG.trace( "Method: checkIfHostInAnyCluster called." );
-
-        return null;//hostDao.checkHost( hostId, true );
+        return hostRepository.getHostWithIdentifier( hostIdentifier ).getCluster() == null ? false : true;
 
     }
 
@@ -172,7 +157,20 @@ public class HostManagerImpl implements HostManager
     {
         LOG.trace( "Method: getHost called." );
 
-        return null;//hostDao.getHost( hostId );
+        return hostRepository.findOne( hostId );
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.services.HostManager#checkIfHostInAnyCluster(java.lang.Integer)
+     */
+    @Override
+    public Boolean checkIfHostInAnyCluster( Integer hostId )
+    {
+        LOG.trace( "Method: checkIfHostInAnyCluster called." );
+
+        return hostRepository.findOne( hostId ).getCluster() == null ? false : true;
 
     }
 
