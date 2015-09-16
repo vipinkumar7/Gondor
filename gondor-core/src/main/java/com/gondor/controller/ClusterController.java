@@ -50,7 +50,7 @@ import com.gondor.services.ClusterManager;
  * 
  * Class responsible for cluster manager specific tasks
  */
-@Api ( value = "clusters")
+@Api ( value = "/clusters")
 @Controller
 @RequestMapping ( value = "/cluster")
 public class ClusterController
@@ -67,8 +67,7 @@ public class ClusterController
     @ResponseStatus ( value = HttpStatus.OK)
     @ApiOperation ( value = "create  cluster", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses ( value = { @ApiResponse ( code = 200, message = "") })
-    public void createCluster(
-        @ApiParam ( name = "cluster", value = "cluster object", required = true) @RequestBody Cluster cluster )
+    public void createCluster( @ApiParam ( value = "cluster", required = true) @RequestBody Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
         clusterManager.createCluster( cluster );

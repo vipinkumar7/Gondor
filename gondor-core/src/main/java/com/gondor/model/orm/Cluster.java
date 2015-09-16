@@ -32,6 +32,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * @author Vipin Kumar
@@ -40,7 +42,7 @@ import javax.persistence.Table;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-@ApiModel
+@ApiModel ( "Cluster")
 @Entity
 @Table ( name = "CLUSTERS")
 public class Cluster
@@ -70,7 +72,7 @@ public class Cluster
     /**
      * @return the id
      */
-    @ApiModelProperty ( position = 1, required = false)
+    @JsonIgnore
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     @Column ( name = "CLUSTER_ID")
@@ -92,7 +94,7 @@ public class Cluster
     /**
      * @return the name
      */
-    @ApiModelProperty ( position = 2, required = true)
+    @ApiModelProperty ( position = 1, required = true, dataType = "String")
     @Column ( name = "CLUSTER_NAME", unique = true, nullable = false)
     public String getName()
     {
@@ -112,7 +114,7 @@ public class Cluster
     /**
      * @return the hosts
      */
-    @ApiModelProperty ( position = 3, required = false)
+    @JsonIgnore
     @OneToMany ( fetch = FetchType.LAZY)
     @JoinColumn ( name = "HOST_ID")
     public Set<Host> getHosts()
@@ -133,7 +135,7 @@ public class Cluster
     /**
      * @return the isActive
      */
-    @ApiModelProperty ( position = 4, required = false)
+    @ApiModelProperty ( position = 2, required = false)
     @Column ( name = "IS_ACTIVE")
     public boolean isActive()
     {
