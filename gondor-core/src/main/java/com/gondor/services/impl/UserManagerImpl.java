@@ -19,10 +19,12 @@ package com.gondor.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gondor.model.orm.RoleType;
 import com.gondor.model.orm.User;
+import com.gondor.repository.UserRepository;
 import com.gondor.services.UserManager;
 
 
@@ -40,6 +42,9 @@ public class UserManagerImpl implements UserManager
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( UserManagerImpl.class );
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     /* (non-Javadoc)
      * @see com.gondor.services.UserManager#list()
@@ -49,7 +54,7 @@ public class UserManagerImpl implements UserManager
     {
         LOG.trace( "Method: list called." );
 
-        return null;//
+        return userRepository.findAll();
     }
 
 
@@ -57,11 +62,11 @@ public class UserManagerImpl implements UserManager
      * @see com.gondor.services.UserManager#get(int)
      */
     @Override
-    public User get( int userId )
+    public User get( Integer userId )
     {
         LOG.trace( "Method: get called." );
 
-        return null;//
+        return userRepository.findOne( userId );
     }
 
 
@@ -69,7 +74,7 @@ public class UserManagerImpl implements UserManager
      * @see com.gondor.services.UserManager#delete(int)
      */
     @Override
-    public void delete( int userId )
+    public void delete( Integer userId )
     {
         LOG.trace( "Method: delete called." );
         LOG.trace( "Method: delete finished." );
@@ -80,7 +85,7 @@ public class UserManagerImpl implements UserManager
      * @see com.gondor.services.UserManager#changeRole(int, int)
      */
     @Override
-    public void changeRole( int userId, RoleType roleType )
+    public void changeRole( Integer userId, RoleType roleType )
     {
         LOG.trace( "Method: changeRole called." );
 
@@ -92,7 +97,7 @@ public class UserManagerImpl implements UserManager
      * @see com.gondor.services.UserManager#hasRole(int, int)
      */
     @Override
-    public boolean hasRole( int userId, RoleType roleType )
+    public boolean hasRole( Integer userId, RoleType roleType )
     {
         LOG.trace( "Method: hasRole called." );
 

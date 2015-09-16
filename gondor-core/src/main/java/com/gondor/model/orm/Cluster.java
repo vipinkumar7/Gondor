@@ -17,6 +17,9 @@
  */
 package com.gondor.model.orm;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -37,7 +40,7 @@ import javax.persistence.Table;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-
+@ApiModel
 @Entity
 @Table ( name = "CLUSTERS")
 public class Cluster
@@ -45,7 +48,9 @@ public class Cluster
     /**
      * 
      */
+
     private Integer id;
+
     private String name;
     private boolean isActive;
 
@@ -65,6 +70,7 @@ public class Cluster
     /**
      * @return the id
      */
+    @ApiModelProperty ( position = 1, required = false)
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     @Column ( name = "CLUSTER_ID")
@@ -86,6 +92,7 @@ public class Cluster
     /**
      * @return the name
      */
+    @ApiModelProperty ( position = 2, required = true)
     @Column ( name = "CLUSTER_NAME", unique = true, nullable = false)
     public String getName()
     {
@@ -105,6 +112,7 @@ public class Cluster
     /**
      * @return the hosts
      */
+    @ApiModelProperty ( position = 3, required = false)
     @OneToMany ( fetch = FetchType.LAZY)
     @JoinColumn ( name = "HOST_ID")
     public Set<Host> getHosts()
@@ -125,6 +133,7 @@ public class Cluster
     /**
      * @return the isActive
      */
+    @ApiModelProperty ( position = 4, required = false)
     @Column ( name = "IS_ACTIVE")
     public boolean isActive()
     {

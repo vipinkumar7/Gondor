@@ -123,7 +123,7 @@ public interface ServiceManager
      * child services for more clarification
      * </p>
      * 
-     * eg. HDFS will have all configuration of datanode ,namenode and yarn at first service startup
+     * eg. HDFS will have all configuration of DataNode ,NameNode and yarn at first service startup
      * 
      * but later as user will know system he can push service related to child services to their 
      * specific 

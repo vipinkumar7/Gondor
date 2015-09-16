@@ -17,7 +17,7 @@
  */
 package com.gondor.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gondor.model.orm.User;
 
@@ -29,7 +29,7 @@ import com.gondor.model.orm.User;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-public interface UserRepository extends CrudRepository<User, Long>
+public interface UserRepository extends JpaRepository<User, Integer>
 {
 
 }

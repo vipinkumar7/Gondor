@@ -32,13 +32,6 @@ import com.gondor.model.orm.Bundle;
 public interface DeploymentManager
 {
 
-    /**
-     * 
-     * @param hostId
-     * @return
-     */
-    public boolean getHeartbeat( int hostId );
-
 
     /**
      * Deploy this bundle to this host

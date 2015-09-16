@@ -36,18 +36,18 @@ public interface UserManager
     public List<User> list();
 
 
-    public User get( int userId );
+    public User get( Integer userId );
 
 
     public void saveOrUpdate( User user );
 
 
-    public void delete( int userId );
+    public void delete( Integer userId );
 
 
-    public void changeRole( int userId, RoleType roleType );
+    public void changeRole( Integer userId, RoleType roleType );
 
 
-    public boolean hasRole( int userId, RoleType roleType );
+    public boolean hasRole( Integer userId, RoleType roleType );
 
 }

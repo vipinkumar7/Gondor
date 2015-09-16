@@ -30,8 +30,11 @@ import javax.persistence.Table;
  * @author Vipin Kumar
  * @created 10-Jul-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
- * 
+ * <p>
+ * This class Represents  the different application to be deployed in cluster 
+ * (generally tar balls binary files)  
+ * either Url should be defined for downloading application or localPath from where to copy  
+ * </p>
  */
 
 @Entity

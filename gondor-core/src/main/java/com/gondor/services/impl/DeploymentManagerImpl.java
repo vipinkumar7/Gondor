@@ -37,19 +37,6 @@ public class DeploymentManagerImpl implements DeploymentManager
 
 
     /* (non-Javadoc)
-     * @see com.gondor.services.DeploymentManager#getHeartbeat(int)
-     */
-    @Override
-    public boolean getHeartbeat( int hostId )
-    {
-        LOG.trace( "Method: getHeartbeat called." );
-
-        return false;
-
-    }
-
-
-    /* (non-Javadoc)
      * @see com.gondor.services.DeploymentManager#deploy(int, com.gondor.model.orm.PackageType)
      */
     @Override

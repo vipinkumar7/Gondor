@@ -17,6 +17,7 @@
  */
 package com.gondor.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -49,7 +50,7 @@ import com.gondor.services.ClusterManager;
  * 
  * Class responsible for cluster manager specific tasks
  */
-
+@Api ( value = "clusters")
 @Controller
 @RequestMapping ( value = "/cluster")
 public class ClusterController
@@ -64,7 +65,10 @@ public class ClusterController
 
     @RequestMapping ( value = "", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus ( value = HttpStatus.OK)
-    public void createCluster( @RequestBody Cluster cluster )
+    @ApiOperation ( value = "create  cluster", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses ( value = { @ApiResponse ( code = 200, message = "") })
+    public void createCluster(
+        @ApiParam ( name = "cluster", value = "cluster object", required = true) @RequestBody Cluster cluster )
     {
         LOG.trace( "Method: createCluster called." );
         clusterManager.createCluster( cluster );
