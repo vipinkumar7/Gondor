@@ -173,6 +173,7 @@ public class DynamicEnumLoader
     /**
      * Load New enum from database here
      */
+
     @PostConstruct
     public void loadService()
     {
@@ -181,4 +182,5 @@ public class DynamicEnumLoader
         // Dynamically add 
         //addEnum( ServiceType.class, "ZOOKEEPER", ServiceType.SERVICE );       
     }
+
 }

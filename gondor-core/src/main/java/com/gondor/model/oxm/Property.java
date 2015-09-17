@@ -39,10 +39,13 @@ public class Property implements Serializable
      */
     private static final long serialVersionUID = 1540313373330934649L;
 
-    @XmlElement ( name = "name")
+    @XmlElement ( name = "name", required = true)
     private String name;
-    @XmlElement ( name = "value")
+    @XmlElement ( name = "value", required = true)
     private String value;
+
+    @XmlElement ( name = "description", required = false)
+    private String description;
 
 
     /**
@@ -78,5 +81,23 @@ public class Property implements Serializable
     public void setValue( String value )
     {
         this.value = value;
+    }
+
+
+    /**
+     * @return the description
+     */
+    public String getDescription()
+    {
+        return description;
+    }
+
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription( String description )
+    {
+        this.description = description;
     }
 }

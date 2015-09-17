@@ -28,6 +28,7 @@ import java.util.List;
  * This is tree implementation of all the services and their respective parents
  * 
  */
+
 public enum ServiceType
 {
 
@@ -39,7 +40,9 @@ public enum ServiceType
 
     HIVE( SERVICE ), HIVE_METASTORE( HIVE ), HIVE_SERVER2( HIVE ),
 
-    HBASE( SERVICE ), HBASE_REGION_SERVER( HBASE ), HBASE_MASTER( HBASE );
+    HBASE( SERVICE ), HBASE_REGION_SERVER( HBASE ), HBASE_MASTER( HBASE ),
+
+    ZOOKEEPER( SERVICE );
 
     private ServiceType parent = null;
 
@@ -107,13 +110,5 @@ public enum ServiceType
         return false;
     }
 
-
-    public static void main( String[] args )
-    {
-        List<ServiceType> type = ServiceType.HDFS.children;
-        for ( ServiceType t : type )
-            System.out.println( t.name() );
-
-    }
 
 }

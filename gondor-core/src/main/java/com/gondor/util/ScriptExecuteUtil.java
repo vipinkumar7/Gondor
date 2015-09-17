@@ -37,7 +37,7 @@ public class ScriptExecuteUtil
 
     public static void main( String[] args )
     {
-        executeProcedure( "function(){" + " print ('data ') }" );
+        executeProcedure( "max = function() { print('kk');}" + "max();" );
     }
 
 
@@ -47,8 +47,9 @@ public class ScriptExecuteUtil
     private static void executeProcedure( String string )
     {
         LOG.trace( "Method: executeProcedure called." );
+
         ScriptEngineManager engineManager = new ScriptEngineManager();
-        ScriptEngine scriptEngine = engineManager.getEngineByName( "js" );
+        ScriptEngine scriptEngine = engineManager.getEngineByName( "JavaScript" );
         try {
             scriptEngine.eval( string );
         } catch ( ScriptException e ) {
