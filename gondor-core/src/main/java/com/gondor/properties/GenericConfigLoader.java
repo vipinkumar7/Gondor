@@ -29,7 +29,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.stereotype.Component;
 
-import com.gondor.model.orm.ServiceType;
 import com.gondor.model.orm.SimpleConfiguration;
 import com.gondor.model.oxm.Configuration;
 import com.gondor.model.oxm.Property;
@@ -81,7 +80,7 @@ public class GenericConfigLoader
                 SimpleConfiguration simpleConf = new SimpleConfiguration();
                 simpleConf.setProperty( property.getName() );
                 simpleConf.setValue( property.getValue() );
-                simpleConf.setServiceType( ServiceType.SERVICE );//TODO Later this will come from xml
+                simpleConf.setServiceType( null );//TODO Later this will come from xml
                 simpleConf.setFileName( file );
                 genericConfList.add( simpleConf );
             }

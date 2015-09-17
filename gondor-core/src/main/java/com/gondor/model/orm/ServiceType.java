@@ -32,19 +32,14 @@ public enum ServiceType
 {
 
     SERVICE( null ),
-    HDFS( SERVICE ),
-    NAMENODE( HDFS ),
-    SECONDARY_NAMENODE( HDFS ),
-    DATANODE( HDFS ),
-    YARN( SERVICE ),
-    RESOURCEMANAGER( YARN ),
-    NODEMANAGER( YARN ),
 
-    HIVE( SERVICE ),
-    HIVE_METASTORE( HIVE ),
-    HBASE( SERVICE ),
-    HBASE_REGION_SERVER( HBASE ),
-    HBASE_MASTER( HBASE );
+    HDFS( SERVICE ), NAMENODE( HDFS ), SECONDARY_NAMENODE( HDFS ), DATANODE( HDFS ),
+
+    YARN( SERVICE ), RESOURCEMANAGER( YARN ), NODEMANAGER( YARN ),
+
+    HIVE( SERVICE ), HIVE_METASTORE( HIVE ), HIVE_SERVER2( HIVE ),
+
+    HBASE( SERVICE ), HBASE_REGION_SERVER( HBASE ), HBASE_MASTER( HBASE );
 
     private ServiceType parent = null;
 
@@ -112,5 +107,13 @@ public enum ServiceType
         return false;
     }
 
+
+    public static void main( String[] args )
+    {
+        List<ServiceType> type = ServiceType.HDFS.children;
+        for ( ServiceType t : type )
+            System.out.println( t.name() );
+
+    }
 
 }
