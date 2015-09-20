@@ -17,12 +17,15 @@
  */
 package com.gondor.config.strategy.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import com.gondor.config.strategy.ConfigurationStrategy;
 import com.gondor.model.config.ConfigurationRequest;
+import com.gondor.model.orm.SimpleConfiguration;
 
 
 /**
@@ -32,11 +35,14 @@ import com.gondor.model.config.ConfigurationRequest;
  * TODO: Write a quick description of what the class is supposed to do.
  * 
  */
-@Component ( "hadoopConfStrategy")
+@Component ( "hadoopConfigStrategy")
 public class HadoopConfigStrategy implements ConfigurationStrategy
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( HadoopConfigStrategy.class );
+
+
+    private Map<String, String> config = new HashMap<String, String>();
 
 
     /* (non-Javadoc)
@@ -53,14 +59,40 @@ public class HadoopConfigStrategy implements ConfigurationStrategy
 
 
     /* (non-Javadoc)
-     * @see com.gondor.config.strategy.ConfigurationStrategy#buildRequest()
+     * @see com.gondor.config.strategy.ConfigurationStrategy#buildConfigurationFiles()
      */
     @Override
-    public List<ConfigurationRequest> buildRequest()
+    public List<ConfigurationRequest> buildConfigurationFiles()
     {
-        LOG.trace( "Method: buildRequest called." );
+        LOG.trace( "Method: buildConfigurationFiles called." );
 
         return null;
 
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.config.strategy.ConfigurationStrategy#loadConfigurations()
+     */
+    @Override
+    public List<SimpleConfiguration> loadConfigurations()
+    {
+        LOG.trace( "Method: loadConfigurations called." );
+
+        return null;
+
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.gondor.config.strategy.ConfigurationStrategy#clear()
+     */
+    @Override
+    public void clear()
+    {
+        LOG.trace( "Method: clear called." );
+
+
+        LOG.trace( "Method: clear finished." );
     }
 }
