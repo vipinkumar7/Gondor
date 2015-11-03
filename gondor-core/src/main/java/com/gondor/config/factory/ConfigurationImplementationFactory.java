@@ -61,6 +61,11 @@ public class ConfigurationImplementationFactory
     ZookeeperConfigStrategy zookeeperConfigStrategy;
 
 
+    /**
+     * Configuration is applied only at root (SERVICE ) level services 
+     * @param serviceType
+     * @return
+     */
     ConfigurationStrategy getConfigurationImplementation( ServiceType serviceType )
     {
         switch ( serviceType ) {

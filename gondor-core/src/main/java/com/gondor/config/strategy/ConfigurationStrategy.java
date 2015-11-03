@@ -20,6 +20,7 @@ package com.gondor.config.strategy;
 import java.util.List;
 
 import com.gondor.model.config.ConfigurationRequest;
+import com.gondor.model.orm.SimpleConfiguration;
 
 
 /**
@@ -34,6 +35,11 @@ public interface ConfigurationStrategy
     void init();
 
 
-    List<ConfigurationRequest> buildRequest();
+    List<ConfigurationRequest> buildConfigurationFiles();
 
+
+    List<SimpleConfiguration> loadConfigurations();
+
+
+    void clear();
 }
