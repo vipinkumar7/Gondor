@@ -23,7 +23,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -34,16 +33,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.gondor.controller.AdminController;
-import com.gondor.security.oauth.AccessConfirmationController;
-import com.gondor.security.oauth.GondorUserApprovalHandler;
-
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import com.gondor.controller.AdminController;
+import com.gondor.security.oauth.AccessConfirmationController;
+import com.gondor.security.oauth.GondorUserApprovalHandler;
 
 
 /**
@@ -87,7 +86,6 @@ public class WebContextConfig extends WebMvcConfigurerAdapter
         interceptor.setUseExpiresHeader( true );
         interceptor.setUseCacheControlHeader( true );
         interceptor.setUseCacheControlNoStore( true );
-
         return interceptor;
     }
 
@@ -121,23 +119,25 @@ public class WebContextConfig extends WebMvcConfigurerAdapter
     {
         registry.addInterceptor( webContentInterceptor() );
     }
-    
+
+
     @Bean
-    public AccessConfirmationController accessConfirmationController(ClientDetailsService clientDetailsService
-           ) {
+    public AccessConfirmationController accessConfirmationController( ClientDetailsService clientDetailsService )
+    {
         AccessConfirmationController accessConfirmationController = new AccessConfirmationController();
-        accessConfirmationController.setClientDetailsService(clientDetailsService);
+        accessConfirmationController.setClientDetailsService( clientDetailsService );
         return accessConfirmationController;
     }
-    
+
+
     @Bean
-    public AdminController adminController(TokenStore tokenStore,
-            @Qualifier("consumerTokenServices") ConsumerTokenServices tokenServices,
-            GondorUserApprovalHandler userApprovalHandler) {
+    public AdminController adminController( TokenStore tokenStore,
+        @Qualifier ( "consumerTokenServices") ConsumerTokenServices tokenServices, GondorUserApprovalHandler userApprovalHandler )
+    {
         AdminController adminController = new AdminController();
-        adminController.setTokenStore(tokenStore);
-        adminController.setTokenServices(tokenServices);
-        adminController.setUserApprovalHandler(userApprovalHandler);
+        adminController.setTokenStore( tokenStore );
+        adminController.setTokenServices( tokenServices );
+        adminController.setUserApprovalHandler( userApprovalHandler );
         return adminController;
     }
 }

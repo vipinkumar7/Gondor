@@ -78,9 +78,9 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         LOG.trace( "Method: onStartup called." );
 
         super.onStartup( servletContext );
-        DelegatingFilterProxy filter = new DelegatingFilterProxy("springSecurityFilterChain");
-        filter.setContextAttribute("org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcher");
-        servletContext.addFilter("springSecurityFilterChain", filter).addMappingForUrlPatterns(null, false, "/*");
+        DelegatingFilterProxy filter = new DelegatingFilterProxy( "springSecurityFilterChain" );
+        filter.setContextAttribute( "org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcher" );
+        servletContext.addFilter( "springSecurityFilterChain", filter ).addMappingForUrlPatterns( null, false, "/*" );
 
         LOG.trace( "Method: onStartup finished." );
     }

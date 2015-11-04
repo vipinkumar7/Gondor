@@ -20,13 +20,18 @@ package com.gondor.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
@@ -39,11 +44,50 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
  * 
  */
 @Configuration
-@EnableResourceServer
 public class OAuth2ServerConfig
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( OAuth2ServerConfig.class );
+    private static final String GONDOR_RESOURCE_ID = "gondor";
+
+
+    @Configuration
+    @EnableResourceServer
+    protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
+    {
+
+        @Override
+        public void configure( ResourceServerSecurityConfigurer resources )
+        {
+            resources.resourceId( GONDOR_RESOURCE_ID ).stateless( false );
+        }
+
+
+        @Override
+        public void configure( HttpSecurity http ) throws Exception
+        {
+            // @formatter:off
+            http
+                // Since we want the protected resources to be accessible in the UI as well we need 
+                // session creation to be allowed (it's disabled by default in 2.0.6)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            .and()
+                .requestMatchers().antMatchers("/cluster/**", "/oauth/users/**", "/oauth/clients/**","/me")
+            .and()
+                .authorizeRequests()
+                   /* .antMatchers("/me").access("#oauth2.hasScope('read')") */                 
+                    .antMatchers("/cluster").access("#oauth2.hasScope('read') or (!#oauth2.isOAuth() and hasRole('ROLE_USER'))")                                        
+                    .antMatchers("/cluster/**").access("#oauth2.hasScope('read') or (!#oauth2.isOAuth() and hasRole('ROLE_USER'))")
+                    .regexMatchers(HttpMethod.DELETE, "/oauth/users/([^/].*?)/tokens/.*")
+                        .access("#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('write')")
+                    .regexMatchers(HttpMethod.GET, "/oauth/clients/([^/].*?)/users/.*")
+                        .access("#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('read')")
+                    .regexMatchers(HttpMethod.GET, "/oauth/clients/.*")
+                        .access("#oauth2.clientHasRole('ROLE_CLIENT') and #oauth2.isClient() and #oauth2.hasScope('read')");
+            // @formatter:on
+        }
+
+    }
 
 
     @Configuration
@@ -57,7 +101,8 @@ public class OAuth2ServerConfig
 
         @Autowired
         private AuthenticationManager authenticationManager;
-        
+
+
         @Bean
         public TokenStore tokenStore()
         {
@@ -75,7 +120,7 @@ public class OAuth2ServerConfig
         @Override
         public void configure( ClientDetailsServiceConfigurer clients ) throws Exception
         {
-            clients.inMemory().withClient( "acme" ).secret( "acmesecret" )
+            clients.inMemory().withClient( "webapp" ).secret( "websecret" )
                 .authorizedGrantTypes( "authorization_code", "refresh_token", "password" ).scopes( "openid" )
                 .autoApprove( true );
 

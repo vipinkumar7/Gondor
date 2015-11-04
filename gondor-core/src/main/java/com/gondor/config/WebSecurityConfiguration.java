@@ -27,52 +27,57 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
+
 /**
  * @author Vipin Kumar
  * @created 03-Nov-2015
  * 
- * TODO: Write a quick description of what the class is supposed to do.
+ * Web security configuration
  * 
  */
 
 @Configuration
 @EnableWebMvcSecurity
-public class WebSecurityConfiguration  extends WebSecurityConfigurerAdapter
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger( WebSecurityConfiguration.class );
-    
-    
+
+
     @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("KYLIN").roles("USER").and().withUser("analyst")
-                .password("KYLIN").roles("USER");
+    public void globalUserDetails( AuthenticationManagerBuilder auth ) throws Exception
+    {
+
+        LOG.debug( "Defining username password for gondor" );/*Allow in memory authentication */
+        auth.inMemoryAuthentication().withUser( "admin" ).password( "GONDOR" ).roles( "ADMIN" ).and().withUser( "user" )
+            .password( "GONDOR" ).roles( "USER" );
     }
 
+
     @Override
-    public void configure(WebSecurity web) throws Exception {
-      web
-        .ignoring()
-           .antMatchers("/resources/**"); // #3
+    public void configure( WebSecurity web ) throws Exception
+    {
+        web.ignoring().antMatchers( "/resources/**" ); /*Ignore any request that starts with “/resources/”*/
     }
-    
+
+
     @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
+    public AuthenticationManager authenticationManagerBean() throws Exception
+    {
         return super.authenticationManagerBean();
     }
-    
+
+
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-      http
-        .authorizeRequests()
-          .antMatchers("/signup","/about").permitAll() // #4
-          .antMatchers("/admin/**").hasRole("ADMIN") // #6
-          .anyRequest().authenticated() // 7
-          .and()
-      .formLogin()  // #8
-          .loginProcessingUrl("/login") // #9
-          .permitAll(); // #5
+    protected void configure( HttpSecurity http ) throws Exception
+    {
+        http.authorizeRequests().antMatchers( "/signup", "/about" ).permitAll() /*these urls can be accessed by anyone*/
+        .antMatchers( "/admin/**" ).hasRole( "ADMIN" ) /*url starts with /admin  must be  admin user*/
+        .anyRequest().authenticated() /**/
+        .and().formLogin() // 
+            .loginProcessingUrl( "/login" ) //
+            .permitAll(); /*anyone should have access to login*/
     }
-    
+
 }

@@ -52,7 +52,6 @@ public class GondorCorsFilter implements Filter
         response.addHeader( "Access-Control-Allow-Headers", "Authorization,Origin, "
             + "No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, "
             + "Cache-Control, Expires, Content-Type, X-E4M-With, Accept" );
-        //response.setHeader( "Content-Type", "application/json" );
         response.addHeader( "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE" );
         response.addHeader( "Access-Control-Max-Age", "3600" );
         chain.doFilter( req, res );
